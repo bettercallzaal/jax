@@ -1,2 +1,9 @@
-# HVAC Field Toolkit — no external deps, stdlib only
+# HVAC Field Toolkit
 # Python 3.10+
+
+# Core toolkit (diagnostics, psychrometrics, journal, standards) — stdlib only
+
+# RAG / AI assistant (optional — required for `hvac ask`)
+anthropic>=0.112.0           # Claude API client with prompt caching
+sentence-transformers>=2.0   # Dense embeddings (all-MiniLM-L6-v2); falls back to TF-IDF if absent
+numpy>=1.24                  # Required by sentence-transformers

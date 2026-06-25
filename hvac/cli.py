@@ -14,7 +14,7 @@ Commands:
 
 import argparse
 import sys
-from . import diagnostics, journal, psychrometrics, analysis
+from . import diagnostics, journal, psychrometrics, analysis, rag
 
 
 def cmd_diagnose_reheat(args):
@@ -104,6 +104,26 @@ def cmd_analyze(args):
     )
 
 
+def cmd_ask(args):
+    import os
+    store = rag.build_store()
+    if args.show_sources:
+        results = rag.retrieve(args.question, store, top_k=args.top_k)
+        rag.print_retrieved(results)
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        print("Error: ANTHROPIC_API_KEY environment variable not set.")
+        print("Set it with: export ANTHROPIC_API_KEY=sk-ant-...")
+        sys.exit(1)
+    if args.stream:
+        print()
+        for chunk in rag.ask_stream(args.question, top_k=args.top_k, store=store):
+            print(chunk, end="", flush=True)
+        print()
+    else:
+        answer = rag.ask(args.question, top_k=args.top_k, store=store)
+        print(f"\n{answer}\n")
+
+
 def cmd_psych(args):
     psychrometrics.print_state_point(
         label=f"{args.zone or 'State Point'}",
@@ -164,6 +184,14 @@ def main():
     p.add_argument("--hw-supply", type=float)
     p.add_argument("--hw-return", type=float)
     p.set_defaults(func=cmd_analyze)
+
+    # --- ask ---
+    p = sub.add_parser("ask", help="Ask the HVAC knowledge base (RAG + Claude)")
+    p.add_argument("question", help="Natural language question")
+    p.add_argument("--top-k", type=int, default=5, help="Number of chunks to retrieve (default: 5)")
+    p.add_argument("--show-sources", action="store_true", help="Print retrieved knowledge chunks")
+    p.add_argument("--stream", action="store_true", help="Stream the response token by token")
+    p.set_defaults(func=cmd_ask)
 
     # --- psych ---
     p = sub.add_parser("psych", help="Psychrometric state point")

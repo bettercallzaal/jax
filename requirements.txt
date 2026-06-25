@@ -1,0 +1,2 @@
+# HVAC Field Toolkit — no external deps, stdlib only
+# Python 3.10+

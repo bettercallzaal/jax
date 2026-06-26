@@ -1,4 +1,4 @@
 __pycache__/
 *.pyc
 *.pyo
-hvac/data/journal/*.jsonl
+# hvac/data/journal/*.jsonl  — committed; field log is part of the record

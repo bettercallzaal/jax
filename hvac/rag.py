@@ -805,6 +805,122 @@ Sensible heat ratio (SHR) = Q_sensible / Q_total
   High-latent spaces (gyms, restaurants): SHR = 0.50–0.70"""
     ))
 
+    # --- JCI VA-7450 Series Actuator ---
+    chunks.append(Chunk(
+        id="actuator-va7450-install",
+        source="equipment_datasheet",
+        topic="JCI VA-7450 Series Electric Valve Actuator — Installation & Wiring",
+        tags=["actuator", "VA-7450", "valve", "JCI", "wiring", "mounting", "proportional", "floating"],
+        text="""JCI VA-7450 SERIES ELECTRIC VALVE ACTUATOR — Installation Instructions
+Part No. 34-636-771 | Johnson Controls | For use with VG4000/VG5000 Series Zone Valves
+
+MODELS:
+  VA-7450-10011: On/Off or Floating Control — 24 VAC input signal
+  VA-7452-90011: Proportional Control — 0 to 10 VDC input signal
+
+WIRING (VA-7452-90011 Proportional):
+  RED   → 24 VAC Power (hot)
+  BLUE  → 24 VAC Common
+  WHITE → 0–10 VDC Input Signal (+) from DDC controller
+
+WIRING (VA-7450-10011 On/Off or Floating):
+  BLUE  → Common
+  WHITE → Up signal (24 VAC)
+  RED   → Down signal (24 VAC)
+
+VOLTAGE TEST POINTS (VA-7452-90011, 0–10 VDC, measure WHITE to BLUE):
+  0%   command → 0.0 VDC
+  50%  command → 5.0 VDC
+  100% command → 10.0 VDC
+
+MOUNTING PROCEDURE:
+  1. Pipe the VG4000/VG5000 zone valve into the system first
+  2. Confirm actuator is in fully up position (factory ships this way; if pre-powered, return to fully up)
+  3. Place threaded coupler over valve stem and bonnet
+  4. Rotate actuator body to desired position
+  5. Hand tighten threaded coupler — DO NOT use a wrench (damages actuator)
+  6. Minimum 7/8 in. (22 mm) clearance above actuator required
+  7. Mount within 90° of vertical above valve body — beyond 90° allows moisture into actuator
+
+JUMPER SETTINGS (VA-7452-90011 only — access via 1/8 in. flathead screwdriver):
+  JP1: Anti-Sticking Cycle  — IN=On | OUT=Off (factory: Off)
+  JP2+3: Input Signal Range — 0-10V / 5-10V / 0-5V (factory: 0–10 VDC)
+  JP4: Valve Body Type      — IN=Three-Way | OUT=Two-Way (factory: Two-Way)
+  JP5: Action               — IN=Direct (DA) | OUT=Reverse (RA) (factory: DA)
+       DA: signal increase drives stem DOWN (closes N.O. valve)
+       RA: signal increase drives stem UP (opens N.O. valve)
+  JP6: Valve Normal Position — IN=PDTO (N.C.) | OUT=PDTC (N.O.) (factory: PDTC)
+       PDTC = Push Down to Close = Normally Open valve (spring opens on power loss)
+       PDTO = Push Down to Open  = Normally Closed valve (spring closes on power loss)
+
+CRITICAL FOR REHEAT VALVES — JP6 FAIL-SAFE:
+  Factory default JP6 = PDTC (Normally Open) → valve FAILS OPEN on power loss → room overheats.
+  For hot water reheat, change JP6 to PDTO (Normally Closed) → valve FAILS CLOSED → safe.
+  Leaking-by with valve commanded closed: check JP6 first — if PDTC with N.C. valve body,
+  the spring is fighting the actuator and valve will never fully seal.
+
+LED STATUS INDICATORS:
+  Solid on      → Power present, motor not running
+  Single flash  → Motor running (valve moving)
+  Double flash  → End-of-stroke confirmation or anti-sticking cycle
+  Off           → No power
+
+AUTO-COMMISSIONING (VA-7452-90011):
+  On first power application, actuator self-calibrates: drives stem DOWN for ~80 seconds,
+  then moves to commanded signal position. Normal behavior — do not interrupt.
+
+ANTI-STICKING CYCLE (JP1, optional):
+  When enabled: performs one complete stroke every 24 hours to clear debris from valve seat.
+  Actuator does not respond to DDC commands during this cycle.
+
+TECHNICAL SPECS:
+  Power:         24 VAC ±15%, 50/60 Hz, 2.7 VA, Class 2
+  Output force:  21.5 lb (96 N) minimum
+  Full stroke:   0.20 in. (5 mm), 65 seconds cycle time
+  Rated cycles:  100,000
+  Fluid temp:    35–203°F (2–95°C)
+  Ambient:       32–122°F (0–50°C), noncondensing
+  Cable:         22 AWG, 9.8 ft (3 m)
+  Certifications: UL 873, CSA C22.2 No. 139, CE Mark"""
+    ))
+
+    chunks.append(Chunk(
+        id="actuator-va7450-troubleshoot",
+        source="equipment_datasheet",
+        topic="JCI VA-7450 Actuator — Troubleshooting Leaking-By and Jumper Issues",
+        tags=["actuator", "VA-7450", "valve", "leaking", "fail-safe", "PDTC", "PDTO", "jumper"],
+        text="""JCI VA-7450 ACTUATOR — FIELD TROUBLESHOOTING
+
+VALVE LEAKING BY WITH ACTUATOR COMMANDED CLOSED:
+Three causes to check in order:
+
+1. JP6 JUMPER WRONG FOR VALVE BODY (most overlooked):
+   - Factory default JP6 = PDTC (N.O. = spring opens valve)
+   - If your valve BODY is N.C. (PDTO type) but jumper is PDTC: spring and actuator fight each other
+   - Actuator pushes down to OPEN an N.C. valve, but spring tries to CLOSE it → valve never fully seats
+   - FIX: Change JP6 to match the actual valve body type. For reheat: PDTO (N.C., fail closed)
+
+2. SIGNAL RANGE MISMATCH (JP2/JP3):
+   - If DDC outputs 2–10V range but actuator jumpered for 0–10V:
+     At DDC 0% command (2V), actuator sees ~20% position → never goes fully closed
+   - FIX: Match JP2/JP3 to DDC output range, OR reconfigure DDC output to 0–10V
+
+3. PHYSICAL VALVE SEAT ISSUE:
+   - Debris on valve plug or seat (new valve or post-flush condition)
+   - Anti-sticking cycle (JP1=ON) can help clear impurities
+   - If seat is scored or damaged: replace valve body, not just actuator
+
+VALVE NOT MOVING WITH CORRECT SIGNAL:
+  - Confirm 24 VAC between RED and BLUE wires
+  - Confirm signal voltage between WHITE and BLUE (0–10V at 0–100%)
+  - LED should single-flash while motor runs; if solid-on with correct signal → actuator failed
+  - Actuator does not respond during auto-commissioning, end-of-stroke, or anti-sticking cycle
+    (double-flash LED indicates these cycles)
+
+REPOSITIONING AFTER INSTALLATION:
+  - Loosen threaded coupler, rotate actuator, hand-tighten — do NOT power actuator while loose"""
+    ))
+
     return chunks
 
 

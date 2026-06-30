@@ -1,0 +1,197 @@
+{
+  "employee": "Zaal Panthaki",
+  "title": "BAS Technician",
+  "manager": "Wayne Cameron",
+  "reviews": [
+    {
+      "period": "2024 Annual",
+      "range": "01/01/2024 - 12/31/2024",
+      "rating": "Meets Expectations",
+      "manager_strengths": "Learning the mechanical side of the BAS world well. Key player in BAS efforts to assist bringing Gainesville online. Willingness to learn will be key in developing into a well rounded BAS Tech.",
+      "manager_opportunities": "2025: scheduled for cross-trade rotations (electricians, mechanics, boiler house, FLS). Small projects to manage. Prep for on-call rotation.",
+      "employee_strengths": "Adaptability and willingness to learn."
+    },
+    {
+      "period": "2025 Mid-Year",
+      "range": "01/01/2025 - 07/01/2025",
+      "goals": [
+        {
+          "name": "2025 Annual Calibrations",
+          "status": "In Progress",
+          "milestones": [
+            {"name": "Finish B19/B20 calibrations", "due": "08/31/2025", "status": "In Progress"},
+            {"name": "Complete B3/B6/B51 calibrations", "due": "10/31/2025", "status": "In Progress"},
+            {"name": "Campus-wide report & audit packet", "due": "12/15/2025", "status": "Not Started"}
+          ],
+          "employee_comment": "Finished full temp/RH/ΔP calibrations for B1, 12, 26, 29, 30, 31, 32, 50, 55, 56, 64, 74 by 06-30 (~6 weeks ahead of 2024 pace). B19 & B20 60% complete, on-track for 08-31. All calibration sheets uploaded to M-Drive <24h after completion. Need dedicated confined-space attendant (James) for Q3.",
+          "manager_comment": "Appreciates work on calibrations. Will rely on Zaal for proper calibration methods and professional documentation."
+        },
+        {
+          "name": "2025 Training & Development",
+          "status": "In Progress",
+          "milestones": [
+            {"name": "JCI Metasys certification", "due": "12/15/2025", "status": "Not Started"}
+          ],
+          "employee_comment": "Cross-trade shadowing 100% complete (Electricians, Mechanics, Boiler, FLS, HVAC).",
+          "manager_comment": "Completed cross-training with all trades and two-week night shift in boiler house. Working on making Zaal the point person for hot and cold calls."
+        },
+        {
+          "name": "AHU Documentation Refresh",
+          "due": "03/31/2026",
+          "status": "In Progress",
+          "milestones": [
+            {"name": "Complete 25% of AHUs", "due": "06/16/2025", "status": "Completed"},
+            {"name": "Complete 50% of AHUs", "due": "11/30/2025", "status": "In Progress"},
+            {"name": "Complete 100% of AHUs", "due": "03/31/2026", "status": "In Progress"}
+          ],
+          "employee_comment": "10 buildings' AHUs complete; new template cuts future write-time by ~50%.",
+          "manager_comment": "Important project — updated information will help new technicians and on-call folks determine how systems are designed at a glance."
+        },
+        {
+          "name": "Energy Savings 2025",
+          "due": "08/31/2025",
+          "status": "In Progress",
+          "employee_comment": "Implemented night-setback on 38 AHUs → ~$25k/yr (~140 MWh) savings; statics verified on all supply/exhaust dampers.",
+          "manager_comment": "Did a great job with the night setback audit."
+        },
+        {
+          "name": "Maintenance Capital Projects 2025",
+          "status": "In Progress",
+          "employee_comment": "",
+          "manager_comment": "Worked well with Gainesville on PIV communications. Appreciates the drive to learn and ability to teach."
+        },
+        {
+          "name": "Departmental Goals 2025",
+          "status": "In Progress",
+          "employee_comment": "SAFETY: 0 injuries/near-misses; reported 2 safety WOs. MAXIMO: 100% time & notes <24h; closed aged BAS WOs to lower backlog. MACHINE SPACES: Adopted 4 penthouse rooms; weekly checks."
+        }
+      ],
+      "employee_self_reflection": {
+        "big_wins": [
+          "Completed 11 building calibrations 6 weeks faster than last year",
+          "Gainesville Allentown alarm-rack rollout: coordinated 3-site training, solved networking issues <2hrs, brought 12 racks online",
+          "Night-setback schedules on 38 AHUs → ~140 MWh and ~$25k/yr savings",
+          "Closed 15 aged BAS WOs (-25% backlog), 100% tickets/notes within 24h",
+          "Zero injuries/near-misses; reported 2 safety hazards",
+          "AHU guides for 10 buildings; new template halves authoring time",
+          "Guided Gainesville and Sacramento PQC teams through alarm-rack operation"
+        ],
+        "how_i_grew": [
+          "Cross-trade rotations complete (electric, boiler, FLS, HVAC)",
+          "Self-study toward JCI Metasys Operator and Niagara 4 Advanced",
+          "Deeper BAS troubleshooting confidence via solo call-outs with root-cause write-ups"
+        ],
+        "challenges": [
+          "Confined-space calibrations: need dedicated attendant (James) in Q3",
+          "Earlier CCT access would accelerate programming proficiency"
+        ],
+        "next_half_targets": [
+          "100% calibration completion, deliver audit packet by 12-15",
+          "Finish AHU documentation for remaining 32 units",
+          "Enter full on-call rotation by July",
+          "Mentor incoming Tech I hires"
+        ]
+      },
+      "manager_response": "Agrees with big wins. On-call rotation target: next 3-6 months. Good job!"
+    },
+    {
+      "period": "2025 Annual",
+      "range": "01/01/2025 - 12/31/2025",
+      "rating": "Meets Expectations",
+      "manager_strengths": "Strong computer proficiency. Accurate environmental calibrations. Rapidly developing campus facility knowledge. Technical support for Gainesville PIV alarming systems.",
+      "manager_opportunities": "Continue strengthening core BAS technical skills — controls logic, system architecture, advanced troubleshooting. Build confidence resolving complex issues independently. Improve field diagnostic speed and accuracy. Expand BAS programming proficiency (CCT, JCI systems).",
+      "employee_strengths": "Increasing independence in WOs and troubleshooting. Brought 12 Gainesville Allentown racks online. Steady calibration and AHU doc progress. Consistent technical skill improvement.",
+      "goals_completed": [
+        "2025 Annual Calibrations (Meets Expectations)",
+        "2025 Training & Development — cross-trade + in-house Bob Metasys training (Meets Expectations)",
+        "Departmental Goals 2025 — no lost time, timely Maximo time/notes, good WO close discipline (Meets Expectations)",
+        "Energy Savings 2025 — audited all AHU schedules for energy savings (Meets Expectations)",
+        "Maintenance Capital Projects 2025 — assisted as needed (Meets Expectations)"
+      ],
+      "manager_overall_comment": "Improving troubleshooting skills, expanding technical knowledge, progressing toward independence. Receptive to feedback, actively working to absorb and apply shared knowledge.",
+      "development_items": [
+        {
+          "item": "Improve troubleshooting skills",
+          "detail": "Identify issues more quickly, work through problems independently, know when to escalate.",
+          "due": "12/31/2026",
+          "status": "In Progress"
+        },
+        {
+          "item": "On Call",
+          "detail": "Cross-trained with other trades, now working toward on-call rotation. Shadow on-call staff in preparation.",
+          "due": "05/01/2026",
+          "status": "In Progress"
+        }
+      ]
+    }
+  ],
+  "active_goals_2026": [
+    {
+      "name": "2026 Annual Calibrations",
+      "due": "12/31/2026",
+      "status": "In Progress"
+    },
+    {
+      "name": "2026 Training & Development",
+      "due": "12/31/2026",
+      "status": "In Progress",
+      "priorities": [
+        "Best practices training in expertise and related trades",
+        "JCI Training"
+      ]
+    },
+    {
+      "name": "Departmental Goals 2026",
+      "due": "12/31/2026",
+      "status": "In Progress",
+      "highlights": [
+        "Safety: zero injuries/near-misses",
+        "MaintainX: 100% time entry within 1 business day, meaningful log notes, proper WO status management",
+        "Machine spaces: housekeeping, ladder inventory, satellite stock organized",
+        "Communications: daily job progress briefing to supervisor"
+      ]
+    },
+    {
+      "name": "Gainesville Weekly Alarm Audits 2026",
+      "due": "12/31/2026",
+      "status": "In Progress",
+      "detail": "Spearhead weekly BAS alarm checks for Gainesville site. Log in weekly, sift through alarms, document follow-up items."
+    },
+    {
+      "name": "Maintenance Capital Projects 2026",
+      "due": "12/31/2026",
+      "status": "In Progress",
+      "projects": [
+        "B28 Air Compressor Upgrade",
+        "Bench Top Vacuum System Upgrade",
+        "B28 Autoclave #1 Replacement",
+        "B28 Wash Equipment Upgrade",
+        "JCI Upgrades",
+        "Valve P to E Upgrades",
+        "RAF VSD Upgrades",
+        "B57 RTU 1 Replacement",
+        "Scientific Water Systems",
+        "22 and 23 Demo",
+        "CRAC Unit Replacement",
+        "B53 Domestic Water Heater Replacement",
+        "Sub-Basement Flash Tank Replacement",
+        "Sub-Basement Sand Filter Replacement",
+        "B28 HVAC Replacement"
+      ]
+    },
+    {
+      "name": "AHU Documentation Refresh (carry-over)",
+      "due": "03/31/2026",
+      "status": "In Progress",
+      "note": "Target was 100% completion by 03/31/2026 — confirm final status"
+    }
+  ],
+  "h1_2026_achievements_so_far": [
+    "Built HVAC BAS Field Toolkit: CLI, diagnostics engine, psychrometrics module, RAG knowledge base, and automated field journal — tools now in use for daily troubleshooting",
+    "Resolved warm-room complaint at 53-1416 (WO #400074): replaced controller, corrected reheat wiring, replaced radiation valve",
+    "Diagnosed and repaired JCI VA-7452-90011 actuator at 53-1416 — traced erratic reverse-acting behavior to disconnected common wire",
+    "Gainesville weekly alarm audits: ongoing",
+    "2026 Annual Calibrations: in progress",
+    "Handled weekend AC scheduling request for B01e-3250 — identified schedule conflict with energy savings policy, escalated to supervisor before making changes"
+  ]
+}

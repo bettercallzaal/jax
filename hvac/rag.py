@@ -921,6 +921,89 @@ REPOSITIONING AFTER INSTALLATION:
   - Loosen threaded coupler, rotate actuator, hand-tighten — do NOT power actuator while loose"""
     ))
 
+    # --- JAX HR / performance ---
+    chunks.append(Chunk(
+        id="jax-zaal-performance-history",
+        source="jax_hr",
+        topic="Zaal Panthaki — Performance Review History and 2026 Goals",
+        tags=["hr", "performance", "goals", "achievements", "jax", "review", "calibrations", "BAS"],
+        text="""ZAAL PANTHAKI — BAS TECHNICIAN, PERFORMANCE SUMMARY
+
+2024 ANNUAL (Meets Expectations):
+Manager: Learning mechanical BAS well, key player in Gainesville BAS efforts, willingness to learn will make strong BAS Tech.
+
+2025 MID-YEAR KEY WINS:
+- 11 building calibrations completed 6 weeks ahead of 2024 pace
+- Gainesville Allentown alarm-rack rollout: coordinated 3-site training, solved networking <2hrs, brought 12 racks online
+- Night-setback schedules on 38 AHUs → ~140 MWh, ~$25k/yr savings
+- Closed 15 aged BAS WOs (-25% backlog), 100% tickets/notes within 24h
+- AHU guides for 10 buildings; new template cuts authoring time by ~50%
+- Zero injuries/near-misses; reported 2 safety hazards
+- Cross-trade rotations 100% complete (electric, boiler, FLS, HVAC)
+Manager: On-call rotation target in next 3-6 months.
+
+2025 ANNUAL (Meets Expectations):
+Completed: All calibrations, cross-trade + in-house Bob Metasys training, energy audit, departmental goals, capital project support.
+Strengths (Wayne): Computer proficiency, accurate calibrations, rapidly developing campus knowledge, Gainesville PIV support.
+Opportunities: Deeper controls logic, more independence on complex issues, faster field diagnosis, CCT/JCI programming depth.
+Development items: Improve troubleshooting independence (due 12/31/2026), On-call rotation (target 05/01/2026).
+
+2026 ACTIVE GOALS:
+1. 2026 Annual Calibrations (due 12/31/2026) — In Progress
+2. 2026 Training & Development — JCI training, best practices (due 12/31/2026)
+3. Departmental Goals 2026 — Safety/MaintainX/machine spaces/communications
+4. Gainesville Weekly Alarm Audits — ongoing weekly BAS alarm checks
+5. Maintenance Capital Projects 2026 — B28 Air Compressor, Autoclave, JCI Upgrades, Valve P-to-E, RAF VSDs, B57 RTU, CRAC replacement, B53 water heater, sub-basement flash tank/sand filter, B28 HVAC, 22&23 Demo, Scientific Water Systems
+6. AHU Documentation Refresh — target 100% by 03/31/2026 (confirm final status)
+
+H1 2026 ACHIEVEMENTS (Jan-Jun):
+- Built HVAC BAS Field Toolkit from scratch: CLI diagnostics engine, psychrometrics module, RAG knowledge base with Claude integration, automated field journal — actively used for daily troubleshooting
+- Resolved warm-room at 53-1416 (WO #400074): replaced controller, corrected reheat wiring, replaced radiation valve
+- Diagnosed VA-7452-90011 actuator at 53-1416: traced erratic behavior to disconnected common wire, restored system
+- Gainesville weekly alarm audits: ongoing
+- 2026 calibrations: in progress
+- Handled weekend AC scheduling request (B01e-3250): identified energy policy conflict, escalated properly before touching schedule"""
+    ))
+
+    chunks.append(Chunk(
+        id="jax-hr-midyear-2026",
+        source="jax_hr",
+        topic="JAX Mid-Year Review 2026 — Process, Timeline, and Requirements",
+        tags=["hr", "performance", "midyear", "workday", "jax", "review"],
+        text="""JAX MID-YEAR REVIEW 2026
+
+Launch: June 22, 2026. Deadline: August 3, 2026.
+
+PURPOSE: A forward-looking check-in — no ratings, not used directly in merit. Focuses on
+goal alignment, progress, and identifying roadblocks for the second half of the year.
+
+EMPLOYEE SECTIONS (completed in Workday):
+1. Goal progress
+2. Reflections and support needs
+
+TIMELINE:
+- By July 6: Employee self-evaluations encouraged
+- July: Managers complete evaluations and schedule discussions
+- By August 3: Manager/employee discussion complete, reviews submitted for acknowledgment
+
+ELIGIBILITY: All employees hired before March 1, 2026 eligible for the JAX-Wide Annual
+Performance Review. Faculty excluded; employees reporting to faculty are included.
+
+WORKDAY TIPS:
+- Goals must have a Due Date within the current calendar year to pull into the review
+- Goals can be updated at any time before and during the review period
+- Stakeholder feedback is optional — managers can request from colleagues who worked
+  closely with the employee
+
+STAKEHOLDER FEEDBACK:
+- Manager sees who submitted; employee does not have direct access
+- Optional for both managers and contributors
+- Use to supplement (not replace) manager's own observations
+
+KEY REMINDER: Reviews not completed by August 3 will be advanced to completion automatically.
+Not completing is strongly discouraged — it loses the alignment and development value."""
+    ))
+
     return chunks
 
 

@@ -3,77 +3,411 @@
     "server": "BHMETASYS01WP",
     "description": "Metasys AHU DAT and setpoint point references — campus-wide",
     "last_updated": "2026-07-01",
-    "reference_format": "server:network.object.attribute",
-    "attributes": {
-      "dat": "SA-TMP (Supply/Discharge Air Temperature)",
-      "sp": "DAT-SP (Discharge Air Temp Setpoint)"
-    }
+    "reference_format": "server:network.object.attribute"
   },
   "units": [
-    {"label": "B21 AHU-10",              "building": "B21", "ahu": "AHU-10",              "sp_low": 60.0, "sp_high": 60.0},
-    {"label": "B21 AHU-11",              "building": "B21", "ahu": "AHU-11",              "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B21 SAHU-1",              "building": "B21", "ahu": "SAHU-1",              "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B56 AHU-1",               "building": "B56", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B56 AHU-2",               "building": "B56", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B28 AHU-1",               "building": "B28", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B28 AHU-2",               "building": "B28", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B28 AHU-3",               "building": "B28", "ahu": "AHU-3",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B28 AHU-4",               "building": "B28", "ahu": "AHU-4",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B28 AHU-5",               "building": "B28", "ahu": "AHU-5",               "sp_low": 60.0, "sp_high": 60.0, "notes": "operator override active"},
-    {"label": "B28 AHU-6",               "building": "B28", "ahu": "AHU-6",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B28 AHU-7",               "building": "B28", "ahu": "AHU-7",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B28 AHU-8 Warehouse VHP", "building": "B28", "ahu": "AHU-8",               "sp_low": 55.0, "sp_high": 55.0, "notes": "Warehouse VHP"},
-    {"label": "B29 AHU-1",               "building": "B29", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B29 AHU-2",               "building": "B29", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B30 AHU-1",               "building": "B30", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B30 AHU-2",               "building": "B30", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B31 AHU-1",               "building": "B31", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B31 AHU-2",               "building": "B31", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B32 AHU-1",               "building": "B32", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B32 AHU-2",               "building": "B32", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B33 AHU-1",               "building": "B33", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B33 AHU-2",               "building": "B33", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B50 AHU-1",               "building": "B50", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B50 AHU-2",               "building": "B50", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B51 AHU-3A",              "building": "B51", "ahu": "AHU-3A",              "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B51 AHU-3B",              "building": "B51", "ahu": "AHU-3B",              "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B28 AHU-11",              "building": "B28", "ahu": "AHU-11",              "sp_low": 53.0, "sp_high": 53.0},
-    {"label": "B12 AHU-1",               "building": "B12", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B12 AHU-2",               "building": "B12", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B12 AHU-3",               "building": "B12", "ahu": "AHU-3",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B12 AHU-4",               "building": "B12", "ahu": "AHU-4",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B51 AHU-5",               "building": "B51", "ahu": "AHU-5",               "sp_low": 60.0, "sp_high": 60.0},
-    {"label": "B51 AHU-1 PIV",           "building": "B51", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0, "notes": "PIV unit"},
-    {"label": "B51 AHU-2 PIV",           "building": "B51", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0, "notes": "PIV unit"},
-    {"label": "B53 AHU-1A",              "building": "B53", "ahu": "AHU-1A",              "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B53 AHU-1B",              "building": "B53", "ahu": "AHU-1B",              "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B53 AHU-2",               "building": "B53", "ahu": "AHU-2",               "sp_low": 56.0, "sp_high": 56.0},
-    {"label": "B53 AHU-3",               "building": "B53", "ahu": "AHU-3",               "sp_low": null, "sp_high": null, "notes": "comm fault — N2 loss; SA-TMP and DAT-SP both unreadable as of 2026-07-01"},
-    {"label": "B55 AHU-1",               "building": "B55", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B55 AHU-2",               "building": "B55", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B55 AHU-3",               "building": "B55", "ahu": "AHU-3",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B55 AHU-4",               "building": "B55", "ahu": "AHU-4",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B64 AHU-1",               "building": "B64", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B64 AHU-2",               "building": "B64", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B74 AHU-1",               "building": "B74", "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B74 AHU-2",               "building": "B74", "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B74 AHU-3",               "building": "B74", "ahu": "AHU-3",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B74 AHU-4",               "building": "B74", "ahu": "AHU-4",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B12 AS-4",                "building": "B12", "ahu": "AS-4",                "sp_low": 58.0, "sp_high": 58.0, "notes": "air system unit"},
-    {"label": "B1 AHU-14",               "building": "B1",  "ahu": "AHU-14",              "sp_low": 60.0, "sp_high": 60.0},
-    {"label": "B20 AHU-1A",              "building": "B20", "ahu": "AHU-1A",              "sp_low": 53.0, "sp_high": 56.0, "notes": "cooling/heating band"},
-    {"label": "B20 AHU-1B",              "building": "B20", "ahu": "AHU-1B",              "sp_low": 53.0, "sp_high": 56.0, "notes": "cooling/heating band"},
-    {"label": "B6 AHU-1",                "building": "B6",  "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B3 AHU-1",                "building": "B3",  "ahu": "AHU-1",               "sp_low": 52.0, "sp_high": 54.0, "notes": "cooling/heating band"},
-    {"label": "B3 AHU-2",                "building": "B3",  "ahu": "AHU-2",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B1 AHU-16",               "building": "B1",  "ahu": "AHU-16",              "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B1 AHU-4",                "building": "B1",  "ahu": "AHU-4",               "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B1 AHU-3",                "building": "B1",  "ahu": "AHU-3",               "sp_low": 52.0, "sp_high": 61.0, "notes": "low/high band"},
-    {"label": "B1 AHU-1 Dirty",          "building": "B1",  "ahu": "AHU-1",               "sp_low": 55.0, "sp_high": 55.0, "notes": "dirty side unit"},
-    {"label": "B1 AHU123-2",             "building": "B1",  "ahu": "AHU123-2",            "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B1 AHU123-1",             "building": "B1",  "ahu": "AHU123-1",            "sp_low": 55.0, "sp_high": 55.0},
-    {"label": "B11 York Unit",            "building": "B11", "ahu": "York Unit",            "sp_low": null, "sp_high": null, "notes": "no DAT-SP in Metasys"},
-    {"label": "B6 AHU-6 Safety",          "building": "B6",  "ahu": "AHU-6",               "sp_low": null, "sp_high": null, "notes": "uses zone temp, not DAT SP — Safety unit"}
+    {
+      "label": "B21 AHU-10", "building": "B21", "ahu": "AHU-10",
+      "sp_low": 60.0, "sp_high": 60.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG21-NAE27/FC-A.27A046FEC AHU-10.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG21-NAE27/FC-A.27A046FEC AHU-10.Discharge Air Temp Setpoint"
+    },
+    {
+      "label": "B21 AHU-11", "building": "B21", "ahu": "AHU-11",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG21-NAE07/N2 Trunk B.07B071DX-BLDG21-AHU11-01.Discharge Air Temp",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG21-NAE07/N2 Trunk B.07B071DX-BLDG21-AHU11-01.Discharge Air Setpoint"
+    },
+    {
+      "label": "B21 SAHU-1", "building": "B21", "ahu": "SAHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG21-NAE27/FC-A.27A004FEC SAHU-1-21.Discharge Air Temp",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG21-NAE27/FC-A.27A004FEC SAHU-1-21.Discharge Air Temperature Setpoi"
+    },
+    {
+      "label": "B56 AHU-1", "building": "B56", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG26-SNE15/FC-A.15A004FEC AHU-1_EF-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG26-SNE15/FC-A.15A004FEC AHU-1_EF-1.Disch Temp Setpt"
+    },
+    {
+      "label": "B56 AHU-2", "building": "B56", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG26-SNE15/FC-A.15A005FEC AHU-2_EF-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG26-SNE15/FC-A.15A005FEC AHU-2_EF-2.Disch Temp Setpt"
+    },
+    {
+      "label": "B28 AHU-1", "building": "B28", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028013FAC B28 AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028013FAC B28 AHU-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B28 AHU-2", "building": "B28", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028014FAC B28 AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028014FAC B28 AHU-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B28 AHU-3", "building": "B28", "ahu": "AHU-3",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028015FAC B28 AHU-3.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028015FAC B28 AHU-3.Discharge Temp Stpt"
+    },
+    {
+      "label": "B28 AHU-4", "building": "B28", "ahu": "AHU-4",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028016FAC B28 AHU-4.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028016FAC B28 AHU-4.Discharge Temp Stpt"
+    },
+    {
+      "label": "B28 AHU-5", "building": "B28", "ahu": "AHU-5",
+      "sp_low": 60.0, "sp_high": 60.0,
+      "notes": "operator override active",
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028047CGE B28 AHU-5.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028047CGE B28 AHU-5.Discharge Temp Setpoint"
+    },
+    {
+      "label": "B28 AHU-6", "building": "B28", "ahu": "AHU-6",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028018FAC B28 AHU-6.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028018FAC B28 AHU-6.Discharge Temp Stpt"
+    },
+    {
+      "label": "B28 AHU-7", "building": "B28", "ahu": "AHU-7",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028019FAC B28 AHU-7.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028019FAC B28 AHU-7.Discharge Temp Stpt"
+    },
+    {
+      "label": "B28 AHU-8 Warehouse VHP", "building": "B28", "ahu": "AHU-8",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "notes": "Warehouse VHP",
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028046FAC AHU-8 Warehouse VHP.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG28-NAE28/BACnet IP.1028046FAC AHU-8 Warehouse VHP.Discharge Air Temperature Setpo"
+    },
+    {
+      "label": "B29 AHU-1", "building": "B29", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG29-SNE31/FCB.31A006FEC AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG29-SNE31/FCB.31A006FEC AHU-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B29 AHU-2", "building": "B29", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG29-SNE31/FCB.31A007FEC AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG29-SNE31/FCB.31A007FEC AHU-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B30 AHU-1", "building": "B30", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG30-SNE30/FCB.30A006FEC B30 AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG30-SNE30/FCB.30A006FEC B30 AHU-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B30 AHU-2", "building": "B30", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG30-SNE30/FCB.30A007FEC B30 AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG30-SNE30/FCB.30A007FEC B30 AHU-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B31 AHU-1", "building": "B31", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG31-SNE13/FCB.13A006FEC B31 AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG31-SNE13/FCB.13A006FEC B31 AHU-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B31 AHU-2", "building": "B31", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG31-SNE13/FCB.13A007FEC B31 AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG31-SNE13/FCB.13A007FEC B31 AHU-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B32 AHU-1", "building": "B32", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG32-SNE34/FCB.34A006FEC AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG32-SNE34/FCB.34A006FEC AHU-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B32 AHU-2", "building": "B32", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG32-SNE34/FCB.34A007FEC AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG32-SNE34/FCB.34A007FEC AHU-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B33 AHU-1", "building": "B33", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG33-SNE17/FC-A.17A007FEC B33 AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG33-SNE17/FC-A.17A007FEC B33 AHU-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B33 AHU-2", "building": "B33", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG33-SNE17/FC-A.17A008FEC B33 AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG33-SNE17/FC-A.17A008FEC B33 AHU-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B50 AHU-1", "building": "B50", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG50-NAE16/FC-A.16A030FEC B50 AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG50-NAE16/FC-A.16A030FEC B50 AHU-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B50 AHU-2", "building": "B50", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG50-NAE16/FC-A.16A029FEC B50 AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG50-NAE16/FC-A.16A029FEC B50 AHU-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B51 AHU-3A", "building": "B51", "ahu": "AHU-3A",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1051000FAC AHU-3A.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1051000FAC AHU-3A.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B51 AHU-3B", "building": "B51", "ahu": "AHU-3B",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1051001FAC AHU-3B.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1051001FAC AHU-3B.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B28 AHU-11", "building": "B28", "ahu": "AHU-11",
+      "sp_low": 53.0, "sp_high": 53.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B017FEC B28 AHU-11_EF-11_SF-11.Discharge Air Temperature AH11",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B017FEC B28 AHU-11_EF-11_SF-11.Discharge Temp Stpt"
+    },
+    {
+      "label": "B12 AHU-1", "building": "B12", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B025FAC B12 AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B025FAC B12 AHU-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B12 AHU-2", "building": "B12", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B026FAC B12 AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B026FAC B12 AHU-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B12 AHU-3", "building": "B12", "ahu": "AHU-3",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B007FEC SF-3_EF-3.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B007FEC SF-3_EF-3.Discharge Temp Stpt"
+    },
+    {
+      "label": "B12 AHU-4", "building": "B12", "ahu": "AHU-4",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B008FEC SF-4_EF-4.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B008FEC SF-4_EF-4.Discharge Temp Stpt"
+    },
+    {
+      "label": "B51 AHU-5", "building": "B51", "ahu": "AHU-5",
+      "sp_low": 60.0, "sp_high": 60.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1051033FAC AHU-5.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1051033FAC AHU-5.Discharge Temp Setpoint"
+    },
+    {
+      "label": "B51 AHU-1 PIV", "building": "B51", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "notes": "PIV unit",
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B015FEC B51 PIV SF-1_EF-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B015FEC B51 PIV SF-1_EF-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B51 AHU-2 PIV", "building": "B51", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "notes": "PIV unit",
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B016FEC B51 PIV SF-2_EF-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/FC-B.03B016FEC B51 PIV SF-2_EF-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B53 AHU-1A", "building": "B53", "ahu": "AHU-1A",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG53-SNE02/BACnet IP.1053001CGE AHU-1A.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG53-SNE02/BACnet IP.1053001CGE AHU-1A.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B53 AHU-1B", "building": "B53", "ahu": "AHU-1B",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG53-SNE02/BACnet IP.1053002CGE AHU-1B.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG53-SNE02/BACnet IP.1053002CGE AHU-1B.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B53 AHU-2", "building": "B53", "ahu": "AHU-2",
+      "sp_low": 56.0, "sp_high": 56.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG53-SNE02/N2-1.02A005DX.SA-TMP",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG53-SNE02/N2-1.02A005DX.DAT-SP"
+    },
+    {
+      "label": "B53 AHU-3", "building": "B53", "ahu": "AHU-3",
+      "sp_low": null, "sp_high": null,
+      "notes": "comm fault — N2 loss; SA-TMP and DAT-SP both unreadable as of 2026-07-01",
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG53-SNE02/N2-1.02A006DX.SA-TMP",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG53-SNE02/N2-1.02A006DX.DAT-SP"
+    },
+    {
+      "label": "B55 AHU-1", "building": "B55", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG55-SNE01/BACnet IP.1055000CGE AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG55-SNE01/BACnet IP.1055000CGE AHU-1.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B55 AHU-2", "building": "B55", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG55-SNE01/BACnet IP.1055001CGE AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG55-SNE01/BACnet IP.1055001CGE AHU-2.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B55 AHU-3", "building": "B55", "ahu": "AHU-3",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG55-SNE01/BACnet IP.1055059CGE AHU-3.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG55-SNE01/BACnet IP.1055059CGE AHU-3.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B55 AHU-4", "building": "B55", "ahu": "AHU-4",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG55-SNE01/BACnet IP.1055060CGE AHU-4.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG55-SNE01/BACnet IP.1055060CGE AHU-4.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B64 AHU-1", "building": "B64", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG64-NAE10/Field Bus1.10A005FEC AHU-1_EF-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG64-NAE10/Field Bus1.10A005FEC AHU-1_EF-1.Disch Temp Setpt"
+    },
+    {
+      "label": "B64 AHU-2", "building": "B64", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG64-NAE10/Field Bus1.10A006FEC AHU-2_EF-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG64-NAE10/Field Bus1.10A006FEC AHU-2_EF-2.Disch Temp Setpt"
+    },
+    {
+      "label": "B74 AHU-1", "building": "B74", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG74-SNE32/FC-A.32A007FEC SAHU-EAHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG74-SNE32/FC-A.32A007FEC SAHU-EAHU-1.Discharge Temp Stpt"
+    },
+    {
+      "label": "B74 AHU-2", "building": "B74", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG74-SNE32/FC-A.32A009FEC SAHU-EAHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG74-SNE32/FC-A.32A009FEC SAHU-EAHU-2.Discharge Temp Stpt"
+    },
+    {
+      "label": "B74 AHU-3", "building": "B74", "ahu": "AHU-3",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG74-SNE32/FC-A.32A047FEC SAHU-3.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG74-SNE32/FC-A.32A047FEC SAHU-3.Discharge Temp Stpt"
+    },
+    {
+      "label": "B74 AHU-4", "building": "B74", "ahu": "AHU-4",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG74-SNE32/FC-A.32A059FEC SAHU-4.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG74-SNE32/FC-A.32A059FEC SAHU-4.Discharge Temp Stpt"
+    },
+    {
+      "label": "B12 AS-4", "building": "B12", "ahu": "AS-4",
+      "sp_low": 58.0, "sp_high": 58.0,
+      "notes": "air system unit; controller lives under JL-BLDG51-SNE03",
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1012034FAC AS-4.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1012034FAC AS-4.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B1 AHU-14", "building": "B1", "ahu": "AHU-14",
+      "sp_low": 60.0, "sp_high": 60.0,
+      "notes": "controller lives under JL-BLDG57-SNE04",
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG57-SNE04/FC-B.04B016FEC AHU14.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG57-SNE04/FC-B.04B016FEC AHU14.Discharge Air Temp Setpoint"
+    },
+    {
+      "label": "B20 AHU-1B", "building": "B20", "ahu": "AHU-1B",
+      "sp_low": 53.0, "sp_high": 56.0,
+      "notes": "cooling/heating band; two separate SP points",
+      "dat_ref":      "BHMETASYS01WP:jl-bldg20-nae19/FC-B.19B034FEC AHU-1B Temperature.Discharge Air Temperature",
+      "sp_heat_ref":  "BHMETASYS01WP:jl-bldg20-nae19/FC-B.19B034FEC AHU-1B Temperature.Discharge Heating Setpoint",
+      "sp_cool_ref":  "BHMETASYS01WP:jl-bldg20-nae19/FC-B.19B034FEC AHU-1B Temperature.Discharge Cooling Setpoint"
+    },
+    {
+      "label": "B20 AHU-1A", "building": "B20", "ahu": "AHU-1A",
+      "sp_low": 53.0, "sp_high": 56.0,
+      "notes": "cooling/heating band; two separate SP points",
+      "dat_ref":      "BHMETASYS01WP:jl-bldg20-nae19/FC-B.19B033FEC AHU-1A Temperature.Discharge Air Temperature",
+      "sp_heat_ref":  "BHMETASYS01WP:jl-bldg20-nae19/FC-B.19B033FEC AHU-1A Temperature.Discharge Heating Setpoint",
+      "sp_cool_ref":  "BHMETASYS01WP:jl-bldg20-nae19/FC-B.19B033FEC AHU-1A Temperature.Discharge Cooling Setpoint"
+    },
+    {
+      "label": "B6 AHU-1", "building": "B6", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG06-SNE11/BACnet IP.1006000FAC AHU-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG06-SNE11/BACnet IP.1006000FAC AHU-1.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B3 AHU-1", "building": "B3", "ahu": "AHU-1",
+      "sp_low": 52.0, "sp_high": 54.0,
+      "notes": "cooling/heating band; two separate SP points",
+      "dat_ref":      "BHMETASYS01WP:JL-BLDG03-NCE25/FCB.25A005FEC AHU-1.Discharge Air Temperature",
+      "sp_heat_ref":  "BHMETASYS01WP:JL-BLDG03-NCE25/FCB.25A005FEC AHU-1.Discharge Air Temperature Heati",
+      "sp_cool_ref":  "BHMETASYS01WP:JL-BLDG03-NCE25/FCB.25A005FEC AHU-1.Discharge Air Temperature Cooli"
+    },
+    {
+      "label": "B3 AHU-2", "building": "B3", "ahu": "AHU-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG03-NCE25/BACnet IP.1003001CGE AHU-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG03-NCE25/BACnet IP.1003001CGE AHU-2.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B1 AHU-16", "building": "B1", "ahu": "AHU-16",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1020011FAC AHU-16.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1020011FAC AHU-16.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B1 AHU-4", "building": "B1", "ahu": "AHU-4",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001051CGE AHU-4.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001051CGE AHU-4.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B1 AHU-3", "building": "B1", "ahu": "AHU-3",
+      "sp_low": 52.0, "sp_high": 61.0,
+      "notes": "low/high band; DATLO-SP and DATHI-SP separate points",
+      "dat_ref":      "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001008FAC AHU-3.Discharge Air Temperature",
+      "sp_lo_ref":    "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001008FAC AHU-3.DATLO-SP",
+      "sp_hi_ref":    "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001008FAC AHU-3.DATHI-SP"
+    },
+    {
+      "label": "B1 AHU-1 Dirty", "building": "B1", "ahu": "AHU-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "notes": "dirty-side unit",
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001005FAC AHU-1 Dirty Area.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001005FAC AHU-1 Dirty Area.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B1 AHU123-2", "building": "B1", "ahu": "AHU123-2",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001041FAC AHU123-2.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001041FAC AHU123-2.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B1 AHU123-1", "building": "B1", "ahu": "AHU123-1",
+      "sp_low": 55.0, "sp_high": 55.0,
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001040FAC AHU123-1.Discharge Air Temperature",
+      "sp_ref":   "BHMETASYS01WP:JL-BLDG01-SNE14/BACnet IP.1001040FAC AHU123-1.Discharge Temperature Setpoint"
+    },
+    {
+      "label": "B11 York Unit", "building": "B11", "ahu": "York Unit",
+      "sp_low": null, "sp_high": null,
+      "notes": "no DAT-SP in Metasys",
+      "dat_ref":  "BHMETASYS01WP:JL-BLDG11-SNE33/FCB.Local Application.York Unit Discharge Air Temp"
+    },
+    {
+      "label": "B6 AHU-6 Safety", "building": "B6", "ahu": "AHU-6",
+      "sp_low": null, "sp_high": null,
+      "notes": "uses zone temp not DAT SP; zone temp SP=68°F",
+      "dat_ref":       "BHMETASYS01WP:JL-BLDG06-SNE11/BACnet IP.1006002FAC B6 AHU-6 Safety.Discharge Air Temperature",
+      "zone_temp_ref": "BHMETASYS01WP:JL-BLDG06-SNE11/BACnet IP.1006002FAC B6 AHU-6 Safety.Zone Temperature",
+      "zone_sp_ref":   "BHMETASYS01WP:JL-BLDG06-SNE11/BACnet IP.1006002FAC B6 AHU-6 Safety.Zone Temperature Setpoint"
+    }
   ],
   "thresholds": {
     "critical_above_sp_f": 10.0,

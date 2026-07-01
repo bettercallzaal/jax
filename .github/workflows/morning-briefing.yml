@@ -1,0 +1,42 @@
+name: HVAC Morning Briefing
+
+on:
+  schedule:
+    # 7:00 AM EST (UTC-5) = 12:00 UTC — adjust to 11:00 UTC during EDT (summer)
+    # Using 12:00 UTC year-round; accepts 8 AM arrival during EDT months
+    - cron: '0 12 * * 1-5'
+  workflow_dispatch:  # manual trigger for testing from Actions tab
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        # Install only briefing deps (no heavy sentence-transformers needed)
+        run: pip install anthropic tzdata
+
+      - name: Run morning briefing
+        env:
+          MAINTAINX_API_TOKEN: ${{ secrets.MAINTAINX_API_TOKEN }}
+          METASYS_HOST: ${{ secrets.METASYS_HOST }}
+          METASYS_USERNAME: ${{ secrets.METASYS_USERNAME }}
+          METASYS_PASSWORD: ${{ secrets.METASYS_PASSWORD }}
+          METASYS_ALARM_PRIORITY_MAX: ${{ vars.METASYS_ALARM_PRIORITY_MAX || '100' }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ vars.SMTP_PORT || '587' }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ vars.SMTP_FROM }}
+          SMTP_TO: ${{ vars.SMTP_TO }}
+          SMTP_USE_TLS: 'true'
+          BRIEFING_TIMEZONE: America/New_York
+        run: python -m hvac.cli brief

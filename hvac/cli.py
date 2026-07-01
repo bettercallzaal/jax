@@ -15,6 +15,7 @@ Commands:
 import argparse
 import sys
 from . import diagnostics, journal, psychrometrics, analysis, rag
+from .briefing import run_briefing
 
 
 def cmd_diagnose_reheat(args):
@@ -124,6 +125,13 @@ def cmd_ask(args):
         print(f"\n{answer}\n")
 
 
+def cmd_brief(args):
+    sys.exit(run_briefing(
+        send_email=not args.no_email,
+        dry_run=args.dry_run,
+    ))
+
+
 def cmd_psych(args):
     psychrometrics.print_state_point(
         label=f"{args.zone or 'State Point'}",
@@ -192,6 +200,12 @@ def main():
     p.add_argument("--show-sources", action="store_true", help="Print retrieved knowledge chunks")
     p.add_argument("--stream", action="store_true", help="Stream the response token by token")
     p.set_defaults(func=cmd_ask)
+
+    # --- brief ---
+    p = sub.add_parser("brief", help="Send morning HVAC briefing email")
+    p.add_argument("--dry-run", action="store_true", help="Print to stdout, do not send email")
+    p.add_argument("--no-email", action="store_true", help="Assemble briefing but skip sending")
+    p.set_defaults(func=cmd_brief)
 
     # --- psych ---
     p = sub.add_parser("psych", help="Psychrometric state point")

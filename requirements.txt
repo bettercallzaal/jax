@@ -7,3 +7,7 @@
 anthropic>=0.112.0           # Claude API client with prompt caching
 sentence-transformers>=2.0   # Dense embeddings (all-MiniLM-L6-v2); falls back to TF-IDF if absent
 numpy>=1.24                  # Required by sentence-transformers
+
+# Morning briefing (hvac/briefing/) — stdlib only: urllib, smtplib, email, zoneinfo
+# tzdata required on Linux for zoneinfo timezone support
+tzdata>=2024.1

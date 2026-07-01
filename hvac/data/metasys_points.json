@@ -308,7 +308,8 @@
     {
       "label": "B12 AS-4", "building": "B12", "ahu": "AS-4",
       "sp_low": 58.0, "sp_high": 58.0,
-      "notes": "air system unit; controller lives under JL-BLDG51-SNE03",
+      "active": false,
+      "notes": "DECOMMISSIONED — unit disabled, readings not meaningful; controller lives under JL-BLDG51-SNE03",
       "dat_ref":  "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1012034FAC AS-4.Discharge Air Temperature",
       "sp_ref":   "BHMETASYS01WP:JL-BLDG51-SNE03/BACnet IP.1012034FAC AS-4.Discharge Temperature Setpoint"
     },

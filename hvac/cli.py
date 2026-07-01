@@ -125,6 +125,30 @@ def cmd_ask(args):
         print(f"\n{answer}\n")
 
 
+def cmd_dat_review(args):
+    import json
+    from .briefing.dat_review import review_from_readings, format_report_lines
+
+    with open(args.file) as f:
+        raw = json.load(f)
+
+    # Accept [{label, dat, sp_low, sp_high, flag}, ...] or the metasys_points format
+    readings = []
+    for row in raw:
+        readings.append((
+            row["label"],
+            row.get("dat"),
+            row.get("sp_low"),
+            row.get("sp_high"),
+            row.get("flag"),
+        ))
+
+    from datetime import date
+    report = review_from_readings(readings, date=str(date.today()))
+    for line in format_report_lines(report):
+        print(line)
+
+
 def cmd_brief(args):
     sys.exit(run_briefing(
         send_email=not args.no_email,
@@ -200,6 +224,11 @@ def main():
     p.add_argument("--show-sources", action="store_true", help="Print retrieved knowledge chunks")
     p.add_argument("--stream", action="store_true", help="Stream the response token by token")
     p.set_defaults(func=cmd_ask)
+
+    # --- dat-review ---
+    p = sub.add_parser("dat-review", help="Parse a DAT readings JSON file and flag outliers")
+    p.add_argument("--file", required=True, help="JSON file with [{label, dat, sp_low, sp_high, flag}, ...]")
+    p.set_defaults(func=cmd_dat_review)
 
     # --- brief ---
     p = sub.add_parser("brief", help="Send morning HVAC briefing email")

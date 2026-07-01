@@ -14,6 +14,7 @@ except ImportError:
 from .maintainx import WorkOrder
 from .metasys_api import MetasysAlarm
 from .journal_summary import JournalSummary
+from .dat_review import DATReport, HIGH_THRESH, CRITICAL_THRESH, LOW_THRESH
 
 
 PRIORITY_LABELS = {
@@ -133,6 +134,32 @@ def _format_journal_lines(summary: JournalSummary, open_items: list[dict]) -> li
     return lines
 
 
+def _format_dat_lines(report: DATReport) -> list[str]:
+    lines = []
+    if report.critical:
+        lines.append(f"  CRITICAL — >{CRITICAL_THRESH}°F above SP ({len(report.critical)})")
+        for u in report.critical:
+            lines.append(f"    {u.label:<30} {u.dat}°F  SP={u.sp_high}°F  Δ=+{u.delta:.1f}°F")
+    if report.high:
+        lines.append(f"  HIGH — {HIGH_THRESH}-{CRITICAL_THRESH}°F above SP ({len(report.high)})")
+        for u in report.high:
+            lines.append(f"    {u.label:<30} {u.dat}°F  SP={u.sp_high}°F  Δ=+{u.delta:.1f}°F")
+    if report.low:
+        lines.append(f"  LOW — >{LOW_THRESH}°F below SP ({len(report.low)})")
+        for u in report.low:
+            lines.append(f"    {u.label:<30} {u.dat}°F  SP={u.sp_low}°F  Δ={u.delta:.1f}°F")
+    if report.faults:
+        lines.append(f"  COMM FAULTS ({len(report.faults)})")
+        for u in report.faults:
+            lines.append(f"    {u.label}")
+    if report.overrides:
+        lines.append(f"  OPERATOR OVERRIDES ({len(report.overrides)})")
+        for u in report.overrides:
+            lines.append(f"    {u.label}: {u.dat}°F  {u.notes}")
+    lines.append(f"  OK: {report.ok_count} / {report.total} units within ±{LOW_THRESH}°F of setpoint")
+    return lines
+
+
 def assemble_briefing(
     work_orders: Optional[list[WorkOrder]],
     maintainx_error: Optional[str],
@@ -141,6 +168,7 @@ def assemble_briefing(
     journal_summary: JournalSummary,
     open_items: list[dict],
     tz_name: str = "America/New_York",
+    dat_report: Optional[DATReport] = None,
 ) -> BriefingReport:
     now = _tz_now(tz_name)
     date_label = now.strftime("%A, %B %-d, %Y")
@@ -207,6 +235,25 @@ def assemble_briefing(
         )
     sections.append(met_section)
 
+    # DAT review section
+    if dat_report is not None:
+        dat_critical = bool(dat_report.critical)
+        dat_section = BriefingSection(
+            title=f"DAT REVIEW — {dat_report.total} AHUs  ({len(dat_report.critical)} critical, {len(dat_report.high)} high, {len(dat_report.low)} low, {len(dat_report.faults)} fault)",
+            available=True,
+            error=None,
+            lines=_format_dat_lines(dat_report),
+        )
+    else:
+        dat_critical = False
+        dat_section = BriefingSection(
+            title="DAT REVIEW",
+            available=False,
+            error="Manual review — import from Metasys and run hvac dat-review to populate",
+            lines=["  Skipped: DAT data not available. Pull from Metasys and pass via dat_report."],
+        )
+    sections.append(dat_section)
+
     # Determine if action is needed
     has_critical = False
     if work_orders:
@@ -215,6 +262,7 @@ def assemble_briefing(
         has_critical = has_critical or any(a.priority <= METASYS_CRITICAL_THRESHOLD for a in alarms)
     if journal_summary.pending_actions:
         has_critical = True
+    has_critical = has_critical or dat_critical
 
     return BriefingReport(
         generated_at=generated_at,

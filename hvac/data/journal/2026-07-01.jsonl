@@ -1,0 +1,1 @@
+{"ts": "2026-07-01T12:23:38.901395+00:00", "kind": "observation", "zone": "Building 62 \u2014 AHU", "description": "Received alarm for B62 AHU. Fred out today \u2014 delegated to Cory to investigate. Will follow up via MaintainX/Metasys if no update received.", "readings": {}, "tags": ["alarm", "AHU", "B62", "delegated", "followup"]}

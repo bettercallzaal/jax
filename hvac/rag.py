@@ -1232,10 +1232,27 @@ DOCUMENTED SOURCES:
 - B55 mouse-room reheats: from Bldg 1 Unit 1 Rm 1275 via '1055005CGE Heat Exchanger'.
 
 DIAGNOSTIC ORDER for a starved coil (valve 100%, wide delta-T, DAT high):
-1. Metasys: the building's CHW system object — both pumps running? loop dP? speed?
-2. Pump room: suction strainers at the pumps (debris collects there first).
-3. Unit: Y-strainer at the AHU coil.
-One pump-room fix can un-starve every AHU on that system.
+1. Check CHW SUPPLY TEMP at the affected AHU first — this splits the diagnosis:
+   - Supply temp near design (42-46F) AND neighboring AHUs on the same system also
+     show good delta-T → PLANT IS FINE. Problem is local to this one unit (its own
+     strainer, isolation valve, or air lock). Do not chase the pump room.
+   - Supply temp elevated across MULTIPLE units on the same system → plant-side
+     (pumps, chiller staging). THEN check pump room / suction strainers.
+2. If local: pump room / suction strainers only if supply temp itself is bad.
+3. Unit: Y-strainer at the AHU coil, isolation valves, air lock in the coil.
+One pump-room fix can un-starve every AHU on that system — but only diagnose it
+there if the supply-temp check actually points that way. Don't assume it.
+
+RE-CHECK AFTER A FIX — DON'T ASSUME IT WORKED:
+JAX 2026-07-02, B55 AHU-3: strainer was cleaned, but re-measuring after showed
+delta-T got WORSE (19.8F -> 24.1F) while supply temp stayed good (46.9F) and
+neighboring AHU-1/AHU-4 on the same system both showed normal delta-T. This
+proved the plant was fine and the restriction was still local to AHU-3 -
+most likely an isolation valve not fully reopened after the strainer work,
+an air lock introduced by opening the strainer, or the strainer re-fouling
+fast if debris is still actively shedding into that branch. ALWAYS re-pull
+CHW supply/return after a strainer or valve fix — a "did I fix it" check
+that only looks at DAT can miss a worse underlying flow problem for hours.
 
 FACE & BYPASS VALVES — NOT A FAULT:
 On F&B control (B53 AHU-1A/1B; B55 AHU units with reclaim), the sequence COMMANDS the

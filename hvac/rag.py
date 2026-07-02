@@ -1137,6 +1137,22 @@ FIX (temporary override):
 2. Operator override: Chilled Water System Enable → Enable
 Monitor: unit should start cooling within 5-10 minutes.
 
+CAVEAT — CHECK BEFORE APPLYING (learned 2026-07-02, JAX): this override only helps
+units where CHW System Enable is ACTUALLY the blocker (valve near 0%, no flow). It
+does NOT help units whose cooling valve is ALREADY pinned near 100% before you touch
+anything — those units are calling for max cooling and not getting it, which is a
+PLANT CAPACITY problem (CHW supply temp or flow at the source), not a local lockout.
+Applying the override to an already-maxed unit changes nothing and wastes time.
+Before overriding, pull the unit's Cooling Valve Command from the most recent valve
+sweep: if it was already >=90% before you started, skip the override and check CHW
+supply temperature at the plant source instead (see dat-review-campus-valve-sweep and
+jax-chw-topology-federated chunks). Reserve the OAT-override fix for units with a
+SUDDEN overnight/same-day spike (sensor-fault signature), not chronically high units
+with maxed valves (capacity-ceiling signature).
+JAX 2026-07-02 example: B28 AHU-3/4/7/11 all had valves already pinned near 100% in
+the prior sweep; the override applied to sibling AHU-6 did not reproducibly fix them.
+CWP-15 (bad impeller, WO #399591) is the standing plant-capacity suspect.
+
 FIX (permanent):
 - Replace or recalibrate the local OAT sensor
 - Or remap the cooling lockout logic to reference the network OAT point instead

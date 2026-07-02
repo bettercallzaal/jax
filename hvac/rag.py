@@ -1004,6 +1004,140 @@ KEY REMINDER: Reviews not completed by August 3 will be advanced to completion a
 Not completing is strongly discouraged — it loses the alignment and development value."""
     ))
 
+    # --- DAT Review: systematic diagnostic approach ---
+    chunks.append(Chunk(
+        id="dat-review-systematic",
+        source="field_practice",
+        topic="DAT Review — Systematic Approach: Building-Level Before Unit-Level",
+        tags=["dat", "discharge-air", "cooling", "diagnostic", "chilled-water", "oat", "lockout"],
+        text="""DAT REVIEW — SYSTEMATIC APPROACH (learned 2026-07-01, JAX campus)
+
+When multiple AHUs in the same building are all running high DAT simultaneously,
+do NOT treat each unit as an isolated fault. Look at the building/plant level first.
+
+STEP 1 — Pattern Recognition
+- If 3+ AHUs in same building are all high: systemic cause (CHW plant, OAT sensor, lockout)
+- If one unit is high while neighbors are fine: unit-level fault
+- If units across multiple buildings are all high: campus chilled water plant issue
+
+STEP 2 — Check Cooling Lockout Status on ONE Representative Unit
+Open Focus view. Look for:
+  - Cooling Lockout Status: Available = cooling should be working, check valve/capacity
+  - Cooling Lockout Status: Not Available = cooling is locked out — find why
+  - Chilled Water System Enable: Disable = controller has shut off CHW — check OAT sensor
+
+STEP 3 — OAT Sensor Check (most common cause of multi-unit lockout)
+Compare:
+  - Outside Air Temp (Local) — the controller's own sensor
+  - Outside Air Temp (Network) — value pushed from supervisory/campus sensor
+If Local reads 10°F+ colder than Network on a hot day: sensor is bad or shorted.
+If Local OAT < Cooling Lockout Setpoint → cooling locks out → all CHW off.
+Fix: override Local OAT to match Network, then override CHW System Enable to Enable.
+Long-term fix: replace/repair local OAT sensor or remap controller to use network OAT.
+
+STEP 4 — CHW Availability Check
+If cooling is unlocked but DAT is still high, check CHW:
+  - CHW Supply Temp: should be 42-46°F in summer. If warm, plant issue.
+  - CHW Return Temp: if supply-return delta T is near zero, no flow through coil.
+  - CHW Pump Status: should be On.
+
+STEP 5 — Capacity vs Fault
+If cooling is unlocked, CHW is flowing (good delta T), but DAT still can't hit setpoint:
+  - Could be capacity-limited on extreme heat days (normal — monitor, don't override)
+  - Could be dirty filters (check dP across pre and final filters — high dP = restricted airflow)
+  - Could be heat recovery not working (HRV leaving air should be cooler than OAT in summer)
+  - Could be HW valve stuck open fighting the cooling coil (see below)
+
+JAX 2026-07-01 Example: B28 had 6 AHUs all high. Root cause was NAE28 local OAT sensor
+stuck at ~50°F. Cooling lockout SP was 52°F. All units locked out CHW simultaneously.
+Fix: per-unit OAT override + CHW System Enable override."""
+    ))
+
+    chunks.append(Chunk(
+        id="dat-review-cooling-valve-100",
+        source="field_practice",
+        topic="DAT Review — Cooling Valve at 100%: What It Means and What to Do",
+        tags=["dat", "cooling-valve", "chilled-water", "diagnostic", "face-bypass", "hw-valve"],
+        text="""DAT HIGH + COOLING VALVE AT 100%: DIAGNOSTIC GUIDE (learned 2026-07-01)
+
+When you see DAT above setpoint AND Cooling Valve Command = 100%, this is a
+REQUEST for full cooling. The question is: is the coil delivering it?
+
+KEY CHECK: CHW Supply and Return Temperatures
+  - CHW Supply 42-46°F + Return 10-20°F warmer = coil IS flowing, doing real work
+  - CHW Supply and Return nearly equal = no flow (valve stuck closed, pump off, or CHW unavailable)
+  - CHW Supply warm (>55°F) = plant not delivering cold water
+
+IMPORTANT — Position Feedback May Not Be Wired:
+Many older JCI/Metasys controllers show Cooling Valve Position = 0% even when
+the valve is actually open. Position feedback sensors are often not connected.
+DO NOT diagnose a stuck valve from position feedback alone. Use CHW delta-T instead.
+
+IF CHW DELTA-T IS GOOD (coil is flowing) but DAT still high:
+1. Check Face & Bypass Damper — if in bypass mode, air is going AROUND the coil
+   (100% = Full Coil, 0% = Full Bypass on most JCI sequences — verify description field)
+2. Check HW valves — feel supply/return HW pipes physically.
+   If both warm/hot while Heating Seq = Off: HW valve stuck open, fighting cooling coil.
+   Fix: isolate HW supply to that coil, or command valve closed and verify physically.
+3. Check filter dP — high differential pressure restricts airflow, reduces coil capacity.
+   Pre-filter >1.0" wc or final filter >1.5" wc: filters need changing.
+4. Capacity limit on extreme heat days — with 85°F+ OAT at 100% OA, some units
+   physically cannot reach 55°F setpoint. Monitor; adjust SA-SP reset if possible.
+
+IF CHW DELTA-T IS NEAR ZERO (no flow) with valve at 100%:
+1. Check CHW pump status — if Off, find why (lockout, fault, interlock)
+2. Check Chilled Water System Enable — if Disable, find the lockout reason (OAT, schedule)
+3. Check CHW supply pressure at the building
+
+PATTERN NOTE: On a hot summer afternoon, seeing 100% cooling valve + high DAT across
+multiple units is a trigger to look at the PLANT level before diagnosing individual units."""
+    ))
+
+    chunks.append(Chunk(
+        id="dat-review-oat-lockout-pattern",
+        source="field_practice",
+        topic="OAT Sensor Lockout — Campus-Wide Pattern (JAX 2026)",
+        tags=["oat", "cooling-lockout", "chilled-water", "metasys", "nae", "sne", "sensor-fault"],
+        text="""OAT SENSOR COOLING LOCKOUT — PATTERN DOCUMENTED AT JAX (2026-07-01)
+
+WHAT HAPPENS:
+Each NAE/SNE network engine has a local Outside Air Temperature input (physical sensor
+wired to the controller). It also receives a network OAT value from the supervisory layer.
+Many sequences use the LOCAL OAT for cooling lockout decisions.
+
+If the local OAT sensor fails low (reads 50°F on a 85°F day), and the cooling lockout
+setpoint is set to 52°F, the controller concludes it's too cold for cooling and sets:
+  Chilled Water System Enable = Disable
+  Chilled Water Pump Command = Off
+  Cooling Valve = 0% open
+Result: all AHUs on that controller run with no cooling.
+
+HOW TO IDENTIFY:
+1. Multiple AHUs on same network engine all running high DAT
+2. Focus view shows: OAT Local <<< OAT Network
+3. Cooling Lockout Status = Not Available
+4. CHW System Enable = Disable (as a CS Input Enum — pushed from supervisory)
+5. CHW Pump Status = Off
+
+AFFECTED ENGINES AT JAX (documented):
+- JL-BLDG28-NAE28: confirmed 2026-07-01 (B28 AHU-6 root cause)
+- JL-BLDG01-SNE14: suspected same pattern (B1 AHU-16, AHU-1 Dirty, AHU-3 all high same afternoon)
+- JL-BLDG06-SNE11: suspected (B6 AHU-1 high same afternoon)
+
+FIX (temporary override):
+1. Operator override: Outside Air Temperature (Local) → set to match Network OAT value
+2. Operator override: Chilled Water System Enable → Enable
+Monitor: unit should start cooling within 5-10 minutes.
+
+FIX (permanent):
+- Replace or recalibrate the local OAT sensor
+- Or remap the cooling lockout logic to reference the network OAT point instead
+- Document the override in Metasys with an expiration date/note
+
+COOLING LOCKOUT SETPOINTS AT JAX (typical): 50-52°F — meaning if OAT reads below
+this, cooling is disabled. Normal summer OAT at JAX is 75-90°F."""
+    ))
+
     return chunks
 
 

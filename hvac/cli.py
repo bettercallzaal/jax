@@ -125,6 +125,20 @@ def cmd_ask(args):
         print(f"\n{answer}\n")
 
 
+def cmd_agent(args):
+    import os
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        print("Error: ANTHROPIC_API_KEY environment variable not set.")
+        print("Set it with: export ANTHROPIC_API_KEY=sk-ant-...")
+        sys.exit(1)
+    from . import agent
+    if args.interactive or not args.question:
+        agent.interactive()
+    else:
+        answer, _ = agent.run_agent(args.question, verbose=not args.quiet)
+        print(f"\n{answer}")
+
+
 def cmd_dat_review(args):
     import json
     from .briefing.dat_review import review_from_readings, format_report_lines
@@ -224,6 +238,13 @@ def main():
     p.add_argument("--show-sources", action="store_true", help="Print retrieved knowledge chunks")
     p.add_argument("--stream", action="store_true", help="Stream the response token by token")
     p.set_defaults(func=cmd_ask)
+
+    # --- agent ---
+    p = sub.add_parser("agent", help="Tool-using field agent (RAG + point map + journal + WOs)")
+    p.add_argument("question", nargs="?", help="Question; omit for interactive mode")
+    p.add_argument("-i", "--interactive", action="store_true", help="Interactive session")
+    p.add_argument("--quiet", action="store_true", help="Hide tool-call trace")
+    p.set_defaults(func=cmd_agent)
 
     # --- dat-review ---
     p = sub.add_parser("dat-review", help="Parse a DAT readings JSON file and flag outliers")

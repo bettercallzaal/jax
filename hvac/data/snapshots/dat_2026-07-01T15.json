@@ -1,0 +1,478 @@
+{
+ "taken_at": "2026-07-01T15:00",
+ "source": "Metasys export paste (PM review)",
+ "notes": "B12 AS-4 decommissioned. B53 AHU-3 comm fault = failed VFD (WO 400131, fixed).",
+ "units": [
+  {
+   "label": "B21 AHU-10",
+   "dat": 59.4,
+   "sp_low": 60.0,
+   "sp_high": 60.0,
+   "flag": null
+  },
+  {
+   "label": "B21 AHU-11",
+   "dat": 56.6,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B21 SAHU-1",
+   "dat": 55.0,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B56 AHU-1",
+   "dat": 52.1,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 51.3
+  },
+  {
+   "label": "B56 AHU-2",
+   "dat": 52.6,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 51.9
+  },
+  {
+   "label": "B28 AHU-1",
+   "dat": 58.5,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 55.3
+  },
+  {
+   "label": "B28 AHU-2",
+   "dat": 57.2,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 54.8
+  },
+  {
+   "label": "B28 AHU-3",
+   "dat": 63.8,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 59.2
+  },
+  {
+   "label": "B28 AHU-4",
+   "dat": 62.5,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 58.3
+  },
+  {
+   "label": "B28 AHU-5",
+   "dat": 59.9,
+   "sp_low": 60.0,
+   "sp_high": 60.0,
+   "flag": "override"
+  },
+  {
+   "label": "B28 AHU-6",
+   "dat": 82.9,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 73.6
+  },
+  {
+   "label": "B28 AHU-7",
+   "dat": 63.5,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 59.1
+  },
+  {
+   "label": "B28 AHU-8 Warehouse VHP",
+   "dat": 74.5,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 73.0
+  },
+  {
+   "label": "B29 AHU-1",
+   "dat": 57.6,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B29 AHU-2",
+   "dat": 57.1,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B30 AHU-1",
+   "dat": 50.9,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 50.9
+  },
+  {
+   "label": "B30 AHU-2",
+   "dat": 52.2,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B31 AHU-1",
+   "dat": 55.0,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B31 AHU-2",
+   "dat": 54.9,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B32 AHU-1",
+   "dat": 54.6,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B32 AHU-2",
+   "dat": 55.4,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B33 AHU-1",
+   "dat": 55.3,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B33 AHU-2",
+   "dat": 55.7,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B50 AHU-1",
+   "dat": 54.8,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B50 AHU-2",
+   "dat": 54.9,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B51 AHU-3A",
+   "dat": 55.2,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B51 AHU-3B",
+   "dat": 54.3,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 59.0
+  },
+  {
+   "label": "B28 AHU-11",
+   "dat": 61.7,
+   "sp_low": 53.0,
+   "sp_high": 53.0,
+   "flag": null,
+   "am_dat": 57.4
+  },
+  {
+   "label": "B12 AHU-1",
+   "dat": 52.0,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 49.9
+  },
+  {
+   "label": "B12 AHU-2",
+   "dat": 56.4,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B12 AHU-3",
+   "dat": 55.1,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B12 AHU-4",
+   "dat": 54.8,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B51 AHU-5",
+   "dat": 58.8,
+   "sp_low": 60.0,
+   "sp_high": 60.0,
+   "flag": null
+  },
+  {
+   "label": "B51 AHU-1 PIV",
+   "dat": 53.4,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 51.0
+  },
+  {
+   "label": "B51 AHU-2 PIV",
+   "dat": 50.5,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 49.3
+  },
+  {
+   "label": "B53 AHU-1A",
+   "dat": 54.1,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B53 AHU-1B",
+   "dat": 53.9,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B53 AHU-2",
+   "dat": 63.3,
+   "sp_low": 56.0,
+   "sp_high": 56.0,
+   "flag": null,
+   "am_dat": 57.1
+  },
+  {
+   "label": "B53 AHU-3",
+   "dat": null,
+   "sp_low": null,
+   "sp_high": null,
+   "flag": "fault"
+  },
+  {
+   "label": "B55 AHU-1",
+   "dat": 55.0,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B55 AHU-2",
+   "dat": 54.7,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B55 AHU-3",
+   "dat": 66.3,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 60.3
+  },
+  {
+   "label": "B55 AHU-4",
+   "dat": 56.8,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B64 AHU-1",
+   "dat": 57.2,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B64 AHU-2",
+   "dat": 54.7,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B74 AHU-1",
+   "dat": 55.1,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B74 AHU-2",
+   "dat": 54.7,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B74 AHU-3",
+   "dat": 55.4,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B74 AHU-4",
+   "dat": 55.5,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B12 AS-4",
+   "dat": 84.1,
+   "sp_low": 58.0,
+   "sp_high": 58.0,
+   "flag": null,
+   "am_dat": 82.3
+  },
+  {
+   "label": "B1 AHU-14",
+   "dat": 57.2,
+   "sp_low": 60.0,
+   "sp_high": 60.0,
+   "flag": null
+  },
+  {
+   "label": "B20 AHU-1B",
+   "dat": 54.4,
+   "sp_low": 53.0,
+   "sp_high": 56.0,
+   "flag": null
+  },
+  {
+   "label": "B20 AHU-1A",
+   "dat": 53.2,
+   "sp_low": 53.0,
+   "sp_high": 56.0,
+   "flag": null
+  },
+  {
+   "label": "B6 AHU-1",
+   "dat": 61.3,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 54.2
+  },
+  {
+   "label": "B3 AHU-1",
+   "dat": 50.5,
+   "sp_low": 52.0,
+   "sp_high": 54.0,
+   "flag": null
+  },
+  {
+   "label": "B3 AHU-2",
+   "dat": 50.8,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 48.8
+  },
+  {
+   "label": "B1 AHU-16",
+   "dat": 62.4,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 55.9
+  },
+  {
+   "label": "B1 AHU-4",
+   "dat": 54.4,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B1 AHU-3",
+   "dat": 64.9,
+   "sp_low": 52.0,
+   "sp_high": 61.0,
+   "flag": null,
+   "am_dat": 60.4
+  },
+  {
+   "label": "B1 AHU-1 Dirty",
+   "dat": 60.9,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null,
+   "am_dat": 55.4
+  },
+  {
+   "label": "B1 AHU123-2",
+   "dat": 54.3,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B1 AHU123-1",
+   "dat": 55.2,
+   "sp_low": 55.0,
+   "sp_high": 55.0,
+   "flag": null
+  },
+  {
+   "label": "B11 York Unit",
+   "dat": 77.4,
+   "sp_low": null,
+   "sp_high": null,
+   "flag": null
+  },
+  {
+   "label": "B6 AHU-6 Safety",
+   "dat": 57.4,
+   "sp_low": null,
+   "sp_high": null,
+   "flag": null
+  }
+ ]
+}

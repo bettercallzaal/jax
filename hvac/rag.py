@@ -1063,10 +1063,18 @@ Fix: per-unit OAT override + CHW System Enable override."""
 When you see DAT above setpoint AND Cooling Valve Command = 100%, this is a
 REQUEST for full cooling. The question is: is the coil delivering it?
 
-KEY CHECK: CHW Supply and Return Temperatures
-  - CHW Supply 42-46°F + Return 10-20°F warmer = coil IS flowing, doing real work
+KEY CHECK: CHW Supply and Return Temperatures — read delta-T against DESIGN (10-14°F typical)
+  - Delta-T near design + DAT at setpoint = coil flowing and doing real work
+  - Delta-T MUCH WIDER than design (e.g. ~20°F) + DAT still high = LOW FLOW signature.
+    Water crawling through the coil absorbs a lot of heat per gallon (wide spread) but
+    total mass flow is starved. Classic causes: clogged strainer at the coil, failing/
+    degraded pump, throttled isolation valve. Check dP across the Y-strainer and clean it.
+    (JAX 2026-07-02: B55 AHU-3 — valve 100%, delta-T 19.8°F, DAT 66°F = fouled strainer,
+    NOT a healthy coil. A wide delta-T alone does not prove the coil is fine.)
   - CHW Supply and Return nearly equal = no flow (valve stuck closed, pump off, or CHW unavailable)
   - CHW Supply warm (>55°F) = plant not delivering cold water
+  - Loop-wide note: a plant pump with a damaged impeller (e.g. CWP-15) can shed debris —
+    one packed strainer means nearby strainers are probably fouling too.
 
 IMPORTANT — Position Feedback May Not Be Wired:
 Many older JCI/Metasys controllers show Cooling Valve Position = 0% even when

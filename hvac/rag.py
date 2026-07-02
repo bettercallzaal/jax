@@ -1138,6 +1138,56 @@ COOLING LOCKOUT SETPOINTS AT JAX (typical): 50-52°F — meaning if OAT reads be
 this, cooling is disabled. Normal summer OAT at JAX is 75-90°F."""
     ))
 
+    chunks.append(Chunk(
+        id="dat-review-campus-valve-sweep",
+        source="field_practice",
+        topic="Campus Cooling-Valve Sweep — Diagnosing Plant vs Unit Faults (JAX 2026)",
+        tags=["cooling-valve", "chilled-water", "plant", "systems-look", "chw-plant", "cwp", "diagnostic"],
+        text="""CAMPUS COOLING-VALVE SWEEP — THE 'BIGGER SYSTEMS LOOK' (learned 2026-07-02)
+
+WHY DO THIS: Before diagnosing any single AHU that's running hot, pull a campus-wide
+Cooling Valve report from Metasys (search all 'Cooling Valve Command'/'Cmd'/'Output'
+points, sort by value). One snapshot tells you whether you're chasing a unit fault or a
+plant problem.
+
+THE DECISIVE PATTERN — count valves pinned >=99% and count how many NETWORK ENGINES
+they span:
+- A few pinned valves, all in ONE building / on ONE engine -> that building/engine
+  (OAT lockout, local CHW branch, one controller).
+- MANY valves pinned >=99% across MANY independent engines (NAE-28, NAE-10, SNE-01,
+  SNE-03, SNE-14, SNE-15, SNE-31, ...) SIMULTANEOUSLY -> CENTRAL CHILLED-WATER PLANT.
+  Valves on separate controllers do not fail together. What they share is the CHW plant.
+
+WHAT PLANT-SIDE MEANS:
+- CHW supply temperature too high (chillers can't make setpoint / staging problem), OR
+- CHW loop flow / differential pressure too low (a distribution pump down or degraded).
+  A chilled-water pump running on a WORN/DAMAGED IMPELLER drops loop dP and flow; every
+  downstream coil starves, every valve drives to 100%, DAT creeps up campus-wide.
+  JAX 2026-07 example: CWP-15 impeller WO #399591 open concurrent with ~25 of ~55 AHU
+  valves pinned across 12 engines. Check plant pumps/CHW supply temp FIRST in this case.
+
+THREE TIERS TO SORT THE SWEEP INTO:
+1. STARVED = valve >=99% AND DAT above setpoint. The real victims of a plant deficit.
+2. AT MAX = valve >=99% but DAT still at setpoint. Holding, but NO reserve — first to
+   tip if the plant slips further. Watch these.
+3. UNIT FAULT (do NOT lump with the plant) = DAT hot but valve NOT open (e.g. 6-14%).
+   A valve that won't open while the space cooks is an actuator/control fault, not
+   starvation. Also flag command/position mismatch (cmd 100% / pos ~0%) as a valve or
+   feedback problem to check on site.
+
+GOTCHAS WHEN READING THE SWEEP:
+- 'Minimum Cooling Valve Position' (CS Input Float) is a setpoint floor, not a live
+  position — exclude it.
+- Position feedback is often unwired at JAX (reads 0.0 or ~0.9%). Trust Command, and
+  confirm real flow with CHW delta-T, not position.
+- Object tree location != physical building (B12 on B51 SNE-03; B28 AHU-11 on B51;
+  B53 AHU-3 on B55 SNE-01). Identify by object ID and Description, not the branch.
+
+REDUCING PLANT LOAD (ties to energy work): shutting down vacant/empty spaces and
+reducing ACH in non-barrier areas lowers CHW demand and can relieve a starved plant —
+coordinate so demand cuts and the capacity problem are worked together, not in isolation."""
+    ))
+
     return chunks
 
 

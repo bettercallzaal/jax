@@ -2,8 +2,30 @@
   "_meta": {
     "server": "BHMETASYS01WP",
     "description": "Metasys AHU DAT and setpoint point references — campus-wide",
-    "last_updated": "2026-07-01",
-    "reference_format": "server:network.object.attribute"
+    "last_updated": "2026-07-02",
+    "reference_format": "server:network.object.attribute",
+    "cooling_valve_attribute_names": [
+      "Cooling Valve Command", "Cooling Valve Cmd", "Cooling Valve Output",
+      "Cooling Valve Effective Command", "Cooling Valve Command 1/2 (dual-coil CGE units)",
+      "1-3 / 2-3 Cooling Valve Command (staged B53 AHU-1A/1B)",
+      "Cooling Valve Position (feedback; often unwired at JAX — do NOT diagnose from position alone)"
+    ],
+    "topology_quirks": {
+      "note": "Object network location does NOT always match the physical building. Verify by object ID prefix (10NN...) and Description field, not the tree branch.",
+      "B12_on_B51_SNE03": "All B12 air handlers live on JL-BLDG51-SNE03/FC-B (03B0xx objects: B12 AHU-1=03B025FAC, AHU-2=03B026FAC, PIV SF-1=03B015, PIV SF-2=03B016, SF-3=03B007, SF-4=03B008). B12 has no engine of its own.",
+      "B28_AHU11_on_B51_SNE03": "B28 AHU-11 is on JL-BLDG51-SNE03/FC-B (03B017FEC B28 AHU-11_EF-11_SF-11), NOT on NAE-28 with the rest of B28.",
+      "B53_AHU3_on_B55_SNE01": "B53 AHU-3 is mapped under JL-BLDG55-SNE01/BACnet IP (1053120CGE). This cross-building mapping is why it can read oddly in the B53 tree. VFD failed 2026-07 (WO #400131).",
+      "B56_on_B26_SNE15": "B56 AHUs live under JL-BLDG26-SNE15/FC-A (15A004/15A005 FEC).",
+      "B1_AHU16_is_1020011": "'B1 AHU-16' is object 1020011FAC (a B20-numbered object) on JL-BLDG01-SNE14. Naming does not match object ID.",
+      "B1_AHU3_labeled_AHU17": "B1 AHU-3 (roof) object 1001008FAC on SNE-14 is labeled 'AHU17' in the Description. Position feedback unwired (reads ~0.9%).",
+      "B1_dirty_area": "'B1 AHU-1 Dirty' (1001005FAC) cooling valve is the wrong point to watch — actual cooling for that space is 'Rm 1645 Dirty Area AC 1 2 3' (1001006FAC).",
+      "B21_AHU11_N2_DX": "B21 AHU-11 is an N2-trunk DX unit on JL-BLDG21-NAE07/N2 Trunk B (07B071DX), not BACnet IP.",
+      "B1_AHU14_on_B57_SNE04": "B1 AHU-14 object is 04B016FEC on JL-BLDG57-SNE04 (labeled B01d Rm 1010)."
+    },
+    "point_gotchas": {
+      "minimum_cooling_valve_position": "'Minimum Cooling Valve Position' (CS Input Float, AV Mapper) is a setpoint floor, NOT a live position. Reads 0.0 on most units. Exclude from any valve-position sweep.",
+      "chw_system_enable": "CHW System Enable is a CS Input Enum fed from the supervisory engine. A stuck/low local OAT drives it to Disable, killing all CHW on that engine. Fixing local OAT alone may not re-enable — a separate CHW Enable override is required (learned on B28 AHU-6, 2026-07-01)."
+    }
   },
   "units": [
     {

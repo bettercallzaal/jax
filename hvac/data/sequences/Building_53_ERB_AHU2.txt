@@ -1,0 +1,65 @@
+
+Areas Served:
+Bio-Informatics Area in Building 55
+
+Air Handler Interlocks:
+If office space in Bio-Informatics temperatures drop below 60 or rise above 80 degrees, the air handler will be brought on during unoccupied hours.
+Air Handler Safeties: 
+Smoke detection shut down safety circuit.
+Will shut down, and prevent the unit from starting. (Will not call FD or set off horns and strobes.) Emergency Bypass Fan does not shut down on smoke alarm, monitoring only. 
+Freeze Protection
+Freeze protection will lock the unit out on low temperature, and will not allow the unit to run. 
+Fan Failure
+In the event a fan will not start, an alarm will need to be reset on Metasys for the sequence to start again.
+High Static Pressure
+Unit will trip on high static and will need to be manually reset before the unit can be restarted.
+
+
+Sequence of Operations (Start/Stop/Pressure):
+The air handler will be commanded “ON” by Metasys.
+Outside/mixed air dampers will modulate to maintain mixed air temperature. 
+Supply fans are turned on and will begin to increase blade pitch. 
+Once fan status is made the return fan is commanded “ON” and isolation dampers are commanded open.
+Supply fans will modulate fan speed based on Discharge Static Pressure Control.
+Return fan will modulate to maintain a 15% differential to supply fan.
+Temperature Control:
+Temperature is controlled by discharge air temperature set point located on Metasys.
+Mixed/Outside Air Dampers will modulate to maintain a mixed air temperature set point. 
+Cooling will be locked out if the Outdoor Air Temperature is below the cooling enable set point. 
+Note: Pre-heat coils have the valves off, they are not needed.
+
+Hot/Chilled Water/Control Air/Controls:
+The room reheats are served from building 53’s Hot Water Heat Exchanger, located in Bldg. 53 Mechanical Space controlled by “1053007CGE Heat Exchanger” under the SNE02 controller on the BACnet IP.
+Chilled water is fed from pumps 1 & 2 located in Building 53 Mechanical Space controlled by “1053008CGE Chilled Water” under the SNE02 controller on the BACnet IP. Chillers Start at 52° outside air temperature.
+Control Air is fed from the Rotary Air Compressor in Bldg. 22 Boiler Room, with a redundant air compressor located in Building 53 Sub Basement. 
+The units are controlled by the SNE-02 Network Device, on the N2 Trunk 1 with AHU-2 on “02A005DX Bldg 53 AHU-2” Controller.  
+Legend: Black Arrow = Freeze Protection Reset Button, Blue Arrow = Smoke detection shut down safety circuit, Orange Rectangle = AHU Footprint, Green Arrow = Supply High Static Pressure
+
+Figure 1:AHU 2
+
+Ground Floor Plan
+
+First Floor Plan
+
+
+
+
+
+
+
+Second Floor Plan
+
+
+
+
+
+
+
+Second Floor Offices
+
+
+
+
+
+Penthouse
+ 

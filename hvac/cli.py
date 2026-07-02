@@ -163,6 +163,26 @@ def cmd_dat_review(args):
         print(line)
 
 
+def cmd_maintainx_pull(args):
+    import os
+    from pathlib import Path
+    from .briefing.maintainx import snapshot_work_orders, MaintainXError
+
+    token = os.environ.get("MAINTAINX_API_TOKEN")
+    if not token:
+        print("Error: MAINTAINX_API_TOKEN environment variable not set.")
+        print("Generate one in MaintainX: Settings > Integrations > + New Key")
+        sys.exit(1)
+
+    out = args.out or str(Path(__file__).parent / "data" / "maintainx_snapshot.json")
+    try:
+        count = snapshot_work_orders(token, out)
+    except MaintainXError as e:
+        print(f"MaintainX pull failed: {e}")
+        sys.exit(1)
+    print(f"Wrote {count} open work orders to {out}")
+
+
 def cmd_brief(args):
     sys.exit(run_briefing(
         send_email=not args.no_email,
@@ -250,6 +270,11 @@ def main():
     p = sub.add_parser("dat-review", help="Parse a DAT readings JSON file and flag outliers")
     p.add_argument("--file", required=True, help="JSON file with [{label, dat, sp_low, sp_high, flag}, ...]")
     p.set_defaults(func=cmd_dat_review)
+
+    # --- maintainx-pull ---
+    p = sub.add_parser("maintainx-pull", help="Pull open WOs from MaintainX API into a snapshot file")
+    p.add_argument("--out", help="Output path (default: hvac/data/maintainx_snapshot.json)")
+    p.set_defaults(func=cmd_maintainx_pull)
 
     # --- brief ---
     p = sub.add_parser("brief", help="Send morning HVAC briefing email")

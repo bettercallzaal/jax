@@ -106,9 +106,67 @@ def _tool_log_observation(zone: str, description: str, tags: Optional[list] = No
 
 def _tool_list_work_orders() -> str:
     if not MAINTAINX_SNAPSHOT.exists():
-        return ("No MaintainX snapshot on disk. Pull one first (or paste WOs into "
-                "the dashboard). Expected file: hvac/data/maintainx_snapshot.json")
+        return ("No MaintainX snapshot on disk. Pull one first with "
+                "`hvac maintainx-pull` (needs MAINTAINX_API_TOKEN). "
+                "Expected file: hvac/data/maintainx_snapshot.json")
     return MAINTAINX_SNAPSHOT.read_text()
+
+
+SNAPSHOTS_DIR = DATA_DIR / "snapshots"
+
+
+def _latest_snapshot(prefix: str) -> Optional[Path]:
+    if not SNAPSHOTS_DIR.exists():
+        return None
+    files = sorted(SNAPSHOTS_DIR.glob(f"{prefix}_*.json"))
+    return files[-1] if files else None
+
+
+def _tool_get_dat_snapshot(date: Optional[str] = None) -> str:
+    if date:
+        matches = sorted(SNAPSHOTS_DIR.glob(f"dat_{date}*.json"))
+        f = matches[-1] if matches else None
+    else:
+        f = _latest_snapshot("dat")
+    if f is None:
+        return "No DAT snapshot found. Snapshots live in hvac/data/snapshots/dat_<timestamp>.json"
+    return f.read_text()
+
+
+def _tool_get_valve_sweep(date: Optional[str] = None) -> str:
+    if date:
+        matches = sorted(SNAPSHOTS_DIR.glob(f"valves_{date}*.json"))
+        f = matches[-1] if matches else None
+    else:
+        f = _latest_snapshot("valves")
+    if f is None:
+        return "No valve sweep snapshot found. Snapshots live in hvac/data/snapshots/valves_<timestamp>.json"
+    return f.read_text()
+
+
+def _tool_draft_work_order(
+    title: str,
+    description: str,
+    building: str,
+    priority: str = "Medium",
+    category: str = "BAS",
+) -> str:
+    """Format a ready-to-paste MaintainX WO draft with the JAX required fields."""
+    draft = f"""WORK ORDER DRAFT — paste into MaintainX
+
+Title: {title}
+Description: {description}
+Location: {building}
+Priority: {priority}
+Category: {category}
+Work Type: Reactive
+MAXIMO WORKTYPE: CM
+MAXIMO STATUS: APPR
+GL ACCOUNT: 6026200-RLAB  <- VERIFY: first digits vary by campus end, suffix by work type (per Amy)
+Assign to: Zaal Panthaki
+
+Reminder: due date is required; default to today+7 unless urgent."""
+    return draft
 
 
 TOOL_FUNCTIONS = {
@@ -117,6 +175,9 @@ TOOL_FUNCTIONS = {
     "read_journal": _tool_read_journal,
     "log_observation": _tool_log_observation,
     "list_work_orders": _tool_list_work_orders,
+    "get_dat_snapshot": _tool_get_dat_snapshot,
+    "get_valve_sweep": _tool_get_valve_sweep,
+    "draft_work_order": _tool_draft_work_order,
 }
 
 TOOLS = [
@@ -183,6 +244,52 @@ TOOLS = [
         "name": "list_work_orders",
         "description": "List open MaintainX work orders from the local snapshot file.",
         "input_schema": {"type": "object", "properties": {}},
+    },
+    {
+        "name": "get_dat_snapshot",
+        "description": (
+            "Get the most recent campus DAT snapshot (all ~64 AHUs: discharge air temp, "
+            "setpoint band, flags, AM comparison). Use for 'what's running hot', "
+            "'how did X trend', or any question about current/recent DAT state."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "date": {"type": "string", "description": "YYYY-MM-DD to pick a specific day; omit for latest"},
+            },
+        },
+    },
+    {
+        "name": "get_valve_sweep",
+        "description": (
+            "Get the most recent campus cooling-valve sweep (valve command/position, "
+            "engine, DAT, flags per AHU) plus the plant-level analysis. Use for "
+            "plant-vs-unit diagnosis and 'which valves are pinned' questions."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "date": {"type": "string", "description": "YYYY-MM-DD to pick a specific day; omit for latest"},
+            },
+        },
+    },
+    {
+        "name": "draft_work_order",
+        "description": (
+            "Draft a MaintainX work order with all JAX-required fields filled in "
+            "(GL account, Maximo worktype/status, category). Returns text to paste."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "building": {"type": "string", "description": "e.g. 'Building 55' or room like '55-2504'"},
+                "priority": {"type": "string", "enum": ["High", "Medium", "Low", "None"]},
+                "category": {"type": "string", "description": "Default BAS"},
+            },
+            "required": ["title", "description", "building"],
+        },
     },
 ]
 

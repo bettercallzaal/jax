@@ -1,0 +1,577 @@
+{
+ "taken_at": "2026-07-02T08:00",
+ "source": "Metasys campus Cooling Valve export",
+ "analysis": "~25 valves pinned >=99% across 12 engines. CHW is FEDERATED (local pump systems per building cluster, chillers start 52F OAT) - B55+B50 share pumps 3&4 in B50 B-101-A; B53 has own pumps 1&2. B53 AHU-1A/1B 1-3 valves at 100% are normal F&B behavior, not pinned. Tiers: STARVED (pinned+hot), AT MAX (pinned, holding SP), UNIT FAULT (hot but valve closed).",
+ "valves": [
+  {
+   "building": "B21",
+   "unit": "AHU-10",
+   "cmd_pct": 14,
+   "pos_pct": 13.3,
+   "engine": "NAE-27",
+   "dat": 59.4,
+   "flag": "fault",
+   "note": "Valve 14% yet alarmed 80F overnight - actuator/control fault, not starvation"
+  },
+  {
+   "building": "B21",
+   "unit": "SAHU-1",
+   "cmd_pct": 13,
+   "pos_pct": 12.6,
+   "engine": "NAE-27",
+   "dat": 55.0,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B21",
+   "unit": "AHU-11",
+   "cmd_pct": 50,
+   "pos_pct": null,
+   "engine": "NAE-07",
+   "dat": 56.6,
+   "flag": null,
+   "note": "N2 DX unit"
+  },
+  {
+   "building": "B28",
+   "unit": "AHU-1",
+   "cmd_pct": 100,
+   "pos_pct": 99.8,
+   "engine": "NAE-28",
+   "dat": 58.5,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B28",
+   "unit": "AHU-2",
+   "cmd_pct": 100,
+   "pos_pct": 99.8,
+   "engine": "NAE-28",
+   "dat": 57.2,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B28",
+   "unit": "AHU-3",
+   "cmd_pct": 100,
+   "pos_pct": 99.6,
+   "engine": "NAE-28",
+   "dat": 63.8,
+   "flag": null,
+   "note": "OAT-lockout bldg"
+  },
+  {
+   "building": "B28",
+   "unit": "AHU-4",
+   "cmd_pct": 100,
+   "pos_pct": 99.5,
+   "engine": "NAE-28",
+   "dat": 62.5,
+   "flag": null,
+   "note": "OAT-lockout bldg"
+  },
+  {
+   "building": "B28",
+   "unit": "AHU-5",
+   "cmd_pct": 31,
+   "pos_pct": 29.9,
+   "engine": "NAE-28",
+   "dat": 59.9,
+   "flag": null,
+   "note": "Override"
+  },
+  {
+   "building": "B28",
+   "unit": "AHU-6",
+   "cmd_pct": 100,
+   "pos_pct": null,
+   "engine": "NAE-28",
+   "dat": 82.9,
+   "flag": null,
+   "note": "Operator override - recovering"
+  },
+  {
+   "building": "B28",
+   "unit": "AHU-7",
+   "cmd_pct": 100,
+   "pos_pct": null,
+   "engine": "NAE-28",
+   "dat": 63.5,
+   "flag": null,
+   "note": "OAT-lockout bldg"
+  },
+  {
+   "building": "B28",
+   "unit": "AHU-8 VHP",
+   "cmd_pct": 0,
+   "pos_pct": null,
+   "engine": "NAE-28",
+   "dat": 74.5,
+   "flag": null,
+   "note": "Warehouse - not calling"
+  },
+  {
+   "building": "B28",
+   "unit": "AHU-11",
+   "cmd_pct": 100,
+   "pos_pct": null,
+   "engine": "SNE-03",
+   "dat": 61.7,
+   "flag": null,
+   "note": "Mapped on B51 SNE-03"
+  },
+  {
+   "building": "B29",
+   "unit": "AHU-1",
+   "cmd_pct": 100,
+   "pos_pct": 98.5,
+   "engine": "SNE-31",
+   "dat": 57.6,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B29",
+   "unit": "AHU-2",
+   "cmd_pct": 100,
+   "pos_pct": 99.7,
+   "engine": "SNE-31",
+   "dat": 57.1,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B30",
+   "unit": "AHU-1",
+   "cmd_pct": 61,
+   "pos_pct": 62.3,
+   "engine": "SNE-30",
+   "dat": 50.9,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B30",
+   "unit": "AHU-2",
+   "cmd_pct": 61,
+   "pos_pct": null,
+   "engine": "SNE-30",
+   "dat": 52.2,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B31",
+   "unit": "AHU-1",
+   "cmd_pct": 33,
+   "pos_pct": null,
+   "engine": "SNE-13",
+   "dat": 55.0,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B31",
+   "unit": "AHU-2",
+   "cmd_pct": 5,
+   "pos_pct": null,
+   "engine": "SNE-13",
+   "dat": 54.9,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B32",
+   "unit": "AHU-1",
+   "cmd_pct": 7,
+   "pos_pct": 8.0,
+   "engine": "SNE-34",
+   "dat": 54.6,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B32",
+   "unit": "AHU-2",
+   "cmd_pct": 5,
+   "pos_pct": 6.0,
+   "engine": "SNE-34",
+   "dat": 55.4,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B33",
+   "unit": "AHU-1",
+   "cmd_pct": 36,
+   "pos_pct": null,
+   "engine": "SNE-17",
+   "dat": 55.3,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B33",
+   "unit": "AHU-2",
+   "cmd_pct": 100,
+   "pos_pct": null,
+   "engine": "SNE-17",
+   "dat": 55.7,
+   "flag": null,
+   "note": "At max, holding SP - fanwall upgrade 7/24"
+  },
+  {
+   "building": "B50",
+   "unit": "AHU-1",
+   "cmd_pct": 99,
+   "pos_pct": null,
+   "engine": "NAE-16",
+   "dat": 54.8,
+   "flag": null,
+   "note": "At max, holding SP - fanwall 7/31"
+  },
+  {
+   "building": "B50",
+   "unit": "AHU-2",
+   "cmd_pct": 100,
+   "pos_pct": 99.3,
+   "engine": "NAE-16",
+   "dat": 54.9,
+   "flag": null,
+   "note": "At max, holding SP - fanwall 7/17"
+  },
+  {
+   "building": "B51",
+   "unit": "AHU-3A",
+   "cmd_pct": 18,
+   "pos_pct": 19.1,
+   "engine": "SNE-03",
+   "dat": 55.2,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B51",
+   "unit": "AHU-3B",
+   "cmd_pct": 27,
+   "pos_pct": 23.3,
+   "engine": "SNE-03",
+   "dat": 54.3,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B51",
+   "unit": "AHU-5",
+   "cmd_pct": 20,
+   "pos_pct": 17.0,
+   "engine": "SNE-03",
+   "dat": 58.8,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B12",
+   "unit": "PIV SF-1",
+   "cmd_pct": 100,
+   "pos_pct": 100.2,
+   "engine": "SNE-03",
+   "dat": 53.4,
+   "flag": null,
+   "note": "B12 on B51 SNE-03"
+  },
+  {
+   "building": "B12",
+   "unit": "PIV SF-2",
+   "cmd_pct": 100,
+   "pos_pct": 99.7,
+   "engine": "SNE-03",
+   "dat": 50.5,
+   "flag": null,
+   "note": "B12 on B51 SNE-03"
+  },
+  {
+   "building": "B12",
+   "unit": "AHU-1",
+   "cmd_pct": 100,
+   "pos_pct": 99.6,
+   "engine": "SNE-03",
+   "dat": 52.0,
+   "flag": null,
+   "note": "B12 on B51 SNE-03"
+  },
+  {
+   "building": "B12",
+   "unit": "AHU-2",
+   "cmd_pct": 100,
+   "pos_pct": 99.5,
+   "engine": "SNE-03",
+   "dat": 56.4,
+   "flag": null,
+   "note": "B12 on B51 SNE-03"
+  },
+  {
+   "building": "B12",
+   "unit": "SF-3",
+   "cmd_pct": 33,
+   "pos_pct": null,
+   "engine": "SNE-03",
+   "dat": 55.1,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B12",
+   "unit": "SF-4",
+   "cmd_pct": 63,
+   "pos_pct": null,
+   "engine": "SNE-03",
+   "dat": 54.8,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B55",
+   "unit": "AHU-1",
+   "cmd_pct": 39,
+   "pos_pct": 62.3,
+   "engine": "SNE-01",
+   "dat": 55.0,
+   "flag": null,
+   "note": "Dual-coil CGE"
+  },
+  {
+   "building": "B55",
+   "unit": "AHU-2",
+   "cmd_pct": 45,
+   "pos_pct": 44.2,
+   "engine": "SNE-01",
+   "dat": 54.7,
+   "flag": null,
+   "note": "Dual-coil CGE"
+  },
+  {
+   "building": "B55",
+   "unit": "AHU-3",
+   "cmd_pct": 100,
+   "pos_pct": null,
+   "engine": "SNE-01",
+   "dat": 66.3,
+   "flag": null,
+   "note": "LOW FLOW - CHW from pumps 3&4 in B50 rm B-101-A (shared w/ B50). Check pumps first, then coil strainer. WOs 400117/400169"
+  },
+  {
+   "building": "B55",
+   "unit": "AHU-4",
+   "cmd_pct": 100,
+   "pos_pct": 0.0,
+   "engine": "SNE-01",
+   "dat": 56.8,
+   "flag": "check",
+   "note": "Cmd 100/pos 0 - verify actuator or unwired feedback"
+  },
+  {
+   "building": "B56",
+   "unit": "AHU-1",
+   "cmd_pct": 100,
+   "pos_pct": 90.3,
+   "engine": "SNE-15",
+   "dat": 52.1,
+   "flag": null,
+   "note": "Broken OA damper WO 399891"
+  },
+  {
+   "building": "B56",
+   "unit": "AHU-2",
+   "cmd_pct": 100,
+   "pos_pct": 99.3,
+   "engine": "SNE-15",
+   "dat": 52.6,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B64",
+   "unit": "AHU-1",
+   "cmd_pct": 100,
+   "pos_pct": 99.5,
+   "engine": "NAE-10",
+   "dat": 57.2,
+   "flag": null,
+   "note": "OAT -39.5F lockout - override applied?"
+  },
+  {
+   "building": "B64",
+   "unit": "AHU-2",
+   "cmd_pct": 99,
+   "pos_pct": 5.6,
+   "engine": "NAE-10",
+   "dat": 54.7,
+   "flag": "check",
+   "note": "Eff cmd 99/pos 5.6 - valve not responding"
+  },
+  {
+   "building": "B74",
+   "unit": "EAHU-1",
+   "cmd_pct": 74,
+   "pos_pct": 73.3,
+   "engine": "SNE-32",
+   "dat": 55.1,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B74",
+   "unit": "EAHU-2",
+   "cmd_pct": 81,
+   "pos_pct": 80.0,
+   "engine": "SNE-32",
+   "dat": 54.7,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B74",
+   "unit": "SAHU-3",
+   "cmd_pct": 56,
+   "pos_pct": 55.4,
+   "engine": "SNE-32",
+   "dat": 55.4,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B74",
+   "unit": "SAHU-4",
+   "cmd_pct": 36,
+   "pos_pct": 36.4,
+   "engine": "SNE-32",
+   "dat": 55.5,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B1",
+   "unit": "AHU-16",
+   "cmd_pct": 99,
+   "pos_pct": null,
+   "engine": "SNE-14",
+   "dat": 62.4,
+   "flag": null,
+   "note": "Object 1020011FAC"
+  },
+  {
+   "building": "B1",
+   "unit": "AHU-3 (AHU17)",
+   "cmd_pct": 100,
+   "pos_pct": 0.9,
+   "engine": "SNE-14",
+   "dat": 64.9,
+   "flag": null,
+   "note": "Pos feedback unwired"
+  },
+  {
+   "building": "B1",
+   "unit": "AHU-4",
+   "cmd_pct": 75,
+   "pos_pct": 74.3,
+   "engine": "SNE-14",
+   "dat": 54.4,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B1",
+   "unit": "AHU-1 Dirty",
+   "cmd_pct": 6,
+   "pos_pct": null,
+   "engine": "SNE-14",
+   "dat": 60.9,
+   "flag": "fault",
+   "note": "Real cooling is Rm1645 AC1-2-3 (64%)"
+  },
+  {
+   "building": "B1",
+   "unit": "AHU123-1",
+   "cmd_pct": 57,
+   "pos_pct": 56.6,
+   "engine": "SNE-14",
+   "dat": 55.2,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B1",
+   "unit": "AHU123-2",
+   "cmd_pct": 60,
+   "pos_pct": 59.0,
+   "engine": "SNE-14",
+   "dat": 54.3,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B1",
+   "unit": "AHU-14",
+   "cmd_pct": 8,
+   "pos_pct": 7.6,
+   "engine": "SNE-04",
+   "dat": 57.2,
+   "flag": null,
+   "note": "B01d on B57 SNE-04"
+  },
+  {
+   "building": "B20",
+   "unit": "AHU-1A",
+   "cmd_pct": 75.8,
+   "pos_pct": null,
+   "engine": "NAE-19",
+   "dat": 53.2,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B20",
+   "unit": "AHU-1B",
+   "cmd_pct": 63.9,
+   "pos_pct": null,
+   "engine": "NAE-19",
+   "dat": 54.4,
+   "flag": null,
+   "note": ""
+  },
+  {
+   "building": "B53",
+   "unit": "AHU-1A",
+   "cmd_pct": 63,
+   "pos_pct": 100,
+   "engine": "SNE-02",
+   "dat": 54.1,
+   "flag": null,
+   "note": "NORMAL - F&B control commands 1/3+2/3 valves to 100%, temp modulated by bypass dampers (per sequence doc)"
+  },
+  {
+   "building": "B53",
+   "unit": "AHU-1B",
+   "cmd_pct": 55,
+   "pos_pct": 100,
+   "engine": "SNE-02",
+   "dat": 53.9,
+   "flag": null,
+   "note": "NORMAL - F&B control commands 1/3+2/3 valves to 100%, temp modulated by bypass dampers (per sequence doc)"
+  },
+  {
+   "building": "B53",
+   "unit": "AHU-3",
+   "cmd_pct": 99,
+   "pos_pct": 0.0,
+   "engine": "SNE-01",
+   "dat": null,
+   "flag": null,
+   "note": "Cross-mapped to B55 SNE-01; VFD replaced WO 400131"
+  }
+ ]
+}

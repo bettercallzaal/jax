@@ -1196,6 +1196,45 @@ reducing ACH in non-barrier areas lowers CHW demand and can relieve a starved pl
 coordinate so demand cuts and the capacity problem are worked together, not in isolation."""
     ))
 
+    chunks.append(Chunk(
+        id="jax-chw-topology-federated",
+        source="sequence_docs",
+        topic="JAX CHW Topology — Federated Local Systems, Not One Central Loop",
+        tags=["chilled-water", "topology", "b55", "b53", "b50", "pumps", "face-bypass", "sequences"],
+        text="""JAX CHILLED WATER IS FEDERATED (from sequence-of-operations docs, 2026-07-02)
+
+Building clusters run LOCAL chilled-water systems with their own pumps; chillers
+start at 52F OAT. Do not assume one central campus loop when diagnosing starvation.
+
+DOCUMENTED SOURCES:
+- B55 (and B50): pumps 3 & 4 in Building 50 room B-101-A.
+  Metasys: '16A023FEC Chilled Water System 1' + '16A022FEC Chilled Water System 2' (SNE-01).
+  B50 and B55 SHARE this system — if AHUs in both are pinned/starved simultaneously,
+  check these pumps and their suction strainers before touching coil strainers.
+- B53: pumps 1 & 2 in B53 Mechanical Space. Metasys: '1053008CGE Chilled Water' (SNE-02).
+  Independent of B55/B50 — a B53 cooling problem is NOT the same water as B55.
+- B55 mouse-room reheats: from Bldg 1 Unit 1 Rm 1275 via '1055005CGE Heat Exchanger'.
+
+DIAGNOSTIC ORDER for a starved coil (valve 100%, wide delta-T, DAT high):
+1. Metasys: the building's CHW system object — both pumps running? loop dP? speed?
+2. Pump room: suction strainers at the pumps (debris collects there first).
+3. Unit: Y-strainer at the AHU coil.
+One pump-room fix can un-starve every AHU on that system.
+
+FACE & BYPASS VALVES — NOT A FAULT:
+On F&B control (B53 AHU-1A/1B; B55 AHU units with reclaim), the sequence COMMANDS the
+1/3 + 2/3 valves to 100% and modulates temperature with the bypass dampers. Seeing
+'1-3 Cooling Valve at 100%, 2-3 at 0%' on these units is normal design behavior —
+exclude them from pinned-valve counts in a plant sweep.
+
+OTHER SEQUENCE FACTS:
+- Unoccupied interlock: B53 AHU-2 (serves Bio-Informatics IN B55) and B53 AHU-3
+  (B53 offices) auto-start unoccupied if space <60F or >80F.
+- B53: only ONE AHU runs on generator power (Bangor Hydro loss).
+- Reclaim window: below 50F / above 75F OAT.
+- Control air: B22 rotary compressor, redundant units in B55 rm 1370 + B53 sub-basement."""
+    ))
+
     return chunks
 
 

@@ -1,0 +1,71 @@
+
+Areas Served:
+All laboratory spaces in Building 53.
+
+Air Handler Interlocks:
+Air Handlers are hard wire interlocked so that if supply fans fail, EAHU-1 is commanded off, and the bypass fan EF-5 will not start. 
+Air Handler Safeties: 
+Smoke detection shut down safety circuit.
+Will shut down, and prevent the unit from starting. (Will not call FD or set off horns and strobes.) Emergency Bypass Fan does not shut down on smoke alarm, monitoring only. 
+Freeze Protection
+Freeze protection will lock the unit out on low temperature, and will not allow the unit to run.
+Emergency Bypass Fan
+Emergency bypass exhaust fan will start in the event of a Heat Reclaim Unit failure. This is a 100% redundant exhaust, that will start when heat reclaim looses status. (Bypass takes approx. 5-10 minutes to start completely.) 
+Fan Failure
+In the event a fan will not start, an alarm will need to be reset on Metasys for the sequence to start again.
+
+
+High Static Pressure
+Unit will trip on high static and will need to be manually reset before the unit can be restarted.
+Note: Only one AHU runs on generation, during loss of Bangor Hydro only one unit will run. 
+Sequence of Operations (Start/Stop/Pressure):
+The air handler will be commanded “ON” by Metasys.
+Outside air dampers will modulate until end switches are made. 
+Supply fans are turned on and will begin to increase blade pitch. 
+Once fan status is made isolation dampers will open.  
+Supply fans will modulate fan speed based on Discharge Static Pressure Control.
+Exhaust Fans will be commanded “ON” by Metasys
+Once status is made isolation dampers and outside dampers will open. 
+Temperature Control:
+Temperature is controlled by discharge air temperature set point located on Metasys.
+Cooling will be locked out if the Outdoor Air Temperature is below the cooling enable set point. 
+Heat/Cooling Reclaim will be available when temperatures are below 50 and above 75 based on Outdoor Air Temperature. 
+Reclaim will modulate to maintain a discharge air temperature to pre-heat/cool the incoming outdoor air to set point.  
+The preheat coil will modulate 1/3, 2/3 valves as needed to maintain discharge air temperature set point.
+Face and Bypass will switch based on heat reclaim leaving are temperature as compared to Face and Bypass set point. 
+When on face and bypass control, the 1/3, 2/3 valves will be commanded to 100%, and temperature will be modulated using the bypass dampers. 
+Hot/Chilled Water/Control Air/Controls:
+The room reheats are served from building 53’s Hot Water Heat Exchanger, located in Bldg. 53 Mechanical Space controlled by “1053007CGE Heat Exchanger” under the SNE02 controller on the BACnet IP.
+Chilled water is fed from pumps 1 & 2 located in Building 53 Mechanical Space controlled by “1053008CGE Chilled Water” under the SNE02 controller on the BACnet IP. Chillers Start at 52° outside air temperature.
+Control Air is fed from the Rotary Air Compressor in Bldg. 22 Boiler Room, with a redundant air compressor located in Building 53 Sub Basement. 
+The units are controlled by the SNE-02 Network Device, on the BACnet IP with AHU-1A on “1053001CGE AHU-1A” Controller and AHU-1B on “1053002CGE AHU-1B” Controller.  
+Legend: Black Arrow = Freeze Protection Reset Button, Blue Arrow = Smoke detection shut down safety circuit, Orange Rectangle = AHU Footprint, Green Arrow = Supply High Static Pressure
+
+
+
+Figure 1:AHU 1A/B
+ Ground Floor Plan
+
+First Floor Plan
+
+
+
+
+
+
+
+Second Floor Plan
+
+
+
+
+
+
+Second Floor Offices
+
+
+
+
+
+Penthouse
+ 

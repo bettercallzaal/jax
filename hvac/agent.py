@@ -169,6 +169,43 @@ Reminder: due date is required; default to today+7 unless urgent."""
     return draft
 
 
+def _tool_create_work_order(
+    title: str,
+    description: str = "",
+    priority: str = "Medium",
+    due_date: str = None,
+) -> str:
+    """Create a work order directly in MaintainX via the API (needs MAINTAINX_API_TOKEN)."""
+    import os
+    from .briefing.maintainx import create_work_order, MaintainXError
+
+    token = os.environ.get("MAINTAINX_API_TOKEN")
+    if not token:
+        return (
+            "Can't create via API: MAINTAINX_API_TOKEN isn't set. Use draft_work_order "
+            "instead and hand the draft to Amy, or set the token first."
+        )
+
+    try:
+        wo = create_work_order(
+            token,
+            title=title,
+            description=description or None,
+            priority=priority,
+            due_date=due_date,
+            org_id=os.environ.get("MAINTAINX_ORG_ID"),
+        )
+    except MaintainXError as e:
+        return f"MaintainX create failed: {e}"
+
+    return (
+        f"Created WO #{wo.id}: {wo.title}\n{wo.url}\n"
+        "NOTE: JAX custom fields (GL Account, Maximo Worktype/Status, Category) are "
+        "NOT set by this call — that field mapping hasn't been confirmed against the "
+        "API yet. Open the WO in MaintainX and fill those in before assigning it out."
+    )
+
+
 TOOL_FUNCTIONS = {
     "search_knowledge": _tool_search_knowledge,
     "lookup_unit": _tool_lookup_unit,
@@ -178,6 +215,7 @@ TOOL_FUNCTIONS = {
     "get_dat_snapshot": _tool_get_dat_snapshot,
     "get_valve_sweep": _tool_get_valve_sweep,
     "draft_work_order": _tool_draft_work_order,
+    "create_work_order": _tool_create_work_order,
 }
 
 TOOLS = [
@@ -289,6 +327,27 @@ TOOLS = [
                 "category": {"type": "string", "description": "Default BAS"},
             },
             "required": ["title", "description", "building"],
+        },
+    },
+    {
+        "name": "create_work_order",
+        "description": (
+            "Create a work order directly in MaintainX via the API (requires "
+            "MAINTAINX_API_TOKEN). Only sets standard fields (title, description, "
+            "priority, due date) — JAX's custom fields (GL Account, Maximo "
+            "Worktype/Status, Category) still need to be filled in manually in the "
+            "app afterward. If no token is set, falls back to telling the user to "
+            "use draft_work_order instead."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "priority": {"type": "string", "enum": ["High", "Medium", "Low", "None"]},
+                "due_date": {"type": "string", "description": "ISO date, e.g. 2026-07-17"},
+            },
+            "required": ["title"],
         },
     },
 ]

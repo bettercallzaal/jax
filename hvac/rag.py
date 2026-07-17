@@ -29,6 +29,41 @@ class Chunk:
     tags: list[str] = field(default_factory=list)
 
 
+DATA_DIR = Path(__file__).parent / "data"
+
+
+def _load_index_chunks(filename: str, source: str, id_prefix: str) -> list[Chunk]:
+    """Parse a '### <file>' per-entry markdown index (building_maps_index.md,
+    duct_prints_index.md) into one Chunk per catalogued file, so a query like
+    'where is the duct plan for B21 2nd floor' retrieves the exact filename."""
+    path = DATA_DIR / filename
+    if not path.exists():
+        return []
+
+    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
+    # Split on level-3 headers ("### <path>"); keep the header text as the topic.
+    parts = re.split(r"(?m)^### (.+)$", text)
+    # parts[0] is preamble (title/notes) before the first entry — skip it.
+    chunks = []
+    for i in range(1, len(parts), 2):
+        heading = parts[i].strip()
+        body = parts[i + 1].strip() if i + 1 < len(parts) else ""
+        # Strip a trailing "## Building X" section header that bleeds in from
+        # the next section boundary (duct_prints_index.md groups by building).
+        body = re.sub(r"(?m)^## .*$", "", body).strip()
+        if not body:
+            continue
+        slug = re.sub(r"[^a-z0-9]+", "-", heading.lower()).strip("-")[:60]
+        chunks.append(Chunk(
+            id=f"{id_prefix}-{slug}",
+            source=source,
+            topic=heading,
+            tags=[source],
+            text=f"{heading}\n{body}",
+        ))
+    return chunks
+
+
 def _build_corpus() -> list[Chunk]:
     """Extract all HVAC knowledge into structured chunks."""
     chunks: list[Chunk] = []
@@ -1267,6 +1302,14 @@ OTHER SEQUENCE FACTS:
 - Reclaim window: below 50F / above 75F OAT.
 - Control air: B22 rotary compressor, redundant units in B55 rm 1370 + B53 sub-basement."""
     ))
+
+    # --- Building maps & duct prints: "where to look" grounding ---
+    # Each catalogued file becomes its own chunk, so a location query retrieves
+    # the exact drawing/sheet (e.g. "MH-100_SecondFloor.pdf"), not just a building name.
+    chunks.extend(_load_index_chunks(
+        "building_maps_index.md", source="building_maps", id_prefix="bmap"))
+    chunks.extend(_load_index_chunks(
+        "duct_prints_index.md", source="duct_prints", id_prefix="duct"))
 
     return chunks
 

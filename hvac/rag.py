@@ -1314,6 +1314,27 @@ OTHER SEQUENCE FACTS:
     return chunks
 
 
+_DOCUMENT_CHUNKS_CACHE: Optional[list[Chunk]] = None
+
+
+def get_document_chunks() -> list[Chunk]:
+    """Building_maps + duct_prints chunks, parsed straight from the markdown
+    indexes with no embedding step. "Which file documents building X" is an
+    exact-match/filename problem, not a semantic-similarity one — cosine
+    similarity over TF-IDF/dense vectors ranks specific building codes and
+    filenames poorly against generic prose (verified: the TF-IDF fallback
+    buried the correct B21 duct print at rank ~52/350 for a literal query).
+    Callers doing location lookups (agent.lookup_documents) should filter/
+    score this list directly rather than going through retrieve()."""
+    global _DOCUMENT_CHUNKS_CACHE
+    if _DOCUMENT_CHUNKS_CACHE is None:
+        _DOCUMENT_CHUNKS_CACHE = (
+            _load_index_chunks("building_maps_index.md", source="building_maps", id_prefix="bmap")
+            + _load_index_chunks("duct_prints_index.md", source="duct_prints", id_prefix="duct")
+        )
+    return _DOCUMENT_CHUNKS_CACHE
+
+
 # ---------------------------------------------------------------------------
 # Embedding backends
 # ---------------------------------------------------------------------------

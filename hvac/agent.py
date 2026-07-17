@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -42,10 +43,10 @@ opposed to a simple factual lookup — do not jump straight to a guessed fix. Yo
 working from partial field data and a wrong guess costs Zaal a trip. Structure the \
 answer as three short parts:
   1. WHERE TO LOOK — the specific drawing, duct print, Metasys point, or room to \
-     check first. search_knowledge now covers building_maps (architectural floor \
-     plans/room numbers) and duct_prints (mechanical/AHU/VAV duct drawings) — cite \
-     the actual file, e.g. "B21/MH-100_SecondFloor.pdf" or floor plan "55-1", not \
-     just the building name.
+     check first. Use lookup_documents (not search_knowledge — it's a filename \
+     match, not a similarity search) to find the exact floor plan or duct print — \
+     cite the actual file, e.g. "B21/MH-100_SecondFloor.pdf" or floor plan "55-1", \
+     not just the building name.
   2. WHAT'S LIKELY GOING ON — your best-supported hypothesis from fault patterns, \
      journal history, and DAT/valve data, and *why* (what evidence points there).
   3. A NEXT STEP TO TRY — framed as "check X, if Y then Z" rather than a confirmed \
@@ -58,11 +59,14 @@ DAT review thresholds: critical = DAT more than 10°F above setpoint, high = \
 3-10°F above, low = more than 3°F below. Cooling lockout setpoints at JAX are \
 typically 50-52°F.
 
-Use your tools rather than guessing: search_knowledge for field lessons, \
-diagnostic procedures, building floor plans, and duct/mechanical prints; \
-lookup_unit for point references and topology quirks; read_journal for what \
-happened on a given day; get_dat_snapshot / get_valve_sweep for current campus \
-state; list_work_orders for open WOs. Log observations to the journal when Zaal \
+Use your tools rather than guessing: search_knowledge for field lessons and \
+diagnostic procedures (semantic search over prose); lookup_documents for "which \
+floor plan/duct print covers X" (exact building-number match, not similarity \
+search — use this, not search_knowledge, for location questions); lookup_unit \
+for point references, topology quirks, and (via its physical_docs field) linked \
+drawings for that unit's building; read_journal for what happened on a given \
+day; get_dat_snapshot / get_valve_sweep for current campus state; \
+list_work_orders for open WOs. Log observations to the journal when Zaal \
 reports something worth keeping. If a tool comes back empty, say so plainly \
 instead of inventing data."""
 
@@ -105,9 +109,120 @@ def _tool_lookup_unit(query: str) -> str:
         }
         if hits:
             out[section] = hits
+
+    # Cross-reference to physical documentation (floor plans / duct prints) for
+    # whichever building the query resolved to — deterministic building-number
+    # match, not embedding search (see rag.get_document_chunks docstring for why).
+    building_token = matches[0].get("building") if matches else query
+    docs = _matching_documents(building_token)
+    if docs:
+        out["physical_docs"] = {
+            src: [c.topic for c in chunks_[:6]] for src, chunks_ in docs.items()
+        }
+
     if not out:
         return f"No units or notes matching '{query}'."
     return json.dumps(out, indent=1)
+
+
+# ---------------------------------------------------------------------------
+# Document lookup — deterministic building-number + keyword matching over
+# building_maps/duct_prints, independent of the embedding-based search_knowledge.
+# ---------------------------------------------------------------------------
+
+_DOC_STOPWORDS = {
+    "where", "is", "are", "the", "a", "an", "for", "of", "in", "on", "at", "to",
+    "print", "prints", "drawing", "drawings", "plan", "plans", "duct", "which",
+    "what", "show", "shows", "find", "look", "up", "me", "us", "and", "or",
+}
+_DOC_FLOOR_SYNONYMS = {
+    "first": "1", "1st": "1", "one": "1", "ground": "g", "grd": "g",
+    "second": "2", "2nd": "2", "two": "2",
+    "third": "3", "3rd": "3", "three": "3",
+    "fourth": "4", "4th": "4", "four": "4",
+    "fifth": "5", "5th": "5", "five": "5",
+    "basement": "b",
+}
+# Duct-print folders that cover more than one building at JAX.
+_DOC_COMBINED_BUILDING_FOLDERS = {"30": "B30-32", "31": "B30-32", "32": "B30-32"}
+
+
+def _doc_tokens(text: str) -> set[str]:
+    """Lowercase, split CamelCase (e.g. 'SecondFloor' -> 'Second Floor') so
+    compound filenames tokenize the same way natural-language queries do,
+    normalize floor-name synonyms, and drop stopwords."""
+    text = re.sub(r"(?<=[a-z0-9])(?=[A-Z])", " ", text)
+    tokens = re.findall(r"[a-z0-9]+", text.lower())
+    return {
+        _DOC_FLOOR_SYNONYMS.get(t, t) for t in tokens if t not in _DOC_STOPWORDS
+    }
+
+
+def _building_number(text: str) -> Optional[str]:
+    """Pull a bare building number out of a code like 'B21', 'Building 21', or 21."""
+    m = re.search(r"\bb0*([0-9]+)\b", text.lower()) or \
+        re.search(r"\bbuilding\s+0*([0-9]+)\b", text.lower())
+    if m:
+        return m.group(1)
+    if re.fullmatch(r"[0-9]+", text.strip()):
+        return text.strip()
+    return None
+
+
+def _building_match_patterns(building_num: str) -> list[re.Pattern]:
+    patterns = [
+        # Bare-number filenames on the building_maps share, e.g. "21-1.pdf", "01a-2.pdf"
+        rf"(?:^|[^0-9A-Za-z])0*{building_num}(?![0-9])",
+        # "B"-prefixed folders on the duct_prints share, e.g. "B21/...", "B01 A/..."
+        rf"(?:^|[^0-9A-Za-z])[Bb]0*{building_num}(?![0-9])",
+    ]
+    if building_num in _DOC_COMBINED_BUILDING_FOLDERS:
+        patterns.append(re.escape(_DOC_COMBINED_BUILDING_FOLDERS[building_num]))
+    return [re.compile(p, re.IGNORECASE) for p in patterns]
+
+
+def _matching_documents(query: str) -> dict[str, list]:
+    """Return {source: [chunk, ...]} for building_maps/duct_prints entries
+    matching a building number and/or keyword tokens in query. Building-number
+    match is required if a number is present in the query; otherwise falls
+    back to requiring at least one keyword overlap (to avoid dumping the
+    entire ~310-file index on an unqualified query). Ranked by keyword overlap
+    on the filename (weighted higher) plus the file's summary text (catches
+    terms like "penthouse" that show up in the description but not the name)."""
+    building_num = _building_number(query)
+    building_patterns = _building_match_patterns(building_num) if building_num else None
+    q_tokens = _doc_tokens(query)
+
+    scored: list[tuple[int, "rag.Chunk"]] = []
+    for chunk in rag.get_document_chunks():
+        if building_patterns and not any(p.search(chunk.topic) for p in building_patterns):
+            continue
+        topic_overlap = len(q_tokens & _doc_tokens(chunk.topic))
+        body_overlap = len(q_tokens & _doc_tokens(chunk.text))
+        score = topic_overlap * 3 + body_overlap
+        if building_patterns or score:
+            scored.append((score, chunk))
+
+    scored.sort(key=lambda pair: pair[0], reverse=True)
+    out: dict[str, list] = {}
+    for _, chunk in scored:
+        out.setdefault(chunk.source, []).append(chunk)
+    return out
+
+
+def _tool_lookup_documents(query: str, top_k: int = 8) -> str:
+    docs = _matching_documents(query)
+    if not docs:
+        return (
+            f"No floor plans or duct prints matched '{query}'. Try naming a "
+            "building number (e.g. 'B21') to narrow the search."
+        )
+    lines = []
+    for source, chunks_ in docs.items():
+        lines.append(f"[{source}]")
+        for c in chunks_[:top_k]:
+            lines.append(f"  {c.topic}")
+    return "\n".join(lines)
 
 
 def _tool_read_journal(date: Optional[str] = None) -> str:
@@ -190,6 +305,7 @@ Reminder: due date is required; default to today+7 unless urgent."""
 TOOL_FUNCTIONS = {
     "search_knowledge": _tool_search_knowledge,
     "lookup_unit": _tool_lookup_unit,
+    "lookup_documents": _tool_lookup_documents,
     "read_journal": _tool_read_journal,
     "log_observation": _tool_log_observation,
     "list_work_orders": _tool_list_work_orders,
@@ -204,12 +320,12 @@ TOOLS = [
         "description": (
             "Search the HVAC field knowledge base (RAG): diagnostic procedures, "
             "documented JAX patterns (OAT lockouts, valve sweeps, reheat faults), "
-            "psychrometrics, sequences, building floor plans (building_maps — room "
-            "numbers, floor layouts, which drawing covers a given room/wing), and "
-            "mechanical duct prints (duct_prints — AHU/VAV/duct drawings per building "
-            "and floor, with equipment tags and CFM where legible). Use for any "
-            "'how do I diagnose X', 'what did we learn about Y', or 'where's the "
-            "drawing/print for Z' question."
+            "psychrometrics, sequences. This is semantic/similarity search over "
+            "prose — good for 'how do I diagnose X' or 'what did we learn about Y'. "
+            "Do NOT use this for 'where's the drawing/print for building X' — that's "
+            "an exact-match filename problem, not a semantic one (similarity search "
+            "ranks specific building codes poorly against generic prose). Use "
+            "lookup_documents for that instead."
         ),
         "input_schema": {
             "type": "object",
@@ -221,12 +337,38 @@ TOOLS = [
         },
     },
     {
+        "name": "lookup_documents",
+        "description": (
+            "Find floor plans (building_maps) and mechanical duct prints "
+            "(duct_prints) for a specific building/floor — e.g. 'B21 second "
+            "floor duct print', 'floor plan for room 55-2504', 'B74 penthouse "
+            "ductwork'. Matches by building number (deterministic, not "
+            "similarity-ranked) plus keyword overlap on the filename. Use this "
+            "instead of search_knowledge whenever the question is 'which "
+            "drawing/print covers X', so you can point Zaal at the exact file."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "e.g. 'B21 2nd floor duct', 'B55 AHU-3 penthouse'",
+                },
+                "top_k": {"type": "integer", "description": "Max files per source (default 8)"},
+            },
+            "required": ["query"],
+        },
+    },
+    {
         "name": "lookup_unit",
         "description": (
             "Look up campus AHUs in the Metasys point map by label, building, or "
             "unit name (e.g. 'B28', 'AHU-6', 'B55 AHU-3'). Returns point references, "
-            "setpoint bands, notes, and any topology quirks (cross-building object "
-            "mappings, naming traps) that mention the query."
+            "setpoint bands, notes, any topology quirks (cross-building object "
+            "mappings, naming traps) that mention the query, and — for whichever "
+            "building the query resolves to — a physical_docs cross-reference to "
+            "matching floor plans / duct prints (same building-number matching as "
+            "lookup_documents)."
         ),
         "input_schema": {
             "type": "object",

@@ -340,16 +340,28 @@ Also asked for a formal quote: "Please put together a quote for adding the humid
 
 ## Full Punch List
 
+### Status Summary -- Pending Items as of Aug 7, 2026
+
+Three items are actively open with no resolution email as of today:
+
+| Item | Owner | Committed | Status | Follow-Up Trigger |
+|------|-------|-----------|--------|-------------------|
+| Kevin (WHC) refrigerant repair completion + written report | Kevin (WH Construction) | Aug 7 by 8 AM | **AWAITING** -- No completion or report email received | Follow up with Sonia if no email by Aug 8 |
+| Work Order for JACE offline notifications ($737.28) | Stockman (Concept) / WWG Gay | Stockman said "Yes!" Aug 5 | **AWAITING WO** -- Approved verbally, no formal WO issued | Follow up with Stockman if no WO by Aug 10 |
+| Flush cycle BAS integration quote (Register 202 / ProtoAir) | Conner + Mark Garcia (WWG) | Conner: "I will let you know what we come up with" Aug 6 | **AWAITING QUOTE** -- Not time-sensitive (humidifiers are winter-only) | Follow up with Conner in September before cooling season ends |
+
+All other punch list items are either in progress (non-reporting trends), deferred by design (training day, permanent humidifier program change), or resolved (vestibule valve, rack work).
+
 ### Waiting on Someone Else
 
 | Item | Status | Waiting On | Next Step |
 |------|--------|-----------|-----------|
-| RTU-3 compressor repair | Parts under warranty (Wade Godwin July 29). **Compressor 5 fully down** Aug 5 (Shelton/WHC). Aug 6: Kevin (WHC) found **crack in t-pipe**, refrigerant splattered on RTU walls. Returning Aug 7 to finish by 8 AM; written report to follow. Compressors 1, 2, 4 working; 3 intermittent; 5 dead (zero PSI). | Kevin (WH Construction) completing Aug 7 | Await Kevin's completion + written report |
+| RTU-3 compressor repair | Parts under warranty (Wade Godwin July 29). **Compressor 5 fully down** Aug 5 (Shelton/WHC). Aug 6: Kevin (WHC) found **crack in t-pipe**, refrigerant splattered on RTU walls. Returning Aug 7 to finish by 8 AM; written report to follow. Compressors 1, 2, 4 working; 3 intermittent; 5 dead (zero PSI). **Aug 7 STATUS: No completion email or written report received as of Aug 7. Kevin promised finish by 8 AM -- both AWAITING.** | Kevin (WH Construction) | Follow up with Sonia if no email by Aug 8-9 |
 | RTU-1 through RTU-4 compressor inspection | Wade inspected all 4 RTUs July 29. Report: (07-29-2026) ML RTU-3 (STM2607-2554) NC Jax.pdf | Nelson & Company | Read PDF report for full findings |
 | Elevator vestibule air valve replacement | **COMPLETE Aug 4** -- confirmed by Sonia Aug 5 email | WWG Mechanical | Done -- valve replaced during 1-hour RTU-3 shutdown |
-| JACE offline notifications | **Stockman confirmed "Yes!" Aug 5 7:27 PM.** Zaal forwarded quote to Kuchta Aug 5; Kuchta pushed to Stockman same day ("work with WW Gay, get us a Work Order"); Stockman replied "Yes!" (CC: Zaal, Sonia). Work Order not yet issued but Stockman has committed. | Monitor for WWG Gay to issue WO |
+| JACE offline notifications | **Stockman confirmed "Yes!" Aug 5 7:27 PM.** Zaal forwarded quote to Kuchta Aug 5; Kuchta pushed to Stockman same day ("work with WW Gay, get us a Work Order to make it happen"); Stockman replied "Yes!" (CC: Zaal, Sonia). Work Order not yet issued but Stockman has committed. **Aug 7 STATUS: AWAITING WO.** Follow up with Stockman (dstockman@conceptcompanies.net) if no WO by Aug 10. | Monitor for WWG Gay to issue WO |
 | SAV 3-2, 3-4, 3-5 trends (first floor) | Conner confirmed Aug 3: SAVs 1-5 always trending -- they are on the **FirstFloor_JACE** history database (separate network/JACE from JAX_2nd_Floor). 3 screenshots sent showing how to access: Histories button > pick FirstFloor_JACE in history picker. | No further action from Conner needed | Switch history picker to FirstFloor_JACE to view SAV 1-5 data |
-| Humidifier flush cycle BAS integration | Conner (Aug 6 AM): requires change order quote. Conner (Aug 6 PM): coordinating with Mark Garcia, will advise. Humidifiers winter-only, not urgent. | WWG Gay | Await Conner/Mark quote |
+| Humidifier flush cycle BAS integration | Conner (Aug 6 AM): requires change order quote outside original design. Conner (Aug 6 PM, to Zaal CC: Mark Garcia, Kuchta, Cameron, Jesse): coordinating with Mark Garcia, "will let you know what we come up with." Kuchta is directly in the loop. Humidifiers winter-only, not urgent. **Aug 7 STATUS: AWAITING QUOTE.** | WWG Gay (Conner + Mark Garcia) | Follow up with Conner in September before cooling season ends |
 | SAV 3-34 exhaust damper / GF3 ExhaustDMprPos=0% | Jesse (Jul 22, 4:20 PM): Wi-com alarm on one GF3 rack cycling between 73-74°F; BAS shows room at 69.3°F. Jesse observed ExhaustDMprPos = 0% for GF3 SAV -- confirmed always at 0% in trend, observed twice. GF2 exhaust at 54%, GF1 at 65% for comparison. Stockman forwarded to Conner: "high priority -- mice in this room." Conner (Jul 23, 11:08 AM): "Those exhaust dampers on the trends are solely for room pressure management only and do not affect the animal cages. I will look into the exhaust that pulls from those cages and see if there is an issue once I get a chance." | WWG Gay | Follow up -- has Conner looked into cage exhaust? No confirmation received yet. |
 | WiCom blower networking | Brandon Shakespeare notified | Brandon Shakespeare | Follow up to confirm complete |
 | Commissioning records / AnnexAir startup report | Not found in email history | Nelson & Company / Concept Companies | Request from Wade during July 29 visit |

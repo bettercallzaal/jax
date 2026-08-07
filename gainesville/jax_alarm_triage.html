@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAX BAS Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .header {
+            background: #1a2535;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header h1 { font-size: 1.25rem; font-weight: 600; }
+        .header .date { font-size: 0.8rem; opacity: 0.6; margin-top: 0.1rem; }
+
+        .tabs {
+            display: flex;
+            background: #243044;
+            padding: 0 1.5rem;
+            gap: 0.25rem;
+        }
+
+        .tab {
+            padding: 0.6rem 1.25rem;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.15s;
+            user-select: none;
+        }
+
+        .tab:hover { color: rgba(255,255,255,0.9); }
+        .tab.active { color: white; border-bottom-color: #4a9eff; }
+
+        .tab-content { display: none; flex: 1; flex-direction: column; overflow: hidden; }
+        .tab-content.active { display: flex; }
+
+        /* ── SHARED INPUT SECTION ── */
+        .input-section {
+            background: white;
+            padding: 0.875rem 1.5rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .input-section textarea {
+            width: 100%;
+            height: 90px;
+            padding: 0.625rem 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            resize: vertical;
+        }
+
+        .input-section textarea:focus { outline: none; border-color: #4a9eff; }
+
+        .button-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.625rem;
+            align-items: center;
+        }
+
+        button {
+            padding: 0.4rem 0.875rem;
+            border: none;
+            border-radius: 4px;
+            background: #4a9eff;
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        button:hover { filter: brightness(1.1); }
+        button.secondary { background: #8a9bb0; }
+        button.success { background: #27ae60; }
+        button.danger { background: #e74c3c; }
+
+        .stats-bar {
+            margin-left: auto;
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: #666;
+            align-items: center;
+        }
+
+        .stat-chip {
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .stat-chip.red { background: #fde8e8; color: #c0392b; }
+        .stat-chip.orange { background: #fef3e2; color: #d35400; }
+        .stat-chip.green { background: #e8f8ef; color: #1e8449; }
+        .stat-chip.blue { background: #e8f4fd; color: #1a5276; }
+        .stat-chip.gray { background: #f0f0f0; color: #555; }
+
+        /* ── DAT SCAN ── */
+        .scan-grid {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 1.5rem;
+        }
+
+        .scan-summary {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 6px;
+            padding: 0.75rem 1.25rem;
+            border-left: 4px solid #ddd;
+            min-width: 130px;
+        }
+
+        .summary-card .label { font-size: 0.7rem; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+        .summary-card .value { font-size: 1.5rem; font-weight: 700; margin-top: 0.1rem; }
+        .summary-card.critical { border-left-color: #e74c3c; }
+        .summary-card.critical .value { color: #e74c3c; }
+        .summary-card.warning { border-left-color: #e67e22; }
+        .summary-card.warning .value { color: #e67e22; }
+        .summary-card.ok { border-left-color: #27ae60; }
+        .summary-card.ok .value { color: #27ae60; }
+        .summary-card.cold { border-left-color: #3498db; }
+        .summary-card.cold .value { color: #3498db; }
+        .summary-card.fault { border-left-color: #95a5a6; }
+        .summary-card.fault .value { color: #95a5a6; }
+
+        .scan-table-wrap { background: white; border-radius: 6px; border: 1px solid #e0e0e0; overflow: hidden; }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        thead th {
+            background: #f7f9fc;
+            padding: 0.6rem 0.875rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        thead th:hover { background: #edf1f7; }
+        thead th.sorted-asc::after { content: ' ↑'; }
+        thead th.sorted-desc::after { content: ' ↓'; }
+
+        tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.1s; }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: #f7f9fc; }
+
+        td { padding: 0.55rem 0.875rem; font-size: 0.85rem; }
+
+        .unit-name { font-weight: 600; color: #1a2535; }
+        .building-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: #edf1f7;
+            color: #4a5568;
+            padding: 0.1rem 0.4rem;
+            border-radius: 3px;
+            margin-right: 0.4rem;
+            font-weight: 600;
+        }
+
+        .delta-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            min-width: 52px;
+            text-align: center;
+        }
+
+        .delta-critical { background: #fde8e8; color: #c0392b; }
+        .delta-warning  { background: #fef3e2; color: #c0392b; }
+        .delta-watch    { background: #fef9e2; color: #b7770d; }
+        .delta-ok       { background: #e8f8ef; color: #1e8449; }
+        .delta-cold     { background: #e8f4fd; color: #1a5276; }
+        .delta-fault    { background: #f0f0f0; color: #888; font-style: italic; }
+        .delta-override { background: #f3e8fd; color: #6c3483; }
+
+        .status-flag {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .flag-override { background: #f3e8fd; color: #6c3483; }
+        .flag-fault    { background: #f0f0f0; color: #888; }
+        .flag-hi-sp    { background: #fff3cd; color: #856404; }
+
+        .note-input {
+            border: none;
+            background: transparent;
+            font-size: 0.8rem;
+            color: #555;
+            width: 100%;
+            padding: 0.2rem 0;
+        }
+        .note-input:focus { outline: none; border-bottom: 1px solid #4a9eff; }
+        .note-input::placeholder { color: #bbb; }
+
+        /* ── ALARM TRIAGE ── */
+        .alarm-grid {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 1.5rem;
+        }
+
+        .alarm-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 0.875rem;
+            margin-bottom: 0.625rem;
+        }
+
+        .alarm-card.flagged { border-left: 4px solid #e74c3c; }
+        .alarm-card.handled { opacity: 0.55; background: #fafafa; }
+
+        .alarm-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 0.2rem 0.45rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            min-width: 36px;
+            text-align: center;
+        }
+
+        .priority-critical { background: #e74c3c; color: white; }
+        .priority-high     { background: #e67e22; color: white; }
+        .priority-medium   { background: #f39c12; color: white; }
+        .priority-low      { background: #3498db; color: white; }
+
+        .type-badge {
+            padding: 0.2rem 0.45rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        .alarm-item { font-weight: 600; flex: 1; font-size: 0.9rem; }
+        .alarm-time { font-size: 0.8rem; color: #888; }
+        .alarm-message { font-size: 0.82rem; color: #555; margin-bottom: 0.35rem; }
+        .alarm-value { font-size: 0.8rem; color: #888; margin-bottom: 0.35rem; }
+
+        .alarm-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            margin-top: 0.625rem;
+            padding-top: 0.625rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .alarm-actions label { font-size: 0.8rem; display: flex; align-items: center; gap: 0.3rem; cursor: pointer; }
+        .alarm-actions input[type="text"] {
+            flex: 1;
+            padding: 0.3rem 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+        .alarm-actions button { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #aaa;
+        }
+
+        .empty-state h2 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .empty-state p { font-size: 0.875rem; }
+
+        /* filter bar */
+        .filter-bar {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.625rem 1.5rem;
+            background: white;
+            border-bottom: 1px solid #e8e8e8;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar label { font-size: 0.8rem; color: #666; }
+
+        .filter-btn {
+            padding: 0.25rem 0.625rem;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background: white;
+            color: #555;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .filter-btn.active { background: #1a2535; color: white; border-color: #1a2535; }
+        .filter-btn:hover:not(.active) { background: #f0f2f5; }
+
+        .filter-bar input[type="text"] {
+            padding: 0.25rem 0.625rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            width: 160px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div>
+        <div class="h1" style="font-size:1.2rem;font-weight:700;color:white;">JAX BAS Dashboard</div>
+        <div class="date" id="headerDate"></div>
+    </div>
+</div>
+
+<div class="tabs">
+    <div class="tab active" onclick="switchTab('dat')">Morning DAT Scan</div>
+    <div class="tab" onclick="switchTab('alarms')">Alarm Triage</div>
+</div>
+
+<!-- ═══════════════════════════════ DAT SCAN TAB ═══════════════════════════════ -->
+<div class="tab-content active" id="tab-dat">
+    <div class="input-section">
+        <textarea id="datInput" placeholder="Paste Global Search Viewer data here (discharge air temp + setpoint rows)..." oninput="autoDat()"></textarea>
+        <div class="button-row">
+            <button class="secondary" onclick="clearDat()">Clear</button>
+            <button onclick="analyzeDat()" style="background:#1a2535;">&#128269; Analyze</button>
+            <button class="success" onclick="copyDatContext()">📋 Copy for Claude</button>
+            <div class="stats-bar" id="datStats"></div>
+        </div>
+    </div>
+
+    <div class="filter-bar" id="datFilterBar" style="display:none">
+        <span style="font-size:0.8rem;color:#888;margin-right:0.25rem;">Show:</span>
+        <button class="filter-btn active" onclick="setDatFilter('all',this)">All</button>
+        <button class="filter-btn" onclick="setDatFilter('issues',this)">Issues only</button>
+        <button class="filter-btn" onclick="setDatFilter('critical',this)">Critical</button>
+        <button class="filter-btn" onclick="setDatFilter('cold',this)">Overcooling</button>
+        <button class="filter-btn" onclick="setDatFilter('fault',this)">Faults</button>
+        <input type="text" id="datSearch" placeholder="Search unit..." oninput="renderDatTable()">
+    </div>
+
+    <div id="analysisPanel" style="display:none;background:#1a2535;color:white;padding:1rem 1.5rem;border-bottom:3px solid #4a9eff;max-height:340px;overflow-y:auto;flex-shrink:0;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.875rem;">
+            <span style="font-weight:700;font-size:0.95rem;">Analysis</span>
+            <span onclick="document.getElementById('analysisPanel').style.display='none'" style="cursor:pointer;opacity:0.5;font-size:1.2rem;line-height:1;">&#x2715;</span>
+        </div>
+        <div id="analysisContent"></div>
+    </div>
+
+    <div class="scan-grid" id="datGrid">
+        <div class="empty-state">
+            <h2>No data loaded</h2>
+            <p>Paste your morning Global Search Viewer export above</p>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════ ALARM TRIAGE TAB ═══════════════════════════════ -->
+<div class="tab-content" id="tab-alarms">
+    <div class="input-section">
+        <textarea id="alarmInput" placeholder="Paste Metasys alarm data here..." oninput="autoAlarm()"></textarea>
+        <div class="button-row">
+            <button class="secondary" onclick="clearAlarms()">Clear</button>
+            <button class="success" onclick="copyAlarmContext()">📋 Copy for Claude</button>
+            <div class="stats-bar" id="alarmStats"></div>
+        </div>
+    </div>
+
+    <div class="alarm-grid" id="alarmGrid">
+        <div class="empty-state">
+            <h2>No alarms loaded</h2>
+            <p>Paste alarm export above to begin triage</p>
+        </div>
+    </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// HEADER DATE
+// ─────────────────────────────────────────────
+document.getElementById('headerDate').textContent = new Date().toLocaleDateString('en-US', {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+});
+
+// ─────────────────────────────────────────────
+// TAB SWITCHING
+// ─────────────────────────────────────────────
+function switchTab(name) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+        t.classList.toggle('active', ['dat','alarms'][i] === name);
+    });
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ─────────────────────────────────────────────
+// DAT SCAN
+// ─────────────────────────────────────────────
+let datUnits = [];
+let datFilter = 'all';
+let datNotes = {};
+
+(function() {
+    const saved = sessionStorage.getItem('dat_notes');
+    if (saved) datNotes = JSON.parse(saved);
+})();
+
+function saveDatNotes() {
+    sessionStorage.setItem('dat_notes', JSON.stringify(datNotes));
+}
+
+let datTimeout;
+function autoDat() {
+    clearTimeout(datTimeout);
+    datTimeout = setTimeout(processDat, 400);
+}
+
+function processDat() {
+    const raw = document.getElementById('datInput').value.trim();
+    if (!raw) { datUnits = []; renderDatGrid(); return; }
+
+    const lines = raw.split('\n').filter(l => l.trim());
+
+    // Find header line
+    let headerIdx = -1;
+    for (let i = 0; i < lines.length; i++) {
+        const l = lines[i].toLowerCase();
+        if (l.includes('name') && l.includes('value') && l.includes('reference')) {
+            headerIdx = i;
+            break;
+        }
+    }
+
+    const dataLines = headerIdx >= 0 ? lines.slice(headerIdx + 1) : lines;
+
+    // Parse rows
+    const rows = [];
+    for (const line of dataLines) {
+        const cols = line.split('\t');
+        if (cols.length < 4) continue;
+
+        const status   = cols[0]?.trim() || '';
+        const label    = cols[1]?.trim() || '';
+        const valueStr = cols[2]?.trim() || '';
+        const units    = cols[3]?.trim() || '';
+        const desc     = cols[4]?.trim() || '';
+        const location = cols[5]?.trim() || '';
+        const ref      = cols[cols.length - 1]?.trim() || '';
+
+        const isFault = status.toLowerCase().includes('cannot be read') || status.toLowerCase().includes('fault');
+        const isOverride = status.toLowerCase().includes('operator override') || status.toLowerCase().includes('override');
+
+        const value = isFault ? null : parseFloat(valueStr);
+
+        // Device key = reference path up to last dot
+        const lastDot = ref.lastIndexOf('.');
+        const deviceKey = lastDot > 0 ? ref.substring(0, lastDot) : ref;
+
+        // Is this a setpoint row?
+        const combinedText = (label + ' ' + desc).toLowerCase();
+        const isSetpoint = /setpoint|setpt|stpt|\bsp\b|dat-sp|dathi|datlo|disch.*sp|cooling set|heating set/i.test(combinedText);
+
+        rows.push({ status, label, value, valueStr, units, desc, location, ref, deviceKey, isSetpoint, isFault, isOverride });
+    }
+
+    // Group by deviceKey
+    const groups = {};
+    for (const row of rows) {
+        if (!groups[row.deviceKey]) groups[row.deviceKey] = [];
+        groups[row.deviceKey].push(row);
+    }
+
+    // Build units
+    datUnits = [];
+    for (const [key, group] of Object.entries(groups)) {
+        const tempRows = group.filter(r => !r.isSetpoint);
+        const stptRows = group.filter(r => r.isSetpoint);
+
+        if (tempRows.length === 0 && stptRows.length === 0) continue;
+
+        // Main temp row
+        const tempRow = tempRows[0] || group[0];
+
+        // Extract unit name from label or description
+        let unitName = tempRow.desc || tempRow.label;
+        // Clean up — remove "Discharge Air Temperature" noise if desc is just that
+        if (/^discharge air (temp|temperature)$/i.test(unitName)) {
+            unitName = tempRow.label;
+        }
+
+        // Extract building
+        const bldgMatch = key.match(/BLDG(\d+)/i) || unitName.match(/B(\d+)/i) || unitName.match(/Bldg\.?\s*(\d+)/i);
+        const building = bldgMatch ? 'B' + bldgMatch[1] : '';
+
+        const isFault = tempRow.isFault || (tempRows.length === 0 && stptRows.length > 0 && stptRows[0].isFault);
+
+        let loStpt = null, hiStpt = null, mainStpt = null;
+
+        for (const s of stptRows) {
+            if (s.value === null) continue;
+            const lbl = (s.label + ' ' + s.desc).toLowerCase();
+            if (lbl.includes('low') || lbl.includes('datlo') || lbl.includes('cooling')) {
+                loStpt = s.value;
+            } else if (lbl.includes('high') || lbl.includes('dathi') || lbl.includes('heating')) {
+                hiStpt = s.value;
+            } else {
+                mainStpt = s.value;
+            }
+        }
+
+        // Resolve effective setpoint
+        let setpoint = mainStpt;
+        let setpointLabel = '';
+        if (setpoint === null && loStpt !== null && hiStpt !== null) {
+            setpoint = loStpt; // use cooling setpoint as reference
+            setpointLabel = `${loStpt}–${hiStpt}°F`;
+        } else if (setpoint === null && loStpt !== null) {
+            setpoint = loStpt;
+        } else if (setpoint === null && hiStpt !== null) {
+            setpoint = hiStpt;
+        }
+
+        const actual = tempRow.value;
+        let delta = (actual !== null && setpoint !== null) ? +(actual - setpoint).toFixed(1) : null;
+
+        // For hi/lo band, delta is only concerning if outside the band
+        if (loStpt !== null && hiStpt !== null && actual !== null) {
+            if (actual < hiStpt && actual > loStpt) delta = 0; // within band
+            else if (actual >= hiStpt) delta = +(actual - hiStpt).toFixed(1);
+            else delta = +(actual - loStpt).toFixed(1);
+        }
+
+        let severity;
+        if (isFault) severity = 'fault';
+        else if (delta === null) severity = 'unknown';
+        else if (delta >= 10) severity = 'critical';
+        else if (delta >= 5)  severity = 'warning';
+        else if (delta >= 2)  severity = 'watch';
+        else if (delta <= -4) severity = 'cold';
+        else severity = 'ok';
+
+        const isOverride = tempRow.isOverride || stptRows.some(s => s.isOverride);
+
+        datUnits.push({
+            key, unitName, building, actual, setpoint, setpointLabel,
+            delta, severity, isFault, isOverride,
+            loStpt, hiStpt, ref: tempRow.ref
+        });
+    }
+
+    renderDatGrid();
+}
+
+function setDatFilter(f, btn) {
+    datFilter = f;
+    document.querySelectorAll('#datFilterBar .filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderDatTable();
+}
+
+function renderDatGrid() {
+    const grid = document.getElementById('datGrid');
+    const filterBar = document.getElementById('datFilterBar');
+
+    if (datUnits.length === 0) {
+        filterBar.style.display = 'none';
+        grid.innerHTML = `<div class="empty-state"><h2>No data loaded</h2><p>Paste your morning Global Search Viewer export above</p></div>`;
+        updateDatStats();
+        return;
+    }
+
+    filterBar.style.display = 'flex';
+    updateDatStats();
+    renderDatTable();
+}
+
+function renderDatTable() {
+    const grid = document.getElementById('datGrid');
+    const search = (document.getElementById('datSearch')?.value || '').toLowerCase();
+
+    let units = [...datUnits];
+
+    // Apply filter
+    if (datFilter === 'issues') units = units.filter(u => ['critical','warning','watch','fault'].includes(u.severity));
+    else if (datFilter === 'critical') units = units.filter(u => ['critical','warning'].includes(u.severity));
+    else if (datFilter === 'cold') units = units.filter(u => u.severity === 'cold');
+    else if (datFilter === 'fault') units = units.filter(u => u.severity === 'fault');
+
+    if (search) units = units.filter(u => u.unitName.toLowerCase().includes(search) || u.building.toLowerCase().includes(search));
+
+    // Sort: issues first, then by delta desc
+    const order = { critical: 0, warning: 1, watch: 2, cold: 3, fault: 4, ok: 5, unknown: 6 };
+    units.sort((a, b) => {
+        const so = (order[a.severity] || 5) - (order[b.severity] || 5);
+        if (so !== 0) return so;
+        return (b.delta || 0) - (a.delta || 0);
+    });
+
+    // Summary cards
+    const counts = { critical: 0, warning: 0, ok: 0, cold: 0, fault: 0 };
+    for (const u of datUnits) {
+        if (u.severity === 'critical' || u.severity === 'warning') counts.critical++;
+        else if (u.severity === 'watch') counts.warning++;
+        else if (u.severity === 'ok') counts.ok++;
+        else if (u.severity === 'cold') counts.cold++;
+        else if (u.severity === 'fault') counts.fault++;
+    }
+
+    const summaryHtml = `
+        <div class="scan-summary">
+            <div class="summary-card critical"><div class="label">Over Setpoint</div><div class="value">${counts.critical}</div></div>
+            <div class="summary-card warning"><div class="label">Watch</div><div class="value">${counts.warning}</div></div>
+            <div class="summary-card ok"><div class="label">OK</div><div class="value">${counts.ok}</div></div>
+            <div class="summary-card cold"><div class="label">Overcooling</div><div class="value">${counts.cold}</div></div>
+            <div class="summary-card fault"><div class="label">Comm Fault</div><div class="value">${counts.fault}</div></div>
+        </div>
+    `;
+
+    if (units.length === 0) {
+        grid.innerHTML = summaryHtml + `<div class="empty-state" style="padding:2rem"><p>No units match current filter</p></div>`;
+        return;
+    }
+
+    const rows = units.map(u => {
+        const deltaHtml = u.isFault
+            ? `<span class="delta-badge delta-fault">FAULT</span>`
+            : u.delta === null
+                ? `<span class="delta-badge delta-fault">—</span>`
+                : (() => {
+                    const sign = u.delta > 0 ? '+' : '';
+                    const cls = u.severity === 'critical' ? 'delta-critical'
+                              : u.severity === 'warning'  ? 'delta-warning'
+                              : u.severity === 'watch'    ? 'delta-watch'
+                              : u.severity === 'cold'     ? 'delta-cold'
+                              : 'delta-ok';
+                    return `<span class="delta-badge ${cls}">${sign}${u.delta}°F</span>`;
+                })();
+
+        const stptDisplay = u.setpointLabel || (u.setpoint !== null ? u.setpoint + '°F' : '—');
+        const actualDisplay = u.isFault ? '<span style="color:#aaa">—</span>' : (u.actual !== null ? u.actual + '°F' : '—');
+
+        const flags = [];
+        if (u.isOverride) flags.push('<span class="status-flag flag-override">Override</span>');
+        if (u.isFault)    flags.push('<span class="status-flag flag-fault">Comm Fault</span>');
+
+        const noteKey = u.key;
+        const noteVal = datNotes[noteKey] || '';
+
+        return `<tr>
+            <td><span class="building-tag">${u.building || '?'}</span></td>
+            <td class="unit-name">${u.unitName} ${flags.join(' ')}</td>
+            <td>${actualDisplay}</td>
+            <td style="color:#888">${stptDisplay}</td>
+            <td>${deltaHtml}</td>
+            <td><input class="note-input" placeholder="note..." value="${noteVal.replace(/"/g,'&quot;')}" onchange="saveDatNote('${noteKey.replace(/'/g,"\\'")}', this.value)"></td>
+        </tr>`;
+    }).join('');
+
+    grid.innerHTML = summaryHtml + `
+        <div class="scan-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:60px">Bldg</th>
+                        <th>Unit</th>
+                        <th style="width:80px">DAT</th>
+                        <th style="width:100px">Setpoint</th>
+                        <th style="width:90px">Delta</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>${rows}</tbody>
+            </table>
+        </div>`;
+}
+
+function saveDatNote(key, val) {
+    datNotes[key] = val;
+    saveDatNotes();
+}
+
+function updateDatStats() {
+    const el = document.getElementById('datStats');
+    if (datUnits.length === 0) { el.innerHTML = ''; return; }
+
+    const issues = datUnits.filter(u => ['critical','warning','watch'].includes(u.severity)).length;
+    const faults = datUnits.filter(u => u.severity === 'fault').length;
+
+    el.innerHTML = `
+        <span class="stat-chip gray">${datUnits.length} units</span>
+        ${issues ? `<span class="stat-chip red">${issues} over setpoint</span>` : ''}
+        ${faults ? `<span class="stat-chip gray">${faults} faults</span>` : ''}
+    `;
+}
+
+function analyzeDat() {
+    if (datUnits.length === 0) { alert('No data loaded yet.'); return; }
+
+    const panel = document.getElementById('analysisPanel');
+    const content = document.getElementById('analysisContent');
+    panel.style.display = 'block';
+
+    const critical = datUnits.filter(u => u.severity === 'critical');
+    const warning  = datUnits.filter(u => u.severity === 'warning');
+    const watch    = datUnits.filter(u => u.severity === 'watch');
+    const cold     = datUnits.filter(u => u.severity === 'cold');
+    const faults   = datUnits.filter(u => u.severity === 'fault');
+    const overrides = datUnits.filter(u => u.isOverride);
+    const ok       = datUnits.filter(u => u.severity === 'ok');
+
+    function diagnose(u) {
+        const d = u.delta;
+        const name = u.unitName;
+        const hints = [];
+
+        if (u.isFault) {
+            hints.push('Controller offline or N2 trunk issue — verify network communication.');
+            return hints;
+        }
+
+        if (d >= 10) {
+            hints.push('DAT severely elevated. Likely causes: cooling valve closed/failed, CHW system disabled, plugged strainer, or cooling lockout active.');
+            hints.push('Check: cooling valve command vs actual position, CHW enable status, OAT sensor for false lockout.');
+        } else if (d >= 5) {
+            hints.push('Significant overshoot. Cooling may be undersized for current load, valve hunting, or partial flow restriction.');
+            hints.push('Check: cooling valve % command, supply fan status, coil condition.');
+        } else if (d >= 2) {
+            hints.push('Minor overshoot — could be normal under high load or transitional. Monitor trend.');
+        }
+
+        if (d <= -4) {
+            hints.push('Overcooling — valve may be stuck open, PID tuning issue, or setpoint too low.');
+            hints.push('Check: cooling valve command, reheat status, zone complaints of cold.');
+        }
+
+        if (u.isOverride) {
+            hints.push('Setpoint is under Operator Override — verify this is intentional and document expected end date.');
+        }
+
+        return hints;
+    }
+
+    let html = '';
+
+    // Headline
+    const issueCount = critical.length + warning.length + watch.length + faults.length;
+    const color = issueCount === 0 ? '#27ae60' : critical.length > 0 ? '#e74c3c' : '#f39c12';
+    html += `<div style="font-size:1.1rem;font-weight:700;color:${color};margin-bottom:1rem;">`;
+    if (issueCount === 0) {
+        html += `&#10003; All ${ok.length} units within normal range.`;
+    } else {
+        html += `${issueCount} unit${issueCount>1?'s':''} need attention &mdash; ${ok.length} OK`;
+    }
+    html += `</div>`;
+
+    // Sections
+    function section(units, label, color) {
+        if (units.length === 0) return '';
+        let s = `<div style="margin-bottom:1rem;">`;
+        s += `<div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:${color};margin-bottom:0.5rem;">${label}</div>`;
+        for (const u of units) {
+            const delta = u.isFault ? 'COMM FAULT' : (u.delta > 0 ? '+' : '') + u.delta + '°F';
+            const hints = diagnose(u);
+            s += `<div style="background:rgba(255,255,255,0.07);border-radius:5px;padding:0.6rem 0.875rem;margin-bottom:0.4rem;">`;
+            s += `<div style="display:flex;justify-content:space-between;align-items:baseline;">`;
+            s += `<span style="font-weight:600;font-size:0.875rem;">${u.unitName}</span>`;
+            s += `<span style="font-size:0.8rem;opacity:0.7;">${u.isFault ? '—' : u.actual+'°F'} vs ${u.setpoint||'?'}°F &nbsp;<strong style="color:${color}">${delta}</strong></span>`;
+            s += `</div>`;
+            if (hints.length) {
+                s += `<ul style="margin-top:0.35rem;padding-left:1.1rem;">`;
+                hints.forEach(h => { s += `<li style="font-size:0.78rem;opacity:0.85;margin-bottom:0.15rem;">${h}</li>`; });
+                s += `</ul>`;
+            }
+            s += `</div>`;
+        }
+        s += `</div>`;
+        return s;
+    }
+
+    html += section(critical, 'Critical — significantly over setpoint', '#ff6b6b');
+    html += section(warning,  'Warning — over setpoint', '#ffaa55');
+    html += section(watch,    'Watch — slightly elevated', '#ffd166');
+    html += section(cold,     'Overcooling', '#74b9ff');
+    html += section(faults,   'Communication faults', '#aaa');
+
+    if (overrides.length) {
+        html += `<div style="margin-bottom:1rem;"><div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#c39bd3;margin-bottom:0.5rem;">Operator Overrides Active</div>`;
+        overrides.forEach(u => {
+            html += `<div style="font-size:0.8rem;opacity:0.85;padding:0.3rem 0;">${u.unitName} &mdash; setpoint overridden to ${u.setpoint}°F</div>`;
+        });
+        html += `</div>`;
+    }
+
+    if (issueCount === 0) {
+        html += `<div style="font-size:0.82rem;opacity:0.6;">Nothing to action today. ${faults.length ? faults.length + ' comm fault(s) worth a glance.' : ''}</div>`;
+    }
+
+    content.innerHTML = html;
+}
+
+function clearDat() {
+    document.getElementById('datInput').value = '';
+    datUnits = [];
+    document.getElementById('analysisPanel').style.display = 'none';
+    renderDatGrid();
+}
+
+function copyDatContext() {
+    if (datUnits.length === 0) { alert('No data to copy.'); return; }
+
+    const issues = datUnits.filter(u => ['critical','warning','watch','cold','fault'].includes(u.severity));
+    let out = `JAX BAS Morning DAT Scan — ${new Date().toLocaleString()}\n`;
+    out += `${datUnits.length} units scanned | ${issues.length} need attention\n\n`;
+
+    if (issues.length) {
+        out += `ISSUES:\n${'─'.repeat(60)}\n`;
+        for (const u of issues) {
+            const delta = u.delta !== null ? (u.delta > 0 ? '+' : '') + u.delta + '°F' : 'FAULT';
+            out += `[${u.severity.toUpperCase()}] ${u.unitName}\n`;
+            out += `  DAT: ${u.isFault ? 'COMM FAULT' : u.actual + '°F'} | Setpoint: ${u.setpoint || '?'}°F | Delta: ${delta}\n`;
+            if (datNotes[u.key]) out += `  Note: ${datNotes[u.key]}\n`;
+            out += '\n';
+        }
+    }
+
+    const ok = datUnits.filter(u => u.severity === 'ok');
+    if (ok.length) {
+        out += `\nOK (${ok.length} units within range):\n`;
+        out += ok.map(u => `  ${u.unitName}: ${u.actual}°F`).join('\n');
+    }
+
+    navigator.clipboard.writeText(out).then(() => {
+        alert('DAT scan copied! Paste into Claude.');
+    }).catch(err => alert('Copy failed: ' + err));
+}
+
+// ─────────────────────────────────────────────
+// ALARM TRIAGE
+// ─────────────────────────────────────────────
+let alarms = [];
+let alarmMeta = {};
+
+(function() {
+    const saved = sessionStorage.getItem('alarm_metadata');
+    if (saved) alarmMeta = JSON.parse(saved);
+})();
+
+function saveMeta() { sessionStorage.setItem('alarm_metadata', JSON.stringify(alarmMeta)); }
+
+let alarmTimeout;
+function autoAlarm() {
+    clearTimeout(alarmTimeout);
+    alarmTimeout = setTimeout(processAlarms, 500);
+}
+
+function processAlarms() {
+    const input = document.getElementById('alarmInput').value.trim();
+    if (!input) { alarms = []; renderAlarms(); updateAlarmStats(); return; }
+
+    const lines = input.split('\n');
+    let headerIdx = -1;
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].trim().startsWith('Type') && lines[i].includes('Priority')) {
+            headerIdx = i; break;
+        }
+    }
+    if (headerIdx === -1) { alert('Could not find alarm table header.'); return; }
+
+    const headers = lines[headerIdx].split('\t').map(h => h.trim());
+    const raw = [];
+    for (let i = headerIdx + 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const vals = lines[i].split('\t');
+        const alarm = {};
+        headers.forEach((h, idx) => alarm[h] = vals[idx]?.trim() || '');
+        if (alarm.Type && alarm.Priority && alarm.Item) raw.push(alarm);
+    }
+
+    alarms = filterNoise(raw).sort((a, b) => (parseInt(a.Priority)||999) - (parseInt(b.Priority)||999));
+    renderAlarms();
+    updateAlarmStats();
+}
+
+function filterNoise(raw) {
+    const groups = {};
+    raw.forEach(a => {
+        const k = `${a.Item}|||${a.Reference}`;
+        if (!groups[k]) groups[k] = [];
+        groups[k].push(a);
+    });
+    const out = [];
+    Object.values(groups).forEach(g => {
+        const hasAlarm  = g.some(a => a.Type && a.Type !== 'Normal');
+        const hasNormal = g.some(a => a.Type === 'Normal');
+        if (hasAlarm && hasNormal) return;
+        if (!hasAlarm && hasNormal) return;
+        g.forEach(a => { if (a.Type !== 'Normal') out.push(a); });
+    });
+    return out;
+}
+
+function renderAlarms() {
+    const grid = document.getElementById('alarmGrid');
+    if (alarms.length === 0) {
+        grid.innerHTML = `<div class="empty-state"><h2>All alarms filtered</h2><p>No active alarms after removing resolved pairs</p></div>`;
+        return;
+    }
+
+    grid.innerHTML = alarms.map((alarm, idx) => {
+        const meta = alarmMeta[idx] || {};
+        const p = parseInt(alarm.Priority) || 999;
+        const pc = p <= 50 ? 'priority-critical' : p <= 100 ? 'priority-high' : p <= 200 ? 'priority-medium' : 'priority-low';
+
+        return `<div class="alarm-card ${meta.flagged?'flagged':''} ${meta.handled?'handled':''}" data-index="${idx}">
+            <div class="alarm-header">
+                <span class="priority-badge ${pc}">${alarm.Priority}</span>
+                <span class="type-badge">${alarm.Type}</span>
+                <span class="alarm-item">${alarm.Item}</span>
+                <span class="alarm-time">${alarm.When}</span>
+            </div>
+            <div class="alarm-message">${alarm['Alarm Message Text'] || alarm.Description || ''}</div>
+            ${alarm.Value ? `<div class="alarm-value">Value: ${alarm.Value}</div>` : ''}
+            <div class="alarm-actions">
+                <label><input type="checkbox" ${meta.flagged?'checked':''} onchange="toggleFlag(${idx})"> Flag</label>
+                <label><input type="checkbox" ${meta.handled?'checked':''} onchange="toggleHandled(${idx})"> Handled</label>
+                <input type="text" placeholder="Add note..." value="${(meta.note||'').replace(/"/g,'&quot;')}" onchange="updateNote(${idx},this.value)">
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function toggleFlag(idx) {
+    if (!alarmMeta[idx]) alarmMeta[idx] = {};
+    alarmMeta[idx].flagged = !alarmMeta[idx].flagged;
+    saveMeta(); renderAlarms();
+}
+
+function toggleHandled(idx) {
+    if (!alarmMeta[idx]) alarmMeta[idx] = {};
+    alarmMeta[idx].handled = !alarmMeta[idx].handled;
+    saveMeta(); renderAlarms(); updateAlarmStats();
+}
+
+function updateNote(idx, note) {
+    if (!alarmMeta[idx]) alarmMeta[idx] = {};
+    alarmMeta[idx].note = note;
+    saveMeta();
+}
+
+function updateAlarmStats() {
+    const el = document.getElementById('alarmStats');
+    const total   = alarms.length;
+    const handled = Object.values(alarmMeta).filter(m => m.handled).length;
+    const flagged = Object.values(alarmMeta).filter(m => m.flagged).length;
+    el.innerHTML = total
+        ? `<span class="stat-chip gray">${total} active</span>${handled ? `<span class="stat-chip green">${handled} handled</span>` : ''}${flagged ? `<span class="stat-chip red">${flagged} flagged</span>` : ''}`
+        : '';
+}
+
+function clearAlarms() {
+    document.getElementById('alarmInput').value = '';
+    alarms = []; alarmMeta = {};
+    saveMeta(); renderAlarms(); updateAlarmStats();
+}
+
+function copyAlarmContext() {
+    if (alarms.length === 0) { alert('No alarms to copy.'); return; }
+    let out = `JAX BAS Alarm Triage — ${new Date().toLocaleString()}\n`;
+    out += `Active: ${alarms.length} | Handled: ${Object.values(alarmMeta).filter(m=>m.handled).length} | Flagged: ${Object.values(alarmMeta).filter(m=>m.flagged).length}\n\n${'='.repeat(70)}\n\n`;
+
+    alarms.forEach((a, idx) => {
+        const meta = alarmMeta[idx] || {};
+        const tags = [meta.flagged ? '🚩 FLAGGED' : '', meta.handled ? '✓ HANDLED' : ''].filter(Boolean);
+        out += `[Priority ${a.Priority}] ${a.Type} — ${a.Item}${tags.length ? ' ' + tags.join(' ') : ''}\n`;
+        out += `  Message: ${a['Alarm Message Text'] || a.Description}\n`;
+        out += `  Time: ${a.When}\n`;
+        if (a.Value) out += `  Value: ${a.Value}\n`;
+        if (meta.note) out += `  Note: ${meta.note}\n`;
+        out += '\n';
+    });
+
+    navigator.clipboard.writeText(out).then(() => {
+        alert('Alarm context copied! Paste into Claude.');
+    }).catch(err => alert('Copy failed: ' + err));
+}
+</script>
+</body>
+</html>

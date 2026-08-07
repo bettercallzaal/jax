@@ -1,0 +1,379 @@
+{
+  "last_updated": "2026-08-06",
+  "contacts": [
+    {
+      "name": "Conner Townsend",
+      "org": "WWG Gay",
+      "org_type": "controls_vendor",
+      "role": "Controls Service Technician",
+      "email": "ctownsend@wwgmc.com",
+      "phone": "352-681-2389",
+      "notes": "BAS SME for Gainesville. Primary contact for Niagara/Vykon questions, trend config, service calls."
+    },
+    {
+      "name": "Mark Garcia",
+      "org": "WWG Gay",
+      "org_type": "controls_vendor",
+      "role": "Controls Service Manager",
+      "email": "MGarcia@wwgmc.com",
+      "phone": "352-264-2607",
+      "phone_mobile": "352-538-2823",
+      "notes": "Conner's manager. CC on most WWG controls emails. Offered billable training (per hour on site). Sent JACE offline notifications quote $737.28."
+    },
+    {
+      "name": "Ken Hovey",
+      "org": "WWG Gay",
+      "org_type": "controls_vendor",
+      "role": "Controls Software Engineer",
+      "email": "khovey@wwgmc.com",
+      "phone": "352-575-8037",
+      "notes": "WWG Gay controls engineer. Researched flush cycle BAS integration. Proposed triggering flush through BAS so commands can be disabled and cycle trended."
+    },
+    {
+      "name": "Negheen Zaman",
+      "org": "WWG Gay",
+      "org_type": "controls_vendor",
+      "role": "Project Manager",
+      "email": "nzaman@wwgmc.com",
+      "phone": "352-264-2612",
+      "phone_alt": "352-756-2721",
+      "notes": "Scheduling and coordination. Confirmed Aug 4 vestibule valve visit."
+    },
+    {
+      "name": "Jesse Hinkle",
+      "org": "JAX Gainesville",
+      "org_type": "jax_gainesville",
+      "role": "Operations Manager",
+      "email": "jesse.hinkle@jax.org",
+      "phone": "352-284-3465",
+      "notes": "Primary JAX on-site contact. Approves access, coordinates shutdowns, day-to-day ops."
+    },
+    {
+      "name": "Sabrina Rosario",
+      "org": "JAX Gainesville",
+      "org_type": "jax_gainesville",
+      "role": "Facilities Technician",
+      "email": "Sabrina.Rosario@jax.org",
+      "phone": null,
+      "notes": "Jesse's on-site tech. Works with Zaal on WiCom rack setup."
+    },
+    {
+      "name": "Amanda Dowtin",
+      "org": "JAX Gainesville",
+      "org_type": "jax_gainesville",
+      "role": "Cell Bio Room",
+      "email": null,
+      "phone": null,
+      "notes": "Coordinated air valve in cell bio room."
+    },
+    {
+      "name": "Dave Kuchta",
+      "org": "JAX Bar Harbor",
+      "org_type": "jax_bar_harbor",
+      "role": "Senior Manager / Facilities Leadership",
+      "email": "David.Kuchta@jax.org",
+      "phone": "207-288-6182",
+      "notes": "Senior stakeholder. Approves budgets (JACE quote $737.28). Mandated weekly trend/alarm review by Zaal. Flagged supply DP event as potential disaster risk. Red category email."
+    },
+    {
+      "name": "Wayne Cameron",
+      "org": "JAX Bar Harbor",
+      "org_type": "jax_bar_harbor",
+      "role": "Facilities / Controls (peer to Zaal)",
+      "email": "Wayne.Cameron@jax.org",
+      "phone": null,
+      "notes": "Also receives Gainesville BAS alerts from Dave. Copied on the supply DP warning email alongside Zaal."
+    },
+    {
+      "name": "Ashley Beaton",
+      "org": "JAX",
+      "org_type": "jax_bar_harbor",
+      "role": "Process Quality Control and Metrology Specialist",
+      "email": "Ashley.Beaton@jax.org",
+      "phone": "916-664-5274",
+      "notes": "Handles rack certifications. Has certs 019 and 020 on file for GF3 rack work. Works with Jesse on WiCom setpoint review."
+    },
+    {
+      "name": "Kyle Martin",
+      "org": "JAX",
+      "org_type": "jax_bar_harbor",
+      "role": "Facilities / IT Coordination",
+      "email": "Kyle.Martin@jax.org",
+      "phone": "207-288-6137",
+      "notes": "On weekly update, WiCom, and BAS access threads. Coordinated BAS server access with Bob Terwilliger (Epic IT). Added to JAX Progress weekly meeting Feb 2026."
+    },
+    {
+      "name": "Karine Lux",
+      "org": "JAX",
+      "org_type": "jax_bar_harbor",
+      "role": "Associate Director, Operational and Quality Initiatives",
+      "email": "Karine.Lux@jax.org",
+      "phone": "916-469-2590",
+      "notes": "Senior stakeholder overseeing WiCom rack monitoring. Initiated WiCom communication thread April 2025 when 6 of 7 units were offline."
+    },
+    {
+      "name": "Eric Rossow",
+      "org": "JAX",
+      "org_type": "jax_bar_harbor",
+      "role": "Unknown",
+      "email": "Eric.Rossow@jax.org",
+      "phone": null,
+      "notes": "On WiCom / Allentown cloud threads."
+    },
+    {
+      "name": "Sabrina Julia",
+      "org": "JAX Gainesville",
+      "org_type": "jax_gainesville",
+      "role": "On-site Staff",
+      "email": "Sabrina.Julia@jax.org",
+      "phone": null,
+      "notes": "On-site at Gainesville. Works on WiCom blower rack initialization. Added to WiCom system by Zaal April 2025."
+    },
+    {
+      "name": "Gizelle Rosario",
+      "org": "JAX Gainesville",
+      "org_type": "jax_gainesville",
+      "role": "On-site Staff",
+      "email": "Gizelle.Rosario@jax.org",
+      "phone": null,
+      "notes": "On-site at Gainesville. Added to WiCom system April 2025 alongside Sabrina Julia."
+    },
+    {
+      "name": "Stephen Burgess",
+      "org": "Allentown",
+      "org_type": "equipment_vendor",
+      "role": "WiCom Technical Support",
+      "email": null,
+      "phone": null,
+      "notes": "Allentown support contact for WiCom networking issues. Called April 24, 2025 to restart networking ports and resolve blower communication issues."
+    },
+    {
+      "name": "Sonia Hopewell",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "Site Coordinator",
+      "email": "shopewell@conceptcompanies.net",
+      "phone": "352-440-4932",
+      "notes": "Main coordination point for Momentum Labs. Schedules all contractor work. Primary scheduler for RTU-3 repair work. Office: 1449 SW 74th Drive Suite 200, Gainesville FL 32607."
+    },
+    {
+      "name": "David Stockman",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "Vice President Real Estate",
+      "email": "dstockman@conceptcompanies.net",
+      "phone_office": "352-333-3233 x124",
+      "phone_mobile": "352-895-8853",
+      "notes": "VP-level. Backup contact when Sonia is OOO. Sends weekly JAX progress update PDFs. On supply DP alarm thread with Jesse."
+    },
+    {
+      "name": "Henry (Hank) Pate",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "Facilities Manager",
+      "email": "hpate@conceptcompanies.net",
+      "phone_mobile": "352-445-5041",
+      "notes": "Facilities Manager at Concept Companies. Requested sensor adjustment history from WWG Feb 2026. Preceded Sonia in some coordination threads."
+    },
+    {
+      "name": "Jonathan Jury",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "On-site Coordinator",
+      "email": "jjury@conceptcompanies.net",
+      "phone": null,
+      "notes": "CC on RTU-3 scheduling emails. Showed WWG the elevator vestibule air valve location on Aug 4."
+    },
+    {
+      "name": "Luke Smith",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "Unknown",
+      "email": "luke@conceptcompanies.net",
+      "phone": null,
+      "notes": "CC on RTU-3 scheduling and weekly update emails."
+    },
+    {
+      "name": "Brian Crawford",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "Unknown",
+      "email": "brian@conceptcompanies.net",
+      "phone": null,
+      "notes": "CC on weekly update emails."
+    },
+    {
+      "name": "Mike Fort",
+      "org": "WH Construction",
+      "org_type": "mechanical_contractor",
+      "role": "Lead Technician",
+      "email": "Mike@whconstructionfl.com",
+      "phone": null,
+      "notes": "Lead for RTU-3 refrigerant leak search and repair (Aug 6-7)."
+    },
+    {
+      "name": "Ashton",
+      "org": "WH Construction",
+      "org_type": "mechanical_contractor",
+      "role": "Technician",
+      "email": "ashton@whconstructionfl.com",
+      "phone": null,
+      "notes": "On-site for compressor inspection and refrigerant leak work. Last name initial J. (from email recipients)."
+    },
+    {
+      "name": "Shelton",
+      "org": "WH Construction",
+      "org_type": "mechanical_contractor",
+      "role": "HVAC Technician",
+      "email": null,
+      "phone": null,
+      "notes": "On-site Aug 5 to assess RTU-3 compressor status after valve replacement restart. Found compressor 5 fully down (not standby). Confirmed RTU at 80% capacity."
+    },
+    {
+      "name": "Ryan Weimar",
+      "org": "Unknown",
+      "org_type": "unknown",
+      "role": "Unknown",
+      "email": "ryanw.rmw@gmail.com",
+      "phone": null,
+      "notes": "CC on RTU-3 scheduling thread. Gmail address -- possibly independent consultant."
+    },
+    {
+      "name": "Casey (last name unknown)",
+      "org": "Nelson and Company",
+      "org_type": "equipment_vendor",
+      "role": "Scheduling / Dispatch",
+      "email": null,
+      "phone": null,
+      "notes": "Sonia Hopewell's direct scheduling contact at NCJax. Confirmed Jul 29 visit by calling Sonia back Jul 28 10:15 AM. Able to dispatch without a unit shutdown. Last name unknown."
+    },
+    {
+      "name": "Wade Godwin",
+      "org": "Nelson and Company",
+      "org_type": "equipment_vendor",
+      "role": "Field Technician",
+      "email": null,
+      "phone": null,
+      "notes": "AnnexAir RTU technician (NCJax). Full name from Sonia's July 30 diagnostics email. On-site July 29 with Conner to inspect all 4 RTUs. Confirmed compressor parts under warranty, ordered. Report file: (07-29-2026) ML RTU-3 (STM2607-2554) NC Jax.pdf."
+    },
+    {
+      "name": "Rory Stiglitz",
+      "org": "Nelson and Company",
+      "org_type": "equipment_vendor",
+      "role": "Sales Rep",
+      "email": null,
+      "phone": null,
+      "notes": "Submitted Pure Humidifier submittal."
+    },
+    {
+      "name": "Newton Freire",
+      "org": "JAX",
+      "org_type": "jax_bar_harbor",
+      "role": "Unknown",
+      "email": "Newton.Freire@jax.org",
+      "phone": null,
+      "notes": "Provided Pure Humidifier submittal PDF."
+    },
+    {
+      "name": "Andy Fernandez",
+      "org": "EPIC IT",
+      "org_type": "it_vendor",
+      "role": "Unknown",
+      "email": null,
+      "phone": null,
+      "notes": "Power meter (192.168.15.57). Use Firefox with http://, credentials from Bob Terwilliger."
+    },
+    {
+      "name": "Brandon Shakespeare",
+      "org": "Unknown",
+      "org_type": "unknown",
+      "role": "Networking",
+      "email": null,
+      "phone": null,
+      "notes": "WiCom blower networking. Notified of issue, awaiting confirmation complete."
+    },
+    {
+      "name": "Matthew Poteet",
+      "org": "Epic IT Solutions",
+      "org_type": "it_vendor",
+      "role": "IT Technician",
+      "email": "help@epic-it.com",
+      "phone": "352-240-1281",
+      "phone_ext": "103",
+      "notes": "Epic IT Solutions -- building IT vendor for Gainesville. Resolved BAS server accessibility issue June 9, 2026 (server had been unreachable for unknown period). Contact for BAS server access issues."
+    },
+    {
+      "name": "Will Leduc",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "On-Site Facilities",
+      "email": null,
+      "phone": null,
+      "notes": "Concept Companies on-site facilities person. Checks ceilings for water/mold, installs door sweeps and fixtures, coordinates with Jesse. Referenced as 'WL' in closeout list."
+    },
+    {
+      "name": "Brian Crawford",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "Contracts / Management",
+      "email": "brian@conceptcompanies.net",
+      "phone": null,
+      "notes": "Concept Companies. Handles MSA agreements and contract review. On CC for JAX weekly updates. Referenced as 'BC' in closeout list."
+    },
+    {
+      "name": "Christian",
+      "org": "WWG Gay",
+      "org_type": "controls_vendor",
+      "role": "After-Hours Technician",
+      "email": null,
+      "phone": null,
+      "notes": "WWG Gay after-hours technician. Responded to CO2 leak alarm July 24, 2025. Full last name unknown."
+    },
+    {
+      "name": "Luke Smith",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "Unknown (Concept Companies staff)",
+      "email": "luke@conceptcompanies.net",
+      "phone": null,
+      "notes": "Concept Companies. On distribution for NCJAX report (July 30) and WHC refrigerant repair calendar invite (Aug 6). Managed Lab 1/2 modification scope and coordination (May-June 2026). Likely property management/facilities team."
+    },
+    {
+      "name": "Jonathan Jury",
+      "org": "Concept Companies",
+      "org_type": "landlord",
+      "role": "Unknown (Concept Companies staff)",
+      "email": "jjury@conceptcompanies.net",
+      "phone": null,
+      "notes": "Concept Companies. On distribution for NCJAX report (July 30) and WHC refrigerant repair calendar invite (Aug 6). Likely property management/facilities team."
+    },
+    {
+      "name": "John Scheckel",
+      "org": "JAX",
+      "org_type": "jax_bar_harbor",
+      "role": "Senior Manager / Approver",
+      "email": "John.Scheckel@jax.org",
+      "phone": null,
+      "notes": "JAX senior stakeholder. On weekly Gainesville project update distribution list alongside Dave Kuchta, Jesse Hinkle, and Kyle Martin. Approves work orders and budget decisions for the project. First seen in March 4, 2026 weekly update distribution."
+    },
+    {
+      "name": "Zoe Hsi",
+      "org": "JAX Gainesville",
+      "org_type": "jax_gainesville",
+      "role": "Researcher",
+      "email": "Zoe.Hsi@jax.org",
+      "phone": null,
+      "notes": "JAX researcher on CriticalEventsGainesville distribution list. Received Jul 28 Critical Event Notice about humidity/compressor failure."
+    },
+    {
+      "name": "Elena GonzaloGil",
+      "org": "JAX Gainesville",
+      "org_type": "jax_gainesville",
+      "role": "Associate Director, Preclinical Services",
+      "email": "Elena.GonzaloGil@jax.org",
+      "phone": "352-824-4200",
+      "phone_ext": "251574",
+      "notes": "Associate Director, Preclinical Services at JAX. Address: 12742 NW 133Rd Terrace, Alachua FL 32615. On CriticalEventsGainesville distribution list. Replied to Jul 28 Critical Event Notice asking for timeline updates. Senior research stakeholder for animal facility conditions."
+    }
+  ]
+}

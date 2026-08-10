@@ -1,7 +1,9 @@
 # Room 2170 Low-Airflow Investigation — Summary (2026-08-10)
 
+**STATUS: RESOLVED (pending client follow-up on noise/comfort).** Root cause was a manual volume damper set to ~50%, physically located in Room 2178, serving the 2170 branch — not the AHU, not duct sizing, not the VAV box itself. Opened to 75%; box reached setpoint immediately and the zone is cooling down. See "Resolution" section below.
+
 Building 1, Unit 4, Level 2 — open-office bullpen (~8 desks), flanked by Rooms 2185/2187.
-Metasys point tree: "JacksonLabs" / controller `04B038FEC`.
+Metasys point tree: "JacksonLabs" / controller `04B038FEC`. MaintainX WO #400557 (location listed as "01D-2170... EDUCATION SUITE CUBICLE AREA RM #2165", requested by Lily Schenk).
 Prepared for in-person discussion with Wayne. Full raw entries logged in `hvac/data/journal/2026-08-10.jsonl`.
 
 ## The complaint
@@ -39,10 +41,18 @@ Zone temp 71.5°F, above cooling setpoint 70.6°F — zone is actively calling f
 - **VAV "Rm 1075-1115"** (`1050020FAC`) — 5-zone unit including Rm 1115 (near VAV-11's documented service area per MH101). Object numbering (`10-series FAC`) does not match AHU-14's `04B0xx` trunk; embedded `AHU-1/AHU-2/EF-2 Status` points are most likely a standard JCI mirrored-status template, not evidence of a separate physical AHU (per [[feedback_trust_drawings_over_live_labels]] — documented drawings take precedence over live screen-label interpretation).
 - **VAV Rm 2090** (documented as VAV-12 on MH102): Zone temp 69.9°F vs. 72°F cooling / 70°F heating setpoint — box is not currently under load. Damper only 35% open, Supply Flow 139 cfm vs. 375 cfm setpoint. **Not a valid comparison yet** — this box hasn't been tested near full-open under an active cooling call, so we can't tell if it would plateau early like 2170 does. Worth re-checking next time it's got a real cooling demand.
 
-## Open questions for Wayne / next steps
+## Resolution (2026-08-10, same day)
 
-1. **AHU identity is still not conclusively settled.** Recommend checking the Metasys navigation-tree parent of `04B038FEC` directly — fastest remaining way to resolve AHU-14 vs. AHU-1E vs. AHU-3.
-2. **AHU-14's own discharge static pressure & fan speed** have not yet been checked — would immediately tell us AHU-wide capacity limit vs. isolated branch.
-3. **Physical trace of the branch is difficult** — duct goes into a wall/chase near the box, no probe holes available for a static pressure survey. Duct size checked at one point (10", correctly sized) — worth checking 2-3 more points along the run for a narrower section, kink, or closed volume damper (VD) if accessible.
-4. **Sibling box comparison (VAV-12/Rm 2090) inconclusive** — needs to be re-read during an actual cooling call, not at 35% damper command.
-5. **Independent flow verification**: a flow-hood reading at the 2170 diffuser(s) compared against the BAS-reported ~400 cfm has not yet been done — would rule in/out a box sensor fault vs. a genuine restriction.
+Found a manual hand volume damper (VD) serving the 2170 branch, physically located in **Room 2178**, set to roughly 50% open. Opened it to 75%. Box flow reached setpoint immediately; zone is actively cooling down.
+
+This confirms the theory the duct-sizing check pointed to: since the 10" branch duct was already ruled correctly sized for 805 cfm, the remaining candidates were a localized restriction (kink/crush/closed damper) or an AHU-wide capacity limit — and it turned out to be exactly the localized-restriction case, specifically a manual balancing damper left partially closed. The VAV box's own damper being 100% open the whole time was real (confirmed by eye, after fixing the actuator dead-zone) but was never going to solve this on its own, because the restriction was upstream of the box.
+
+**This also means the AHU-identity question (AHU-14 vs. AHU-1E vs. AHU-3 vs. AHU-10 — see below) turned out not to matter for fixing this complaint.** Worth still resolving for the record/future troubleshooting in this wing, but it wasn't blocking the fix.
+
+Client (Lily Schenk) confirmed OK with the airflow being noticeably louder in the suite going forward; will flag if it becomes a problem. Plan: check back with her later this week to confirm noise is acceptable and temp has actually come down.
+
+## Open questions for Wayne / still worth resolving (not blocking, informational)
+
+1. **AHU identity is still not conclusively settled** — AHU-14, AHU-1E, and AHU-3 all have documented ties to Unit 4's 2nd floor; a color-coded zone map (`X:\Enterprise\Standards\New HVAC Seq Of Operations\Building 1 Units 123 AHU 1-2.docx`) adds a 4th candidate, AHU-10, plus a zone literally named "AHU-1-Unit4" — but the map has no room-number labels and no doc in that folder has a text-based room list for AHU-10, so this is still unverified. Recommend checking the Metasys navigation-tree parent of `04B038FEC` directly if this is worth pinning down.
+2. **Other manual volume dampers on this same run** may be worth a sweep while access is fresh — if one was left at 50%, there could be others nearby serving 2185/2187 with the same issue, even if those rooms haven't complained yet.
+3. **Independent flow verification** (flow hood at the diffuser vs. BAS-reported cfm) was never done — no longer urgent now that the fix worked, but worth doing at close-out to confirm the box's own sensor is reading true.

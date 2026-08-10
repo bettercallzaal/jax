@@ -20,7 +20,8 @@
       "B1_AHU3_labeled_AHU17": "B1 AHU-3 (roof) object 1001008FAC on SNE-14 is labeled 'AHU17' in the Description. Position feedback unwired (reads ~0.9%).",
       "B1_dirty_area": "'B1 AHU-1 Dirty' (1001005FAC) cooling valve is the wrong point to watch — actual cooling for that space is 'Rm 1645 Dirty Area AC 1 2 3' (1001006FAC).",
       "B21_AHU11_N2_DX": "B21 AHU-11 is an N2-trunk DX unit on JL-BLDG21-NAE07/N2 Trunk B (07B071DX), not BACnet IP.",
-      "B1_AHU14_on_B57_SNE04": "B1 AHU-14 object is 04B016FEC on JL-BLDG57-SNE04 (labeled B01d Rm 1010)."
+      "B1_AHU14_on_B57_SNE04": "B1 AHU-14 object is 04B016FEC on JL-BLDG57-SNE04 (labeled B01d Rm 1010).",
+      "B1_Rm2170_fed_by_AHU14": "Metasys shows Rm 2170 (B01d, Unit 4 Lvl 2) VAV on object 04B038FEC, same 04B0xx range/trunk as AHU-14 (04B016FEC) on JL-BLDG57-SNE04/FC-B — confirmed 2026-08-10 by cross-ref to Z:\\Duct Prints\\B01 D\\Feed From AHU14\\MH101.pdf/MH102.pdf (WBRC Project 2882.38, AS-BUILT 11-28-03). NOT AHU-1E (that tag is real but serves Unit 5/Bioinformatics per B01 E\\Mechanical.pdf, Project 2882.63) and NOT AHU-10 (no B1 AHU-10 exists in this file at all)."
     },
     "chw_sources": {
       "note": "From sequence-of-operations docs (2026-07-02). CHW is FEDERATED — building clusters have local pump systems, chillers start at 52F OAT.",

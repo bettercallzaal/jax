@@ -183,6 +183,39 @@ def cmd_maintainx_pull(args):
     print(f"Wrote {count} open work orders to {out}")
 
 
+def cmd_maintainx_create(args):
+    import os
+    from .briefing.maintainx import create_work_order, MaintainXError
+
+    token = os.environ.get("MAINTAINX_API_TOKEN")
+    if not token:
+        print("Error: MAINTAINX_API_TOKEN environment variable not set.")
+        print("Generate one in MaintainX: Settings > Integrations > + New Key")
+        sys.exit(1)
+
+    org_id = os.environ.get("MAINTAINX_ORG_ID")
+    try:
+        wo = create_work_order(
+            token,
+            title=args.title,
+            description=args.description,
+            priority=args.priority.upper() if args.priority else None,
+            due_date=args.due_date,
+            org_id=org_id,
+        )
+    except MaintainXError as e:
+        print(f"MaintainX create failed: {e}")
+        sys.exit(1)
+
+    print(f"Created work order #{wo.id}: {wo.title}")
+    print(wo.url)
+    print(
+        "NOTE: JAX-required custom fields (GL Account, Maximo Worktype/Status, "
+        "Category) are not set by this call — the API's custom-field support "
+        "hasn't been confirmed yet. Open the WO in MaintainX and fill those in."
+    )
+
+
 def cmd_brief(args):
     sys.exit(run_briefing(
         send_email=not args.no_email,
@@ -275,6 +308,14 @@ def main():
     p = sub.add_parser("maintainx-pull", help="Pull open WOs from MaintainX API into a snapshot file")
     p.add_argument("--out", help="Output path (default: hvac/data/maintainx_snapshot.json)")
     p.set_defaults(func=cmd_maintainx_pull)
+
+    # --- maintainx-create ---
+    p = sub.add_parser("maintainx-create", help="Create a work order via the MaintainX API")
+    p.add_argument("--title", required=True)
+    p.add_argument("--description")
+    p.add_argument("--priority", choices=["high", "medium", "low", "none"])
+    p.add_argument("--due-date", dest="due_date", help="ISO date, e.g. 2026-07-17")
+    p.set_defaults(func=cmd_maintainx_create)
 
     # --- brief ---
     p = sub.add_parser("brief", help="Send morning HVAC briefing email")

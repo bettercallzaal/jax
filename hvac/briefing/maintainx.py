@@ -1,13 +1,26 @@
 """
 MaintainX CMMS API client.
 
-Requires: MAINTAINX_API_TOKEN (Bearer token — Premium plan only)
+Requires: MAINTAINX_API_TOKEN (Bearer token — Premium plan and up; generated
+at Settings > Integrations > API Keys in the MaintainX web app)
 Endpoint: https://api.getmaintainx.com/v1/
 
-The v1 API is cursor-paginated (limit + cursor -> nextCursor) and rate-limited
+The v1 API is cursor-paginated for work orders (limit + cursor -> nextCursor;
+parts/assets/purchase orders use offset pagination instead) and rate-limited
+per MaintainX's published limits: 100 req/60s per user, 500 req/60s per org
 (429 with Retry-After). Status/priority enums are uppercase on the wire
 (OPEN, IN_PROGRESS, ON_HOLD, DONE / HIGH, MEDIUM, LOW, NONE); this module
 lowercases them for the rest of the toolkit.
+
+If the account's token is scoped to multiple organizations, pass org_id to
+send the required x-organization-id header (a 400 comes back otherwise).
+
+Confirmed write support: create a work order (POST /workorders) and update
+its status (PATCH /workorders/{id}/status). Comment and attachment endpoints
+also exist in the v1 API but their exact request shape hasn't been confirmed
+against JAX's account yet (docs site 403s automated fetches) — do not build
+against add_comment/add_attachment without verifying against a real token
+first.
 """
 
 import json
@@ -44,18 +57,33 @@ class WorkOrder:
     categories: Optional[list] = None
 
 
-def _request(path: str, token: str, params: dict = None, timeout: int = 15) -> dict:
+def _request(
+    path: str,
+    token: str,
+    params: dict = None,
+    method: str = "GET",
+    body: dict = None,
+    org_id: Optional[str] = None,
+    timeout: int = 15,
+) -> dict:
     url = f"{MAINTAINX_BASE}{path}"
     if params:
         from urllib.parse import urlencode
         url = f"{url}?{urlencode(params)}"
-    req = urllib.request.Request(
-        url,
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Accept": "application/json",
-        },
-    )
+
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+    }
+    if org_id:
+        headers["x-organization-id"] = org_id
+
+    data = None
+    if body is not None:
+        data = json.dumps(body).encode()
+        headers["Content-Type"] = "application/json"
+
+    req = urllib.request.Request(url, data=data, headers=headers, method=method)
 
     for attempt in range(MAX_RETRIES + 1):
         try:
@@ -142,3 +170,83 @@ def snapshot_work_orders(api_token: str, path: str, **kwargs) -> int:
     with open(path, "w") as f:
         json.dump([asdict(w) for w in wos], f, indent=1)
     return len(wos)
+
+
+def create_work_order(
+    api_token: str,
+    title: str,
+    description: Optional[str] = None,
+    priority: Optional[str] = None,
+    location_id: Optional[str] = None,
+    asset_id: Optional[str] = None,
+    assignee_ids: Optional[list] = None,
+    due_date: Optional[str] = None,
+    org_id: Optional[str] = None,
+    timeout: int = 15,
+) -> WorkOrder:
+    """Create a work order via POST /workorders."""
+    body: dict = {"title": title}
+    if description:
+        body["description"] = description
+    if priority:
+        body["priority"] = priority.upper()
+    if location_id:
+        body["locationId"] = location_id
+    if asset_id:
+        body["assetId"] = asset_id
+    if assignee_ids:
+        body["assigneeIds"] = list(assignee_ids)
+    if due_date:
+        body["dueDate"] = due_date
+
+    data = _request(
+        "/workorders", api_token, method="POST", body=body, org_id=org_id, timeout=timeout
+    )
+    return _parse_wo(data.get("workOrder") or data)
+
+
+def update_work_order_status(
+    api_token: str,
+    work_order_id: str,
+    status: str,
+    org_id: Optional[str] = None,
+    timeout: int = 15,
+) -> WorkOrder:
+    """Update a work order's status via PATCH /workorders/{id}/status.
+
+    status is one of OPEN, IN_PROGRESS, ON_HOLD, DONE (case-insensitive).
+    """
+    data = _request(
+        f"/workorders/{work_order_id}/status",
+        api_token,
+        method="PATCH",
+        body={"status": status.upper()},
+        org_id=org_id,
+        timeout=timeout,
+    )
+    return _parse_wo(data.get("workOrder") or data)
+
+
+def add_comment(api_token: str, work_order_id: str, text: str, org_id: Optional[str] = None) -> None:
+    """Not yet wired up.
+
+    MaintainX's v1 API has a comment-creation capability tied to a work order,
+    but the exact endpoint path and payload shape haven't been confirmed
+    against a real token (the docs site 403s automated fetches). Confirm the
+    real shape — via the live docs or a test call — before implementing this.
+    """
+    raise NotImplementedError(
+        "add_comment: MaintainX comment endpoint shape unconfirmed — see module docstring"
+    )
+
+
+def add_attachment(api_token: str, work_order_id: str, file_path: str, org_id: Optional[str] = None) -> None:
+    """Not yet wired up.
+
+    MaintainX's v1 API supports attaching files (application/octet-stream,
+    binary payload) but the exact endpoint path hasn't been confirmed against
+    a real token. Confirm the real shape before implementing this.
+    """
+    raise NotImplementedError(
+        "add_attachment: MaintainX attachment endpoint shape unconfirmed — see module docstring"
+    )
